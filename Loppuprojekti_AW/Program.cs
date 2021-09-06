@@ -14,6 +14,7 @@ namespace Loppuprojekti_AW
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            // testi
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
