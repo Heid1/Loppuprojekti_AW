@@ -24,9 +24,6 @@ namespace Loppuprojekti_AW
             return Enduser;
         }
 
-        public static void EditUser(Enduser Eu)
-        {
-            MoveoContext db = new MoveoContext();
         //hae yleisimmät postit lajin mukaan (tämä on sanapilveä varten)
         public List<Sport> GetPostsByPrevalence()
         {
@@ -52,7 +49,9 @@ namespace Loppuprojekti_AW
                ).ToList();
             return postlist;
         }
-
+        public static void EditUser(Enduser Eu)
+        {
+            MoveoContext db = new MoveoContext();
             var muokattava = db.Endusers.Find(Eu.Userid);
 
             muokattava.Userid = Eu.Userid;
