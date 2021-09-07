@@ -33,7 +33,7 @@ namespace Loppuprojekti_AW.Controllers
 
             if (user != null)
             {
-                HttpContext.Session.SetString("username", user.Username);
+                HttpContext.Session.SetInt32("userid", user.Userid);
                 return View();
             }
             ModelState.AddModelError("Name", "There is no account assosiated with the given name. Please try again or create a new account!");
