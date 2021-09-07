@@ -31,7 +31,7 @@ namespace Loppuprojekti_AW
 
             muokattava.Userid = Eu.Userid;
             muokattava.Username = Eu.Username;
-            muokattava.Age = Eu.Age;
+            muokattava.Birthday = Eu.Birthday;
             muokattava.Userrole = Eu.Userrole;
             muokattava.Description = Eu.Description;
             muokattava.UsersSports = Eu.UsersSports;

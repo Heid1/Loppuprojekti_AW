@@ -27,18 +27,23 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(string Name) // await missing?
+        public IActionResult Login()
         {
-            var user = _context.Endusers.Where(u => u.Username == Name).FirstOrDefault();
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string Username)
+        {
+            var user = _context.Endusers.Where(u => u.Username == Username).FirstOrDefault();
 
             if (user != null)
             {
                 HttpContext.Session.SetInt32("userid", user.Userid);
                 return View();
             }
-            ModelState.AddModelError("Name", "There is no account assosiated with the given name. Please try again or create a new account!");
-            return View();
+            ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
+            return RedirectToAction("Index");
 
         }
 
