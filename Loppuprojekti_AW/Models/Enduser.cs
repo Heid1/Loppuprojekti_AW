@@ -17,7 +17,7 @@ namespace Loppuprojekti_AW.Models
 
         public int Userid { get; set; }
         public string Username { get; set; }
-        public DateTime? Age { get; set; }
+        public DateTime? Birthday { get; set; }
         public int Userrole { get; set; }
         public string Description { get; set; }
         public byte[] Photo { get; set; }
