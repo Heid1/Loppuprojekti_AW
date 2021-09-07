@@ -40,5 +40,19 @@ namespace Loppuprojekti_AW
 
             db.SaveChanges();
         }
+
+        public static void CreateSport(Sport sport)
+        {
+            MoveoContext db = new();
+            db.Sports.Add(sport);
+            db.SaveChanges();
+        }
+
+        public static Sport GetSportById(int sportid)
+        {
+            MoveoContext db = new MoveoContext();
+            Sport sport = db.Sports.Find(sportid);
+            return sport;
+        }
     }
 }
