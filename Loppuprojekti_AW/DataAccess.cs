@@ -8,6 +8,11 @@ namespace Loppuprojekti_AW
 {
     public class DataAccess
     {
+        public MoveoContext db { get; set; }
+        public DataAccess(MoveoContext data)
+        {
+            db = data;
+        }
 
         public Enduser GetUserById(int Identity)
         {
@@ -17,11 +22,7 @@ namespace Loppuprojekti_AW
 
             return Enduser;
         }
-        public MoveoContext db { get; set; }
-        public DataAccess(MoveoContext data)
-        {
-            db = data;
-        }
+
 
 
     }
