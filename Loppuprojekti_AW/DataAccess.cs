@@ -17,5 +17,13 @@ namespace Loppuprojekti_AW
 
             return Enduser;
         }
+
+        public void EditUser(Enduser Eu)
+        {
+            MoveoContext db = new MoveoContext();
+
+
+            db.SaveChanges();
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Profiili()
         {
+
             return View();
         }
 
