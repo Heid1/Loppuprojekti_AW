@@ -41,6 +41,11 @@ namespace Loppuprojekti_AW.Controllers
 
         }
 
+        public IActionResult Profiili()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
