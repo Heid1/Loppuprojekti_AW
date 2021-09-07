@@ -25,9 +25,15 @@ namespace Loppuprojekti_AW
         }
 
         //hae yleisimmät postit lajin mukaan (tämä on sanapilveä varten)
-        //public List<Post> GetPostsByPrevalence()
-        //{
-        //}
+        public List<Sport> GetPostsByPrevalence()
+        {
+            var prevalencelist = db.Posts
+                                    .GroupBy(q => q.Sport)
+                                    .OrderByDescending(gp => gp.Count())
+                                    .Take(10)
+                                    .Select(g => g.Key).ToList();
+            return prevalencelist;
+        }
 
         //hae hakusanalla posteja(tämä varsinaista hakua varten)
         public List<Post> GetPostsByCriteria(string criteria)

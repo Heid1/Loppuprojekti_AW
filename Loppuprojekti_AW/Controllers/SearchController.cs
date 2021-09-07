@@ -20,18 +20,18 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
-        [HttpGet]
         public IActionResult GetPostsByCriteria(string criteria)
         {
             if (criteria != null)
             {
-                DataAccess DA = new DataAccess(_context);
-                var postlist = DA.GetPostsByCriteria(criteria);
+                DataAccess da = new DataAccess(_context);
+                var postlist = da.GetPostsByCriteria(criteria);
                 ViewBag.Posts = postlist;
                 return View();
+
             } else {
-                //string error = "Anna hakusana"
-                //ViewBag.Alert = error; Tässä viewbagiin menee error viesti joka tulostetaan viewissä bootstrap alertissa
+                //string error = "Anna hakusana";
+                //ViewBag.Alert = error; //Tässä viewbagiin menee error viesti joka tulostetaan viewissä bootstrap alertissa
                 return View();
             }
         }
