@@ -396,3 +396,4 @@ obj/
 
 # Nuget personal access tokens and Credentials
 nuget.config
+/Loppuprojekti_AW/Views/Home/Index2.cshtml
