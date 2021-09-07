@@ -31,7 +31,7 @@ namespace Loppuprojekti_AW
 
             muokattava.Userid = Eu.Userid;
             muokattava.Username = Eu.Username;
-            muokattava.Age = Eu.Age;
+            muokattava.Birthday = Eu.Birthday;
             muokattava.Userrole = Eu.Userrole;
             muokattava.Description = Eu.Description;
             muokattava.UsersSports = Eu.UsersSports;
@@ -40,5 +40,16 @@ namespace Loppuprojekti_AW
 
             db.SaveChanges();
         }
+
+        public static void DeleteProfile(Enduser Eu)
+        {
+            MoveoContext db = new MoveoContext();
+
+            var muokattava = db.Endusers.Find(Eu.Userid);
+
+            db.Remove(muokattava);
+            db.SaveChanges();
+        }
+
     }
 }
