@@ -96,5 +96,18 @@ namespace Loppuprojekti_AW
         {
             return db.Sports.ToList();
         }
+
+        public void DeleteSport(int sportid)
+        {
+            db.Sports.Remove(db.Sports.Find(sportid));
+            db.SaveChanges();
+        }
+
+        public void EditSport(int sportid, Sport sport)
+        {
+            db.Sports.Find(sportid).Sportname = sport.Sportname;
+            db.Sports.Find(sportid).Description = sport.Description;
+            db.SaveChanges();
+        }
     }
 }

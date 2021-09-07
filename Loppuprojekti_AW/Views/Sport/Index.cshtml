@@ -13,15 +13,16 @@
 <div class="accordion" id="accordionSport">
     @foreach (var item in Model)
     {
+        var iditem = String.Join("", item.Sportname.Split(' '));
         <div class="card">
             <div class="card-header" id="headingSport">
                 <h2 class="mb-0">
-                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#@item.Sportname" aria-expanded="false" aria-controls="@item.Sportname">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#@iditem" aria-expanded="false" aria-controls="@iditem">
                         @item.Sportname
                     </button>
                 </h2>
             </div>
-            <div id="@item.Sportname" class="collapse" aria-labelledby="headingSport" data-parent="#accordionSport">
+            <div id="@iditem" class="collapse" aria-labelledby="headingSport" data-parent="#accordionSport">
                 <div class="card-body">
                     @item.Description
                 </div>

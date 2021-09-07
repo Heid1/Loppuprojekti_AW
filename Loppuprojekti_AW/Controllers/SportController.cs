@@ -38,11 +38,10 @@ namespace Loppuprojekti_AW.Controllers
         // POST: SportController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(int sportid, string sportname, string description)
+        public ActionResult Create(string sportname, string description)
         {
             Sport sport = new()
             {
-                Sportid = sportid,
                 Sportname = sportname,
                 Description = description
             };
@@ -51,45 +50,40 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: SportController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int sportid)
         {
-            return View();
+            return View(_data.GetSportById(sportid));
         }
 
         // POST: SportController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int sportid, [Bind("Sportname, Descrption")] Sport sport)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _data.EditSport(sportid, sport);
+            return View("Index");
         }
 
         // GET: SportController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int sportid)
         {
-            return View();
+            _data.DeleteSport(sportid);
+            return View("Index");
         }
 
-        // POST: SportController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: SportController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
