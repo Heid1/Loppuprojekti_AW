@@ -1,5 +1,4 @@
 ﻿using Loppuprojekti_AW.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +31,7 @@ namespace Loppuprojekti_AW
 
             muokattava.Userid = Eu.Userid;
             muokattava.Username = Eu.Username;
-            muokattava.Age = Eu.Age;
+            muokattava.Birthday = Eu.Birthday;
             muokattava.Userrole = Eu.Userrole;
             muokattava.Description = Eu.Description;
             muokattava.UsersSports = Eu.UsersSports;
@@ -42,32 +41,14 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public static void AddPost(Post post)
+        public static void DeleteProfile(Enduser Eu)
         {
             MoveoContext db = new MoveoContext();
 
-           Attendee attend = CreateAttendee(post);
+            var muokattava = db.Endusers.Find(Eu.Userid);
 
-
-            var user = db.Attendees.Include(p => p.User).Where(p => p.Userid == 1);
-           
-
+            db.Remove(muokattava);
             db.SaveChanges();
-        }
-
-        public static Attendee CreateAttendee(Post Post)
-        {
-            
-            Attendee attend = new Attendee();
-
-            //attend.User = Sessionista
-            attend.Post = Post;
-
-           // if (???) { attend.Organiser = true; }
-            attend.Postid = Post.Postid;
-
-
-            return attend;
         }
 
     }
