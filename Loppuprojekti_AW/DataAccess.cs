@@ -15,7 +15,7 @@ namespace Loppuprojekti_AW
             db = data;
         }
 
-        public Enduser GetUserById(int Identity)
+        public static Enduser GetUserById(int Identity)
         {
             MoveoContext db = new MoveoContext();
 
@@ -24,6 +24,9 @@ namespace Loppuprojekti_AW
             return Enduser;
         }
 
+        public static void EditUser(Enduser Eu)
+        {
+            MoveoContext db = new MoveoContext();
         //hae yleisimmät postit lajin mukaan (tämä on sanapilveä varten)
         public List<Sport> GetPostsByPrevalence()
         {
@@ -50,6 +53,18 @@ namespace Loppuprojekti_AW
             return postlist;
         }
 
+            var muokattava = db.Endusers.Find(Eu.Userid);
 
+            muokattava.Userid = Eu.Userid;
+            muokattava.Username = Eu.Username;
+            muokattava.Birthday = Eu.Birthday;
+            muokattava.Userrole = Eu.Userrole;
+            muokattava.Description = Eu.Description;
+            muokattava.UsersSports = Eu.UsersSports;
+            muokattava.Club = Eu.Club;
+            muokattava.Photo = Eu.Photo;
+
+            db.SaveChanges();
+        }
     }
 }

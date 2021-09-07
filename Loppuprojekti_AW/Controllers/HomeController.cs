@@ -6,16 +6,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+
 
 namespace Loppuprojekti_AW.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly MoveoContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, MoveoContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -23,9 +27,38 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
-        public IActionResult Profiili()
+        public IActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string Username)
+        {
+            var user = _context.Endusers.Where(u => u.Username == Username).FirstOrDefault();
+
+            if (user != null)
+            {
+                HttpContext.Session.SetInt32("userid", user.Userid);
+                return View();
+            }
+            ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
+            return RedirectToAction("Index");
+
+        }
+
+        public IActionResult Profile(int Identity)
+        {
+            var enduser = DataAccess.GetUserById(Identity);
+
+            return View(enduser);
+        }
+
+        public IActionResult ProfileEdit(Enduser Eu)
+        {
+            DataAccess.EditUser(Eu);
+
+            return View(Eu);
         }
 
         public IActionResult Privacy()
