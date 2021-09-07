@@ -14,7 +14,7 @@ namespace Loppuprojekti_AW
         {
             db = data;
         }
-
+        // ----------------------- USER ----------------------------------------------
         public static Enduser GetUserById(int Identity)
         {
             MoveoContext db = new MoveoContext();
@@ -24,31 +24,6 @@ namespace Loppuprojekti_AW
             return Enduser;
         }
 
-        //hae yleisimmät postit lajin mukaan (tämä on sanapilveä varten)
-        public List<Sport> GetPostsByPrevalence()
-        {
-            var prevalencelist = db.Posts
-                                    .GroupBy(q => q.Sport)
-                                    .OrderByDescending(gp => gp.Count())
-                                    .Take(10)
-                                    .Select(g => g.Key).ToList();
-            return prevalencelist;
-        }
-
-        //hae hakusanalla posteja(tämä varsinaista hakua varten)
-        public List<Post> GetPostsByCriteria(string criteria)
-        {
-            var postlist = db.Posts.Include(
-                   s => s.Sport).Where(
-                   p => p.Description.ToLower().Contains(criteria.ToLower())
-                || p.Postname.ToLower().Contains(criteria.ToLower())
-                || p.Place.ToLower().Contains(criteria.ToLower())
-                || p.Date.ToString().Contains(criteria)
-                || p.Sport.Sportname.ToLower().Contains(criteria.ToLower())
-                || p.Sport.Description.ToLower().Contains(criteria.ToLower())
-               ).ToList();
-            return postlist;
-        }
         public static void EditUser(Enduser Eu)
         {
             MoveoContext db = new MoveoContext();
@@ -76,18 +51,50 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public static void CreateSport(Sport sport)
+        // ----------------------- POSTS ----------------------------------------------
+
+        //hae yleisimmät postit lajin mukaan (tämä on sanapilveä varten)
+        public List<Sport> GetPostsByPrevalence()
         {
-            MoveoContext db = new();
+            var prevalencelist = db.Posts
+                                    .GroupBy(q => q.Sport)
+                                    .OrderByDescending(gp => gp.Count())
+                                    .Take(10)
+                                    .Select(g => g.Key).ToList();
+            return prevalencelist;
+        }
+
+        //hae hakusanalla posteja(tämä varsinaista hakua varten)
+        public List<Post> GetPostsByCriteria(string criteria)
+        {
+            var postlist = db.Posts.Include(
+                   s => s.Sport).Where(
+                   p => p.Description.ToLower().Contains(criteria.ToLower())
+                || p.Postname.ToLower().Contains(criteria.ToLower())
+                || p.Place.ToLower().Contains(criteria.ToLower())
+                || p.Date.ToString().Contains(criteria)
+                || p.Sport.Sportname.ToLower().Contains(criteria.ToLower())
+                || p.Sport.Description.ToLower().Contains(criteria.ToLower())
+               ).ToList();
+            return postlist;
+        }
+
+        // ----------------------- SPORTS ----------------------------------------------
+
+        public void CreateSport(Sport sport)
+        {
             db.Sports.Add(sport);
             db.SaveChanges();
         }
 
-        public static Sport GetSportById(int sportid)
+        public Sport GetSportById(int sportid)
         {
-            MoveoContext db = new MoveoContext();
-            Sport sport = db.Sports.Find(sportid);
-            return sport;
+            return db.Sports.Find(sportid);
+        }
+
+        public List<Sport> GetAllSports()
+        {
+            return db.Sports.ToList();
         }
     }
 }

@@ -10,24 +10,23 @@ namespace Loppuprojekti_AW.Controllers
 {
     public class SportController : Controller
     {
-        //private readonly MoveoContext _context;
+        private readonly DataAccess _data;
 
-        //public SportController(MoveoContext context)
-        //{
-        //    _context = context;
-        //}
+        public SportController(MoveoContext context)
+        {
+            _data = new(context);
+        }
 
         // GET: SportController
         public ActionResult Index()
         {
-            return View();
+            return View(_data.GetAllSports());
         }
 
         // GET: SportController/Details/5
         public ActionResult Details(int sportid)
         {
-            Sport sport = DataAccess.GetSportById(sportid);
-            return View(sport);
+            return View(_data.GetSportById(sportid));
         }
 
         // GET: SportController/Create
@@ -47,9 +46,8 @@ namespace Loppuprojekti_AW.Controllers
                 Sportname = sportname,
                 Description = description
             };
-            DataAccess.CreateSport(sport);
-
-            return RedirectToAction("Index", "Home");
+            _data.CreateSport(sport);
+            return RedirectToAction("Index", "Sport");
         }
 
         // GET: SportController/Edit/5
