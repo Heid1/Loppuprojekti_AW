@@ -14,7 +14,7 @@ namespace Loppuprojekti_AW
             db = data;
         }
 
-        public Enduser GetUserById(int Identity)
+        public static Enduser GetUserById(int Identity)
         {
             MoveoContext db = new MoveoContext();
 
@@ -23,10 +23,20 @@ namespace Loppuprojekti_AW
             return Enduser;
         }
 
-        public void EditUser(Enduser Eu)
+        public static void EditUser(Enduser Eu)
         {
             MoveoContext db = new MoveoContext();
 
+            var muokattava = db.Endusers.Find(Eu.Userid);
+
+            muokattava.Userid = Eu.Userid;
+            muokattava.Username = Eu.Username;
+            muokattava.Age = Eu.Age;
+            muokattava.Userrole = Eu.Userrole;
+            muokattava.Description = Eu.Description;
+            muokattava.UsersSports = Eu.UsersSports;
+            muokattava.Club = Eu.Club;
+            muokattava.Photo = Eu.Photo;
 
             db.SaveChanges();
         }

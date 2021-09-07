@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace Loppuprojekti_AW.Controllers
 {
     public class HomeController : Controller
@@ -23,10 +24,18 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
-        public IActionResult Profiili()
+        public IActionResult Profile(int Identity)
         {
+            var enduser =  DataAccess.GetUserById(Identity)
 
-            return View();
+            return View(enduser);
+        }
+
+        public IActionResult ProfileEdit(Enduser Eu)
+        {
+            DataAccess.EditUser(Eu);
+
+            return View(Eu);
         }
 
         public IActionResult Privacy()
