@@ -31,6 +31,13 @@ namespace Loppuprojekti_AW.Controllers
             return View(enduser);
         }
 
+        public IActionResult AddPost()
+        {
+           
+            return View();
+        }
+
+
         public IActionResult ProfileEdit(Enduser Eu)
         {
             DataAccess.EditUser(Eu);

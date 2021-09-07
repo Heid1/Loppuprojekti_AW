@@ -1,4 +1,5 @@
 ﻿using Loppuprojekti_AW.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,5 +41,34 @@ namespace Loppuprojekti_AW
 
             db.SaveChanges();
         }
+
+        public static void AddPost(Post post)
+        {
+            MoveoContext db = new MoveoContext();
+
+           Attendee attend = CreateAttendee(post);
+
+
+            var user = db.Attendees.Include(p => p.User).Where(p => p.Userid == 1);
+           
+
+            db.SaveChanges();
+        }
+
+        public static Attendee CreateAttendee(Post Post)
+        {
+            
+            Attendee attend = new Attendee();
+
+            //attend.User = Sessionista
+            attend.Post = Post;
+
+           // if (???) { attend.Organiser = true; }
+            attend.Postid = Post.Postid;
+
+
+            return attend;
+        }
+
     }
 }
