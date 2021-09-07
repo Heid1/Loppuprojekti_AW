@@ -31,7 +31,7 @@ namespace Loppuprojekti_AW
 
             muokattava.Userid = Eu.Userid;
             muokattava.Username = Eu.Username;
-            muokattava.Age = Eu.Age;
+            muokattava.Birthday = Eu.Birthday;
             muokattava.Userrole = Eu.Userrole;
             muokattava.Description = Eu.Description;
             muokattava.UsersSports = Eu.UsersSports;
@@ -40,5 +40,36 @@ namespace Loppuprojekti_AW
 
             db.SaveChanges();
         }
+
+        /// <summary>
+        /// Returns given user's messages with all other users as a dict where int is
+        /// the other user's id and value is the list of messages with the other user.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static Dictionary<int, List<Message>> GetMessagesOfUser(int userId)
+        {
+            MoveoContext db = new MoveoContext();
+            var messagesToIds = db.Messages.Where(u => u.Senderid == userId).Select(u => (int)u.Receiverid).ToList();
+            var messagesFromIds = db.Messages.Where(u => u.Receiverid == userId).Select(u => u.Senderid).ToList();
+            var messageswithIds = messagesToIds.Union(messagesFromIds).ToList();
+            return null;
+
+        }
+
+        /// <summary>
+        /// Returns messages between two users bases on their ids.
+        /// </summary>
+        /// <param name="userId1">Id of first user..</param>
+        /// <param name="userId2">Id of second user.</param>
+        /// <returns>list of messages between the two users.</returns>
+        public static List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
+        {
+            MoveoContext db = new MoveoContext();
+            var messages = db.Messages.Where(u => u.Receiverid == userId1 && u.Senderid == userId2 || u.Receiverid == userId2 && u.Senderid == userId1).OrderBy(m => m.Sendtime).ToList();
+            return messages;
+        }
+
+
     }
 }
