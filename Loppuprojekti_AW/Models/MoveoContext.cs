@@ -69,9 +69,9 @@ namespace Loppuprojekti_AW.Models
 
                 entity.Property(e => e.Userid).HasColumnName("userid");
 
-                entity.Property(e => e.Age)
+                entity.Property(e => e.Birthday)
                     .HasColumnType("date")
-                    .HasColumnName("age");
+                    .HasColumnName("birthday");
 
                 entity.Property(e => e.Club)
                     .HasMaxLength(100)
@@ -99,6 +99,12 @@ namespace Loppuprojekti_AW.Models
                 entity.ToTable("Message");
 
                 entity.Property(e => e.Messageid).HasColumnName("messageid");
+
+                entity.Property(e => e.Messagebody)
+                    .IsRequired()
+                    .HasMaxLength(1000)
+                    .IsUnicode(false)
+                    .HasColumnName("messagebody");
 
                 entity.Property(e => e.Receiverid).HasColumnName("receiverid");
 
