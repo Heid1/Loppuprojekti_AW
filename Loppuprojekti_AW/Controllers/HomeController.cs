@@ -22,11 +22,11 @@ namespace Loppuprojekti_AW.Controllers
         {
             return View();
         }
-
          public IActionResult Profiili()
         {
             return View();
         }
+
 
         public IActionResult Privacy()
         {
