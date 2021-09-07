@@ -26,7 +26,7 @@ namespace Loppuprojekti_AW
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MoveoContext>(options =>
-                   options.UseSqlServer(Configuration.GetConnectionString("localdb")));
+                   options.UseSqlServer(Configuration.GetConnectionString("azure")));
             services.AddControllersWithViews();
         }
 
