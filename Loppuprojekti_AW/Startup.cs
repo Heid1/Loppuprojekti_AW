@@ -28,6 +28,7 @@ namespace Loppuprojekti_AW
             services.AddDbContext<MoveoContext>(options =>
                    options.UseSqlServer(Configuration.GetConnectionString("azure")));
             services.AddControllersWithViews();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +48,7 @@ namespace Loppuprojekti_AW
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
