@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
+
 namespace Loppuprojekti_AW.Controllers
 {
     public class HomeController : Controller
@@ -41,9 +42,18 @@ namespace Loppuprojekti_AW.Controllers
 
         }
 
-        public IActionResult Profiili()
+        public IActionResult Profile(int Identity)
         {
-            return View();
+            var enduser = DataAccess.GetUserById(Identity);
+
+            return View(enduser);
+        }
+
+        public IActionResult ProfileEdit(Enduser Eu)
+        {
+            DataAccess.EditUser(Eu);
+
+            return View(Eu);
         }
 
         public IActionResult Privacy()
