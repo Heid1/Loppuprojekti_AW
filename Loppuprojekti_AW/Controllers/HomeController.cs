@@ -26,7 +26,7 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Profile(int Identity)
         {
-            var enduser =  DataAccess.GetUserById(Identity)
+            var enduser = DataAccess.GetUserById(Identity);
 
             return View(enduser);
         }
