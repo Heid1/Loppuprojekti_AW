@@ -1,13 +1,18 @@
-﻿using System;
+﻿using Loppuprojekti_AW.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Loppuprojekti_AW.Models;
 
 namespace Loppuprojekti_AW
 {
     public class DataAccess
     {
+        public MoveoContext db { get; set; }
+        public DataAccess(MoveoContext data)
+        {
+            db = data;
+        }
 
         public Enduser GetUserById(int Identity)
         {
@@ -17,5 +22,8 @@ namespace Loppuprojekti_AW
 
             return Enduser;
         }
+
+
+
     }
 }
