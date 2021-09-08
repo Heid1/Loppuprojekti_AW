@@ -14,7 +14,7 @@ namespace Loppuprojekti_AW
         {
             db = data;
         }
-
+        // ----------------------- USER ----------------------------------------------
         public static Enduser GetUserById(int Identity)
         {
             MoveoContext db = new MoveoContext();
@@ -23,6 +23,35 @@ namespace Loppuprojekti_AW
 
             return Enduser;
         }
+
+        public static void EditUser(Enduser Eu)
+        {
+            MoveoContext db = new MoveoContext();
+            var muokattava = db.Endusers.Find(Eu.Userid);
+
+            muokattava.Userid = Eu.Userid;
+            muokattava.Username = Eu.Username;
+            muokattava.Birthday = Eu.Birthday;
+            muokattava.Userrole = Eu.Userrole;
+            muokattava.Description = Eu.Description;
+            muokattava.UsersSports = Eu.UsersSports;
+            muokattava.Club = Eu.Club;
+            muokattava.Photo = Eu.Photo;
+
+            db.SaveChanges();
+        }
+
+        public static void DeleteProfile(Enduser Eu)
+        {
+            MoveoContext db = new MoveoContext();
+
+            var muokattava = db.Endusers.Find(Eu.Userid);
+
+            db.Remove(muokattava);
+            db.SaveChanges();
+        }
+
+        // ----------------------- POSTS ----------------------------------------------
 
         //hae yleisimmät postit lajin mukaan (tämä on sanapilveä varten)
         public List<Sport> GetPostsByPrevalence()
@@ -49,20 +78,35 @@ namespace Loppuprojekti_AW
                ).ToList();
             return postlist;
         }
-        public static void EditUser(Enduser Eu)
+
+        // ----------------------- SPORTS ----------------------------------------------
+
+        public void CreateSport(Sport sport)
         {
-            MoveoContext db = new MoveoContext();
-            var muokattava = db.Endusers.Find(Eu.Userid);
+            db.Sports.Add(sport);
+            db.SaveChanges();
+        }
 
-            muokattava.Userid = Eu.Userid;
-            muokattava.Username = Eu.Username;
-            muokattava.Birthday = Eu.Birthday;
-            muokattava.Userrole = Eu.Userrole;
-            muokattava.Description = Eu.Description;
-            muokattava.UsersSports = Eu.UsersSports;
-            muokattava.Club = Eu.Club;
-            muokattava.Photo = Eu.Photo;
+        public Sport GetSportById(int sportid)
+        {
+            return db.Sports.Find(sportid);
+        }
 
+        public List<Sport> GetAllSports()
+        {
+            return db.Sports.ToList();
+        }
+
+        public void DeleteSport(int sportid)
+        {
+            db.Sports.Remove(db.Sports.Find(sportid));
+            db.SaveChanges();
+        }
+
+        public void EditSport(int sportid, Sport sport)
+        {
+            db.Sports.Find(sportid).Sportname = sport.Sportname;
+            db.Sports.Find(sportid).Description = sport.Description;
             db.SaveChanges();
         }
     }
