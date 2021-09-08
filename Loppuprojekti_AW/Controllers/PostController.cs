@@ -73,9 +73,9 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: PostController/Delete/5
-        public ActionResult Delete(int postid)
+        public ActionResult Delete(int Postid)
         {
-            _data.DeletePost(postid);
+            _data.DeletePost(Postid);
             return RedirectToAction("Index", "Post");
         }
 
