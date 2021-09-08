@@ -1,4 +1,5 @@
 ﻿using Loppuprojekti_AW.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Loppuprojekti_AW
             db = data;
         }
         // ----------------------- USER ----------------------------------------------
-        public static Enduser GetUserById(int Identity)
+        public static Enduser GetUserById(int ?Identity)
         {
             MoveoContext db = new MoveoContext();
 
@@ -27,16 +28,16 @@ namespace Loppuprojekti_AW
         public static void EditUser(Enduser Eu)
         {
             MoveoContext db = new MoveoContext();
-            var muokattava = db.Endusers.Find(Eu.Userid);
+            var edit = db.Endusers.Find(Eu.Userid);
 
-            muokattava.Userid = Eu.Userid;
-            muokattava.Username = Eu.Username;
-            muokattava.Birthday = Eu.Birthday;
-            muokattava.Userrole = Eu.Userrole;
-            muokattava.Description = Eu.Description;
-            muokattava.UsersSports = Eu.UsersSports;
-            muokattava.Club = Eu.Club;
-            muokattava.Photo = Eu.Photo;
+            edit.Userid = Eu.Userid;
+            edit.Username = Eu.Username;
+            edit.Birthday = Eu.Birthday;
+            edit.Userrole = Eu.Userrole;
+            edit.Description = Eu.Description;
+            edit.UsersSports = Eu.UsersSports;
+            edit.Club = Eu.Club;
+            edit.Photo = Eu.Photo;
 
             db.SaveChanges();
         }
@@ -45,9 +46,9 @@ namespace Loppuprojekti_AW
         {
             MoveoContext db = new MoveoContext();
 
-            var muokattava = db.Endusers.Find(Eu.Userid);
+            var edit = db.Endusers.Find(Eu.Userid);
 
-            db.Remove(muokattava);
+            db.Remove(edit);
             db.SaveChanges();
         }
 

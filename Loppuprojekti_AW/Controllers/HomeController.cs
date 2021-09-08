@@ -48,9 +48,10 @@ namespace Loppuprojekti_AW.Controllers
 
         }
 
-        public IActionResult Profile(int Identity)
+        public IActionResult Profile()
         {
-            var enduser = DataAccess.GetUserById(Identity);
+            var id = HttpContext.Session.GetInt32("userid");
+            var enduser = DataAccess.GetUserById();
 
             return View(enduser);
         }
