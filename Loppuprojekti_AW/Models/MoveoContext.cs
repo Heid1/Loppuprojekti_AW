@@ -153,6 +153,14 @@ namespace Loppuprojekti_AW.Models
 
                 entity.Property(e => e.Duration).HasColumnName("duration");
 
+                entity.Property(e => e.Latitude)
+                    .HasColumnType("decimal(12, 9)")
+                    .HasColumnName("latitude");
+
+                entity.Property(e => e.Longitude)
+                    .HasColumnType("decimal(12, 9)")
+                    .HasColumnName("longitude");
+
                 entity.Property(e => e.Place)
                     .IsRequired()
                     .HasMaxLength(500)

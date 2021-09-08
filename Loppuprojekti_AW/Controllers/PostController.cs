@@ -21,9 +21,11 @@ namespace Loppuprojekti_AW.Controllers
         public ActionResult Index()
         {
             int userid = (int)HttpContext.Session.GetInt32("userid");
-            ViewBag.Organising = _data.GetPostsByAttendance(userid, true);
-            ViewBag.Attending = _data.GetPostsByAttendance(userid, false);
-            return View();
+            var organising =  _data.GetPostsByAttendance(userid, true);
+            var attending = _data.GetPostsByAttendance(userid, false);
+            ViewBag.Attending = attending;
+            ViewBag.Organising = organising;
+            return View(organising);
         }
 
         //// GET: PostController/Details/5
@@ -35,6 +37,7 @@ namespace Loppuprojekti_AW.Controllers
         // GET: PostController/Create
         public ActionResult Create()
         {
+            ViewBag.Sports = _data.GetAllSports();
             return View();
         }
 
