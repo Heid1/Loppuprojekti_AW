@@ -22,8 +22,11 @@ namespace Loppuprojekti_AW.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            DataAccess da = new DataAccess(_context);
+            var prevalencelist = da.GetPostsByPrevalence();
+            ViewBag.CommonPosts = prevalencelist;
             return View();
         }
 

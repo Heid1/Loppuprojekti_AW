@@ -57,6 +57,7 @@ namespace Loppuprojekti_AW
         public List<Sport> GetPostsByPrevalence()
         {
             var prevalencelist = db.Posts
+                                    .AsEnumerable()
                                     .GroupBy(q => q.Sport)
                                     .OrderByDescending(gp => gp.Count())
                                     .Take(10)
