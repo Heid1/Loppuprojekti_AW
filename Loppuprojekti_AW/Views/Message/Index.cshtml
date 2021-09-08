@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
     Layout = null;
-    var Dictionary = (Dictionary<int, List<Message>>)ViewData["dict"];
+    var Dictionary = (Dictionary<int, List<Message>>)ViewData["messages"];
 }
 
 
@@ -12,11 +12,19 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-@if ()
-@foreach(var item in Dictionary)
+@if (Dictionary != null)
+{
+    @foreach (var item in Dictionary)
+    {
+        <button type="button" id=@item.Key>@item.Key</button>
+    }
+
+}
+@if (Dictionary == null)
             {
-            <button type="button" id=@item.Key>@item.Key</button>
+                <p>tyhjä</p>
             }
+
 
 @*
     <table class="table">
@@ -60,5 +68,5 @@
                 </td>
             </tr>
     }*@
-    </tbody>
+</tbody>
 </table>
