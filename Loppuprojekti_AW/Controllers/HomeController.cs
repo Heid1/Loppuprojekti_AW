@@ -40,6 +40,7 @@ namespace Loppuprojekti_AW.Controllers
             if (user != null)
             {
                 HttpContext.Session.SetInt32("userid", user.Userid);
+                HttpContext.Session.SetInt32("userrole", user.Userrole);
                 return View();
             }
             ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
@@ -47,9 +48,10 @@ namespace Loppuprojekti_AW.Controllers
 
         }
 
-        public IActionResult Profile(int Identity)
+        public IActionResult Profile()
         {
-            var enduser = DataAccess.GetUserById(Identity);
+            var id = HttpContext.Session.GetInt32("userid");
+            var enduser = DataAccess.GetUserById();
 
             return View(enduser);
         }
