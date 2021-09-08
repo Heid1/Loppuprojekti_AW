@@ -18,7 +18,7 @@ namespace Loppuprojekti_AW.Models
         public int Userid { get; set; }
         public string Username { get; set; }
         public DateTime? Birthday { get; set; }
-        public int Userrole { get; set; } //roolit on määritetty numerokoodeilla
+        public string Userrole { get; set; }
         public string Description { get; set; }
         public byte[] Photo { get; set; }
         public string Club { get; set; }

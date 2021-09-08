@@ -17,7 +17,7 @@ namespace Loppuprojekti_AW.Models
         public int Sportid { get; set; }
         public string Description { get; set; }
         public int? Attendees { get; set; }
-        public int Posttype { get; set; } //tyyppikoodi eli esim. 001 = yksityistunti
+        public int Posttype { get; set; }
         public string Place { get; set; }
         public DateTime Date { get; set; }
         public int Duration { get; set; }
