@@ -79,6 +79,56 @@ namespace Loppuprojekti_AW
             return postlist;
         }
 
+        public Post GetPostById(int postid)
+        {
+            return db.Posts.Find(postid);
+        }
+
+        /// <summary>
+        /// Luo ilmoituksen ja sen jälkeen Attendee-olion, joka yhdistää ilmoituksen ja ilmoituksen luoja
+        /// ja määrittää käyttäjän sen järjestäjäksi.
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="post"></param>
+        public void CreatePost(int userid, Post post)
+        {
+            db.Posts.Add(post);
+            db.SaveChanges();
+            Attendee attendee = new(userid, post.Postid, true);
+            db.Attendees.Add(attendee);
+            db.SaveChanges();
+        }
+
+        public void EditPost(int postid, Post post)
+        {
+            db.Posts.Find(postid).Postname = post.Postname;
+            db.Posts.Find(postid).Sportid = post.Sportid;
+            db.Posts.Find(postid).Description = post.Description;
+            db.Posts.Find(postid).Attendees = post.Attendees;
+            db.Posts.Find(postid).Posttype = post.Posttype;
+            db.Posts.Find(postid).Place = post.Place;
+            db.Posts.Find(postid).Date = post.Date;
+            db.Posts.Find(postid).Duration = post.Duration;
+            db.Posts.Find(postid).Privacy = post.Privacy;
+            db.Posts.Find(postid).Price = post.Price;
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Poistaa sekä ilmoituksen tekijän että osallistujat Attendeesta 
+        /// ja sen jälkeen itse ilmoituksen.
+        /// </summary>
+        /// <param name="postid"></param>
+        public void DeletePost(int postid)
+        {
+            foreach (var a in db.Attendees.Where(p => p.Postid == postid))
+            {
+                db.Attendees.Remove(a);
+            }
+            db.Posts.Remove(db.Posts.Find(postid));
+            db.SaveChanges();
+        }
+
         // ----------------------- SPORTS ----------------------------------------------
 
         public void CreateSport(Sport sport)
