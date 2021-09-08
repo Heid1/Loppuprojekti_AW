@@ -110,20 +110,32 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
+
+        // ----------------------- MESSAGES ----------------------------------------------
+
         /// <summary>
         /// Returns given user's messages with all other users as a dict where int is
         /// the other user's id and value is the list of messages with the other user.
+        /// If the user has no messages empty dict is returned.
         /// </summary>
         /// <param name="userId"></param>
-        /// <returns></returns>
+        /// <returns>dict of the other party's id as key and as value list of message objects </returns>
         public static Dictionary<int, List<Message>> GetMessagesOfUser(int userId)
         {
+            Dictionary<int, List<Message>> usersMessages = new Dictionary<int, List<Message>>();
             MoveoContext db = new MoveoContext();
             var messagesToIds = db.Messages.Where(u => u.Senderid == userId).Select(u => (int)u.Receiverid).ToList();
             var messagesFromIds = db.Messages.Where(u => u.Receiverid == userId).Select(u => u.Senderid).ToList();
-            var messageswithIds = messagesToIds.Union(messagesFromIds).ToList();
-            return null;
-
+            if(messagesToIds !=  null || messagesFromIds != null)
+            {
+                var messagesWithIds = messagesToIds.Union(messagesFromIds).ToList();
+                for(int i = 0; i < messagesWithIds.Count; i++)
+                {
+                    var messages = GetMessagesBetweenUsers(userId, messagesWithIds[i]);
+                    usersMessages.Add(messagesWithIds[i], messages);
+                }
+            }
+            return usersMessages;
         }
 
         /// <summary>
@@ -135,7 +147,8 @@ namespace Loppuprojekti_AW
         public static List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
         {
             MoveoContext db = new MoveoContext();
-            var messages = db.Messages.Where(u => u.Receiverid == userId1 && u.Senderid == userId2 || u.Receiverid == userId2 && u.Senderid == userId1).OrderBy(m => m.Sendtime).ToList();
+            var messages = db.Messages.Where(u => u.Receiverid == userId1 && u.Senderid == userId2 ||
+            u.Receiverid == userId2 && u.Senderid == userId1).OrderBy(m => m.Sendtime).ToList();
             return messages;
         }
 
