@@ -1,0 +1,162 @@
+﻿@model IEnumerable<Loppuprojekti_AW.Models.Post>
+
+@{
+    ViewData["Title"] = "Omat ilmoitukset";
+}
+
+<h1>Omat ilmoitukset</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Postname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendees)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Posttype)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Place)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Privacy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sport)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Postname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attendees)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Posttype)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Place)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Privacy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sport.Sportname)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Postid">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Postid">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Postid">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Postname
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Attendees
+            </th>
+            <th>
+                Posttype
+            </th>
+            <th>
+                Place
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Sport
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in ViewBag.Attending) {
+        <tr>
+            <td>
+                @item.Postname
+            </td>
+            <td>
+                @item.Description
+            </td>
+            <td>
+                @item.Attendees
+            </td>
+            <td>
+                @item.Posttype
+            </td>
+            <td>
+                @item.Place
+            </td>
+            <td>
+                @item.Date
+            </td>
+            <td>
+                @item.Duration
+            </td>
+            <td>
+                @item.Price
+            </td>
+            <td>
+                @item.Sport.Sportname
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Postid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Postid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Postid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

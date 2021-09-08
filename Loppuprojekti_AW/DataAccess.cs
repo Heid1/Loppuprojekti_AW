@@ -143,6 +143,22 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
+        public void AttendPost(int userid, int postid)
+        {
+            Attendee attendee = new();
+            attendee.Userid = userid;
+            attendee.Postid = postid;
+            attendee.Organiser = false;
+            db.Attendees.Add(attendee);
+            db.SaveChanges();
+        }
+
+        public void DeleteAttendingPost(int userid, int postid)
+        {
+            db.Attendees.Remove(db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault());
+            db.SaveChanges();
+        }
+
         // ----------------------- SPORTS ----------------------------------------------
 
         public void CreateSport(Sport sport)
