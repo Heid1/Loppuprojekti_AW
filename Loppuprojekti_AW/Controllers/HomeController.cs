@@ -24,6 +24,9 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
+            DataAccess da = new DataAccess(_context);
+            var prevalencelist = da.GetPostsByPrevalence();
+            ViewBag.CommonPosts = prevalencelist;
             return View();
         }
         public IActionResult Index2()
@@ -31,14 +34,22 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
+<<<<<<< HEAD
+        public IActionResult Azuremap()
+        {
+            return View();
+        }
 
+
+=======
+>>>>>>> 27a516aab6db57a8bc58e0cd4a42afdbe09cfe4d
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string Username)
+        public IActionResult Login(string Username)
         {
             var user = _context.Endusers.Where(u => u.Username == Username).FirstOrDefault();
 
