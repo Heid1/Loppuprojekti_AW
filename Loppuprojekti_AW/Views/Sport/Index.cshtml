@@ -8,7 +8,7 @@
 
 @*Tähän userroolin admin koodinumero intinä*@
 @using Microsoft.AspNetCore.Http;
-@if (Context.Session.GetInt32("admin") == "true")
+@if (Context.Session.GetString("admin") == "true")
 {
     <p>
         <a asp-action="Create">Create New</a>
