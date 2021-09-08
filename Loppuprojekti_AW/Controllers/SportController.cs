@@ -38,13 +38,8 @@ namespace Loppuprojekti_AW.Controllers
         // POST: SportController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(string sportname, string description)
+        public ActionResult Create(Sport sport)
         {
-            Sport sport = new()
-            {
-                Sportname = sportname,
-                Description = description
-            };
             _data.CreateSport(sport);
             return RedirectToAction("Index", "Sport");
         }
@@ -58,7 +53,7 @@ namespace Loppuprojekti_AW.Controllers
         // POST: SportController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int sportid, [Bind("Sportname, Descrption")] Sport sport)
+        public ActionResult Edit(int sportid, Sport sport)
         {
             _data.EditSport(sportid, sport);
             return View("Index");
