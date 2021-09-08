@@ -98,6 +98,8 @@ namespace Loppuprojekti_AW
         /// </summary>
         /// <param name="userid"></param>
         /// <param name="post"></param>
+
+
         public void CreatePost(int userid, Post post)
         {
             db.Posts.Add(post);
