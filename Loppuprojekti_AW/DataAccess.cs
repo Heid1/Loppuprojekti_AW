@@ -101,8 +101,8 @@ namespace Loppuprojekti_AW
         {
             db.Posts.Add(post);
             db.SaveChanges();
-            Attendee attendee = new(userid, post.Postid, true);
-            db.Attendees.Add(attendee);
+            //Attendee attendee = new(userid, post.Postid, true);
+            //db.Attendees.Add(attendee);
             db.SaveChanges();
         }
 
