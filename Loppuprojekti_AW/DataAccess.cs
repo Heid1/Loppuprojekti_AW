@@ -80,6 +80,56 @@ namespace Loppuprojekti_AW
             return postlist;
         }
 
+        public Post GetPostById(int postid)
+        {
+            return db.Posts.Find(postid);
+        }
+
+        /// <summary>
+        /// Luo ilmoituksen ja sen jälkeen Attendee-olion, joka yhdistää ilmoituksen ja ilmoituksen luoja
+        /// ja määrittää käyttäjän sen järjestäjäksi.
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="post"></param>
+        public void CreatePost(int userid, Post post)
+        {
+            db.Posts.Add(post);
+            db.SaveChanges();
+            Attendee attendee = new(userid, post.Postid, true);
+            db.Attendees.Add(attendee);
+            db.SaveChanges();
+        }
+
+        public void EditPost(int postid, Post post)
+        {
+            db.Posts.Find(postid).Postname = post.Postname;
+            db.Posts.Find(postid).Sportid = post.Sportid;
+            db.Posts.Find(postid).Description = post.Description;
+            db.Posts.Find(postid).Attendees = post.Attendees;
+            db.Posts.Find(postid).Posttype = post.Posttype;
+            db.Posts.Find(postid).Place = post.Place;
+            db.Posts.Find(postid).Date = post.Date;
+            db.Posts.Find(postid).Duration = post.Duration;
+            db.Posts.Find(postid).Privacy = post.Privacy;
+            db.Posts.Find(postid).Price = post.Price;
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Poistaa sekä ilmoituksen tekijän että osallistujat Attendeesta 
+        /// ja sen jälkeen itse ilmoituksen.
+        /// </summary>
+        /// <param name="postid"></param>
+        public void DeletePost(int postid)
+        {
+            foreach (var a in db.Attendees.Where(p => p.Postid == postid))
+            {
+                db.Attendees.Remove(a);
+            }
+            db.Posts.Remove(db.Posts.Find(postid));
+            db.SaveChanges();
+        }
+
         // ----------------------- SPORTS ----------------------------------------------
 
         public void CreateSport(Sport sport)
@@ -110,5 +160,49 @@ namespace Loppuprojekti_AW
             db.Sports.Find(sportid).Description = sport.Description;
             db.SaveChanges();
         }
+
+
+        // ----------------------- MESSAGES ----------------------------------------------
+
+        /// <summary>
+        /// Returns given user's messages with all other users as a dict where int is
+        /// the other user's id and value is the list of messages with the other user.
+        /// If the user has no messages empty dict is returned.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>dict of the other party's id as key and as value list of message objects </returns>
+        public static Dictionary<int, List<Message>> GetMessagesOfUser(int userId)
+        {
+            Dictionary<int, List<Message>> usersMessages = new Dictionary<int, List<Message>>();
+            MoveoContext db = new MoveoContext();
+            var messagesToIds = db.Messages.Where(u => u.Senderid == userId).Select(u => (int)u.Receiverid).ToList();
+            var messagesFromIds = db.Messages.Where(u => u.Receiverid == userId).Select(u => u.Senderid).ToList();
+            if(messagesToIds !=  null || messagesFromIds != null)
+            {
+                var messagesWithIds = messagesToIds.Union(messagesFromIds).ToList();
+                for(int i = 0; i < messagesWithIds.Count; i++)
+                {
+                    var messages = GetMessagesBetweenUsers(userId, messagesWithIds[i]);
+                    usersMessages.Add(messagesWithIds[i], messages);
+                }
+            }
+            return usersMessages;
+        }
+
+        /// <summary>
+        /// Returns messages between two users bases on their ids.
+        /// </summary>
+        /// <param name="userId1">Id of first user..</param>
+        /// <param name="userId2">Id of second user.</param>
+        /// <returns>list of messages between the two users.</returns>
+        public static List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
+        {
+            MoveoContext db = new MoveoContext();
+            var messages = db.Messages.Where(u => u.Receiverid == userId1 && u.Senderid == userId2 ||
+            u.Receiverid == userId2 && u.Senderid == userId1).OrderBy(m => m.Sendtime).ToList();
+            return messages;
+        }
+
+
     }
 }
