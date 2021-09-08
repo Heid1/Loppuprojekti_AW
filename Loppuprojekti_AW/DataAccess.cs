@@ -178,6 +178,7 @@ namespace Loppuprojekti_AW
             
             var messagesToIds = db.Messages.Where(u => u.Senderid == userId).Select(u => (int)u.Receiverid).ToList();
             var messagesFromIds = db.Messages.Where(u => u.Receiverid == userId).Select(u => u.Senderid).ToList();
+            
             if(messagesToIds !=  null || messagesFromIds != null)
             {
                 var messagesWithIds = messagesToIds.Union(messagesFromIds).ToList();

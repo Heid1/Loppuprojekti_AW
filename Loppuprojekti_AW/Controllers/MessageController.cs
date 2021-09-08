@@ -18,7 +18,9 @@ namespace Loppuprojekti_AW.Controllers
         }
         public IActionResult Index(int userId)
         {
-            return View(_data.GetMessagesOfUser(userId));
+            ViewData["messages"] = _data.GetMessagesOfUser(userId);
+            return View(ViewData);
+            //return View(_data.GetMessagesOfUser(userId));
         }
     }
 }
