@@ -139,7 +139,8 @@ namespace Loppuprojekti_AW
             {
                 db.Attendees.Remove(a);
             }
-            db.Posts.Remove(db.Posts.Find(postid));
+            var post = db.Posts.Find(postid);
+            db.Posts.Remove(post);
             db.SaveChanges();
         }
 
