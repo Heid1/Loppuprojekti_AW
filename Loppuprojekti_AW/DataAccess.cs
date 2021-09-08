@@ -93,9 +93,13 @@ namespace Loppuprojekti_AW
         /// <returns></returns>
         public List<Post> GetPostsByAttendance(int userid, bool organiser)
         {
-            var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
-            var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
-            return posts;
+            var posts = from p in db.Posts
+                         join a in db.Attendees on p.Postid equals a.Postid
+                         where a.Userid == userid && a.Organiser == organiser
+                         select p;
+            //var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
+            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
+            return posts.ToList();
         }
 
         /// <summary>
@@ -104,14 +108,14 @@ namespace Loppuprojekti_AW
         /// </summary>
         /// <param name="userid"></param>
         /// <param name="post"></param>
-        //public void CreatePost(int userid, Post post)
-        //{
-        //    db.Posts.Add(post);
-        //    db.SaveChanges();
-        //    //Attendee attendee = new(userid, post.Postid, true);
-        //    db.Attendees.Add(attendee);
-        //    db.SaveChanges();
-        //}
+        public void CreatePost(int userid, Post post)
+        {
+            db.Posts.Add(post);
+            db.SaveChanges();
+            Attendee attendee = new(userid, post.Postid, true);
+            db.Attendees.Add(attendee);
+            db.SaveChanges();
+        }
 
         public void EditPost(int postid, Post post)
         {
@@ -139,7 +143,8 @@ namespace Loppuprojekti_AW
             {
                 db.Attendees.Remove(a);
             }
-            db.Posts.Remove(db.Posts.Find(postid));
+            var post = db.Posts.Find(postid);
+            db.Posts.Remove(post);
             db.SaveChanges();
         }
 
