@@ -26,6 +26,11 @@ namespace Loppuprojekti_AW.Controllers
         {
             return View();
         }
+        public IActionResult Index2()
+        {
+            return View();
+        }
+
 
         public IActionResult Login()
         {
@@ -55,6 +60,13 @@ namespace Loppuprojekti_AW.Controllers
 
             return View(enduser);
         }
+
+        public IActionResult AddPost()
+        {
+           
+            return View();
+        }
+
 
         public IActionResult ProfileEdit(Enduser Eu)
         {
