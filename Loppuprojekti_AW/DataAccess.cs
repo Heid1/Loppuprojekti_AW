@@ -84,6 +84,12 @@ namespace Loppuprojekti_AW
         {
             return db.Posts.Find(postid);
         }
+        public List<Post> GetPostsByAttendance(int userid, bool organiser)
+        {
+            var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
+            //var posts = db.Posts.Join(attendees, p=>p.Postid, a=>a.Postid, 
+            return null;
+        }
 
         /// <summary>
         /// Luo ilmoituksen ja sen jälkeen Attendee-olion, joka yhdistää ilmoituksen ja ilmoituksen luoja

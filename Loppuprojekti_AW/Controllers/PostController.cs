@@ -21,8 +21,9 @@ namespace Loppuprojekti_AW.Controllers
         // GET: PostController
         public ActionResult Index()
         {
-            //ViewBag.Organising = _data.GetPostsByAttendance(userid, true);
-            //ViewBag.Attending = _data.GetPostByAttendance(userid, false);
+            int userid = (int)HttpContext.Session.GetInt32("userid");
+            ViewBag.Organising = _data.GetPostsByAttendance(userid, true);
+            ViewBag.Attending = _data.GetPostsByAttendance(userid, false);
             return View();
         }
 

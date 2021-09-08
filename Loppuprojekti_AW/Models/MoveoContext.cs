@@ -83,6 +83,12 @@ namespace Loppuprojekti_AW.Models
                     .IsUnicode(false)
                     .HasColumnName("description");
 
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(320)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
                 entity.Property(e => e.Photo).HasColumnName("photo");
 
                 entity.Property(e => e.Username)
