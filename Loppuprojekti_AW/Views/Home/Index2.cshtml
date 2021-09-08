@@ -16,17 +16,18 @@
         // Initialize and add the map
         function initMap() {
             // The location of Uluru
-            const uluru = { lat: 60.101, lng: 24.056 };
+            const kamppi = { lat: 60.167390, lng: 24.931080 };
             // The map, centered at Uluru
             const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 4,
-                center: uluru,
+                zoom: 11.5,
+                center: kamppi,
             });
             // The marker, positioned at Helsinki
             const marker = new google.maps.Marker({
-                position: uluru,
+                position: kamppi,
                 map: map,
             });
+            
         }
     </script>
 </head>
