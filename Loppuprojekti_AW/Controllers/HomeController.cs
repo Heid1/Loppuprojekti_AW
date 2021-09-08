@@ -41,7 +41,7 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string Username)
+        public IActionResult Login(string Username)
         {
             var user = _context.Endusers.Where(u => u.Username == Username).FirstOrDefault();
 

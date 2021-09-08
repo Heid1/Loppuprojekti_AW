@@ -6,14 +6,13 @@
 
 <h1>Lajit</h1>
 
-@*Tähän userroolin admin koodinumero intinä*@
-@using Microsoft.AspNetCore.Http;
-@if (Context.Session.GetString("admin") == "true")
-{
+@*@using Microsoft.AspNetCore.Http;
+@if (Context.Session.GetString("userrole") == "admin")
+{*@
     <p>
         <a asp-action="Create">Create New</a>
     </p>    
-}
+@*}*@
 
 
 <div class="accordion" id="accordionSport">
