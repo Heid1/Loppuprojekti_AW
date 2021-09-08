@@ -58,6 +58,7 @@ namespace Loppuprojekti_AW
         public List<Sport> GetPostsByPrevalence()
         {
             var prevalencelist = db.Posts
+                                    .AsEnumerable()
                                     .GroupBy(q => q.Sport)
                                     .OrderByDescending(gp => gp.Count())
                                     .Take(10)
@@ -93,9 +94,13 @@ namespace Loppuprojekti_AW
         /// <returns></returns>
         public List<Post> GetPostsByAttendance(int userid, bool organiser)
         {
-            var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
-            var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
-            return posts;
+            var posts = from p in db.Posts
+                         join a in db.Attendees on p.Postid equals a.Postid
+                         where a.Userid == userid && a.Organiser == organiser
+                         select p;
+            //var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
+            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
+            return posts.ToList();
         }
 
         /// <summary>
