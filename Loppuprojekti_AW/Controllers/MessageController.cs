@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Loppuprojekti_AW.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,16 @@ namespace Loppuprojekti_AW.Controllers
 {
     public class MessageController : Controller
     {
-        public IActionResult Index()
+        private readonly DataAccess _data;
+
+        public MessageController(MoveoContext context)
         {
-            return View();
+            _data = new(context);
+            
+        }
+        public IActionResult Index(int userId)
+        {
+            return View(_data.GetMessagesOfUser(userId));
         }
     }
 }

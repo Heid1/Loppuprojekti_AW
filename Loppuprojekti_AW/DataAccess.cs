@@ -121,10 +121,11 @@ namespace Loppuprojekti_AW
         /// </summary>
         /// <param name="userId"></param>
         /// <returns>dict of the other party's id as key and as value list of message objects </returns>
-        public static Dictionary<int, List<Message>> GetMessagesOfUser(int userId)
+        public Dictionary<int, List<Message>> GetMessagesOfUser(int userId)
         {
             Dictionary<int, List<Message>> usersMessages = new Dictionary<int, List<Message>>();
-            MoveoContext db = new MoveoContext();
+            //MoveoContext db = new MoveoContext();
+            
             var messagesToIds = db.Messages.Where(u => u.Senderid == userId).Select(u => (int)u.Receiverid).ToList();
             var messagesFromIds = db.Messages.Where(u => u.Receiverid == userId).Select(u => u.Senderid).ToList();
             if(messagesToIds !=  null || messagesFromIds != null)
@@ -145,7 +146,7 @@ namespace Loppuprojekti_AW
         /// <param name="userId1">Id of first user..</param>
         /// <param name="userId2">Id of second user.</param>
         /// <returns>list of messages between the two users.</returns>
-        public static List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
+        public List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
         {
             MoveoContext db = new MoveoContext();
             var messages = db.Messages.Where(u => u.Receiverid == userId1 && u.Senderid == userId2 ||
