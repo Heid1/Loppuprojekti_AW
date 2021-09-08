@@ -2,6 +2,7 @@ using Loppuprojekti_AW.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,19 @@ namespace Loppuprojekti_AW
                    options.UseSqlServer(Configuration.GetConnectionString("azure")));
             services.AddControllersWithViews();
             services.AddSession();
+
+            //googlea varten tarvitaan identity
+
+            //tässä tulee googlen oauth
+            services.AddAuthentication()
+                .AddGoogle(options => {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
