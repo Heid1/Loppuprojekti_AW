@@ -22,7 +22,7 @@ namespace Loppuprojekti_AW.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             DataAccess da = new DataAccess(_context);
             var prevalencelist = da.GetPostsByPrevalence();

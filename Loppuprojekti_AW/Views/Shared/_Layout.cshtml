@@ -18,9 +18,22 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
+                        @using Microsoft.AspNetCore.Http;
+                        @{var id = Context.Session.GetInt32("id");}
+                        @if (id != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Pääsivu</a>
+                            </li>
+
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Etusivu</a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
@@ -28,12 +41,30 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="GetPostsByCriteria">Hae</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Kirjautuminen(temp)</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="Index">Lajit</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="Index">Lajit(temp)</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Kirjautuminen</a>
                         </li>
 
+                        @if (id != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="Index">Profiili</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Kirjaudu ulos</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Kirjaudu sisään</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Login">Rekisteröidy</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
