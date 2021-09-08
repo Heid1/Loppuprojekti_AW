@@ -26,6 +26,11 @@ namespace Loppuprojekti_AW.Controllers
         {
             return View();
         }
+        public IActionResult Index2()
+        {
+            return View();
+        }
+
 
         public IActionResult Login()
         {
@@ -51,7 +56,7 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult Profile()
         {
             var id = HttpContext.Session.GetInt32("userid");
-            var enduser = DataAccess.GetUserById();
+            var enduser = DataAccess.GetUserById(id);
 
             return View(enduser);
         }
