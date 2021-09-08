@@ -12,6 +12,11 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@if ()
+@foreach(var item in Dictionary)
+            {
+            <button type="button" id=@item.Key>@item.Key</button>
+            }
 
 @*
     <table class="table">
