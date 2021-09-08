@@ -48,20 +48,6 @@ namespace Loppuprojekti_AW.Controllers
 
         }
 
-        public IActionResult Profile(int Identity)
-        {
-            var enduser = DataAccess.GetUserById(Identity);
-
-            return View(enduser);
-        }
-
-        public IActionResult ProfileEdit(Enduser Eu)
-        {
-            DataAccess.EditUser(Eu);
-
-            return View(Eu);
-        }
-
         public IActionResult Privacy()
         {
             return View();
