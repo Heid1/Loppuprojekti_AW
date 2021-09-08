@@ -92,6 +92,7 @@ namespace Loppuprojekti_AW.Models
                     .HasColumnName("username");
 
                 entity.Property(e => e.Userrole)
+                    .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("userrole");
