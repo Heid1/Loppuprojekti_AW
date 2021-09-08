@@ -87,7 +87,7 @@ namespace Loppuprojekti_AW
         public List<Post> GetPostsByAttendance(int userid, bool organiser)
         {
             var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
-            //var posts = db.Posts.Join(attendees, p=>p.Postid, a=>a.Postid, 
+            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, db.Posts.ToList);
             return null;
         }
 
