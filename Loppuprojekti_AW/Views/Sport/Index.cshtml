@@ -6,9 +6,14 @@
 
 <h1>Lajit</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@*@using Microsoft.AspNetCore.Http;
+@if (Context.Session.GetString("userrole") == "admin")
+{*@
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>    
+@*}*@
+
 
 <div class="accordion" id="accordionSport">
     @foreach (var item in Model)

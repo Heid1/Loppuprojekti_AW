@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace Loppuprojekti_AW.Controllers
 {
     public class PostController : Controller
@@ -25,7 +24,6 @@ namespace Loppuprojekti_AW.Controllers
             var organising =  _data.GetPostsByAttendance(userid, true);
             var attending = _data.GetPostsByAttendance(userid, false);
             ViewBag.Attending = attending;
-            ViewBag.Organising = organising;
             return View(organising);
         }
 
@@ -45,12 +43,12 @@ namespace Loppuprojekti_AW.Controllers
         // POST: PostController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult Create(Post post)
-        //{
-        //    var userid = HttpContext.Session.GetInt32("userid");
-        //    _data.CreatePost((int)userid, post);
-        //    return RedirectToAction("Index", "Post");
-        //}
+        public ActionResult Create(Post post)
+        {
+            var userid = HttpContext.Session.GetInt32("userid");
+            _data.CreatePost((int)userid, post);
+            return RedirectToAction("Index", "Post");
+        }
 
         // GET: PostController/Edit/5
         public ActionResult Edit(int postid)
@@ -75,9 +73,9 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: PostController/Delete/5
-        public ActionResult Delete(int postid)
+        public ActionResult Delete(int Postid)
         {
-            _data.DeletePost(postid);
+            _data.DeletePost(Postid);
             return RedirectToAction("Index", "Post");
         }
 
