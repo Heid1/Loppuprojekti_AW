@@ -34,15 +34,13 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
-<<<<<<< HEAD
         public IActionResult Azuremap()
         {
             return View();
         }
 
 
-=======
->>>>>>> 27a516aab6db57a8bc58e0cd4a42afdbe09cfe4d
+
         public IActionResult Login()
         {
             return View();
