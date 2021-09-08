@@ -84,11 +84,18 @@ namespace Loppuprojekti_AW
         {
             return db.Posts.Find(postid);
         }
+
+        /// <summary>
+        /// Hakee kaikki ilmoitukset, jotka käyttäjä on luonut tai liittynyt parametrien arvojen mukaan.
+        /// </summary>
+        /// <param name="userid">käyttäjä</param>
+        /// <param name="organiser">järjestäjä=true, ilmoittautunut=false</param>
+        /// <returns></returns>
         public List<Post> GetPostsByAttendance(int userid, bool organiser)
         {
             var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
-            //var posts = db.Posts.Join(attendees, p=>p.Postid, a=>a.Postid, 
-            return null;
+            var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
+            return posts;
         }
 
         /// <summary>
@@ -133,6 +140,22 @@ namespace Loppuprojekti_AW
                 db.Attendees.Remove(a);
             }
             db.Posts.Remove(db.Posts.Find(postid));
+            db.SaveChanges();
+        }
+
+        public void AttendPost(int userid, int postid)
+        {
+            Attendee attendee = new();
+            attendee.Userid = userid;
+            attendee.Postid = postid;
+            attendee.Organiser = false;
+            db.Attendees.Add(attendee);
+            db.SaveChanges();
+        }
+
+        public void DeleteAttendingPost(int userid, int postid)
+        {
+            db.Attendees.Remove(db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault());
             db.SaveChanges();
         }
 

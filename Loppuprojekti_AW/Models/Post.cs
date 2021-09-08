@@ -23,6 +23,8 @@ namespace Loppuprojekti_AW.Models
         public int Duration { get; set; }
         public int Privacy { get; set; }
         public decimal? Price { get; set; }
+        public decimal? Longitude { get; set; }
+        public decimal? Latitude { get; set; }
 
         public virtual Sport Sport { get; set; }
         public virtual ICollection<Attendee> AttendeesNavigation { get; set; }
