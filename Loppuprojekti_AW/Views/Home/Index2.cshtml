@@ -22,10 +22,31 @@
                 zoom: 11.5,
                 center: kamppi,
             });
+            
+
+            var icon = {
+                url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+                origin: new google.maps.Point(0, 0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            };
             // The marker, positioned at Helsinki
             const marker = new google.maps.Marker({
                 position: kamppi,
                 map: map,
+                icon: icon
+            });
+
+            var hello = "hullo kaikille";
+            const infowindow = new google.maps.InfoWindow({
+                content: hello,
+            });
+            marker.addListener("click", () => {
+                map.setZoom(15);
+                map.setCenter(marker.getPosition());
+            });
+            marker.addListener("click", () => {
+                infowindow.open(marker.get("map"), marker);
             });
             
         }
