@@ -4,5 +4,14 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    @*@if (ViewBag.CommonPosts != null)
+    {
+        <ul class="cloud" role="navigation" aria-label="Moveo lajien sanapilvi">
+            @foreach (var item in ViewBag.CommonPosts)
+            {
+                <li>@item.Sportname</li>
+            }
+        </ul>
+    }*@
 </div>

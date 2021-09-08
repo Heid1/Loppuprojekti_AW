@@ -58,6 +58,7 @@ namespace Loppuprojekti_AW
         public List<Sport> GetPostsByPrevalence()
         {
             var prevalencelist = db.Posts
+                                    .AsEnumerable()
                                     .GroupBy(q => q.Sport)
                                     .OrderByDescending(gp => gp.Count())
                                     .Take(10)
@@ -104,14 +105,15 @@ namespace Loppuprojekti_AW
         /// </summary>
         /// <param name="userid"></param>
         /// <param name="post"></param>
-        //public void CreatePost(int userid, Post post)
-        //{
-        //    db.Posts.Add(post);
-        //    db.SaveChanges();
-        //    //Attendee attendee = new(userid, post.Postid, true);
-        //    db.Attendees.Add(attendee);
-        //    db.SaveChanges();
-        //}
+
+        public void CreatePost(int userid, Post post)
+        {
+            db.Posts.Add(post);
+            db.SaveChanges();
+            Attendee attendee = new(userid, post.Postid, true);
+            db.Attendees.Add(attendee);
+            db.SaveChanges();
+        }
 
         public void EditPost(int postid, Post post)
         {
