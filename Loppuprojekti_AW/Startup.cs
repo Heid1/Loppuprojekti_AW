@@ -1,4 +1,5 @@
 using Loppuprojekti_AW.Models;
+using Loppuprojekti_AW.Signalr.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace Loppuprojekti_AW
 {
@@ -30,6 +32,9 @@ namespace Loppuprojekti_AW
                    options.UseSqlServer(Configuration.GetConnectionString("azure")));
             services.AddControllersWithViews();
             services.AddSession();
+
+            //hubs
+            services.AddSignalR();
 
             //googlea varten tarvitaan identity
 
@@ -71,7 +76,12 @@ namespace Loppuprojekti_AW
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<ChatHub>("/ChatHub");
             });
+
+            
+            
         }
     }
 }
