@@ -24,7 +24,6 @@ namespace Loppuprojekti_AW.Controllers
             var organising =  _data.GetPostsByAttendance(userid, true);
             var attending = _data.GetPostsByAttendance(userid, false);
             ViewBag.Attending = attending;
-            ViewBag.Organising = organising;
             return View(organising);
         }
 
@@ -74,9 +73,9 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: PostController/Delete/5
-        public ActionResult Delete(int postid)
+        public ActionResult Delete(int Postid)
         {
-            _data.DeletePost(postid);
+            _data.DeletePost(Postid);
             return RedirectToAction("Index", "Post");
         }
 
