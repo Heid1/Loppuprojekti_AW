@@ -18,19 +18,19 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: SportController
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View(_data.GetAllSports());
         }
 
         // GET: SportController/Details/5
-        public ActionResult Details(int sportid)
+        public IActionResult Details(int sportid)
         {
             return View(_data.GetSportById(sportid));
         }
 
         // GET: SportController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -38,14 +38,14 @@ namespace Loppuprojekti_AW.Controllers
         // POST: SportController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Sport sport)
+        public IActionResult Create(Sport sport)
         {
             _data.CreateSport(sport);
             return RedirectToAction("Index", "Sport");
         }
 
         // GET: SportController/Edit/5
-        public ActionResult Edit(int sportid)
+        public IActionResult Edit(int sportid)
         {
             return View(_data.GetSportById(sportid));
         }
@@ -53,17 +53,31 @@ namespace Loppuprojekti_AW.Controllers
         // POST: SportController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int sportid, Sport sport)
+        public IActionResult Edit(Sport sport)
         {
-            _data.EditSport(sportid, sport);
+            _data.EditSport(sport);
             return View("Index");
         }
 
         // GET: SportController/Delete/5
-        public ActionResult Delete(int sportid)
+        public IActionResult Delete(int sportid)
         {
             _data.DeleteSport(sportid);
             return View("Index");
+        }
+
+        public IActionResult ChooseSport(int sportid)
+        {
+            ViewBag.Userid = HttpContext.Session.GetInt32("userid");
+            ViewBag.Sportid = sportid;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ChooseSport(UsersSport userssport)
+        {
+            _data.LikeSport(userssport);
+            return RedirectToAction("Index", "Sport");
         }
 
         //// POST: SportController/Delete/5
