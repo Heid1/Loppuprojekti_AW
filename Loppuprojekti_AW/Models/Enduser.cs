@@ -22,6 +22,7 @@ namespace Loppuprojekti_AW.Models
         public string Description { get; set; }
         public byte[] Photo { get; set; }
         public string Club { get; set; }
+        public string Email { get; set; }
 
         public virtual ICollection<Attendee> Attendees { get; set; }
         public virtual ICollection<Message> MessageReceivers { get; set; }

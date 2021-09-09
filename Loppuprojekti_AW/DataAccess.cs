@@ -58,6 +58,7 @@ namespace Loppuprojekti_AW
         public List<Sport> GetPostsByPrevalence()
         {
             var prevalencelist = db.Posts
+                                    .AsEnumerable()
                                     .GroupBy(q => q.Sport)
                                     .OrderByDescending(gp => gp.Count())
                                     .Take(10)
@@ -83,6 +84,23 @@ namespace Loppuprojekti_AW
         public Post GetPostById(int postid)
         {
             return db.Posts.Find(postid);
+        }
+
+        /// <summary>
+        /// Hakee kaikki ilmoitukset, jotka käyttäjä on luonut tai liittynyt parametrien arvojen mukaan.
+        /// </summary>
+        /// <param name="userid">käyttäjä</param>
+        /// <param name="organiser">järjestäjä=true, ilmoittautunut=false</param>
+        /// <returns></returns>
+        public List<Post> GetPostsByAttendance(int userid, bool organiser)
+        {
+            var posts = from p in db.Posts
+                         join a in db.Attendees on p.Postid equals a.Postid
+                         where a.Userid == userid && a.Organiser == organiser
+                         select p;
+            //var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
+            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
+            return posts.ToList();
         }
 
         /// <summary>
@@ -126,7 +144,24 @@ namespace Loppuprojekti_AW
             {
                 db.Attendees.Remove(a);
             }
-            db.Posts.Remove(db.Posts.Find(postid));
+            var post = db.Posts.Find(postid);
+            db.Posts.Remove(post);
+            db.SaveChanges();
+        }
+
+        public void AttendPost(int userid, int postid)
+        {
+            Attendee attendee = new();
+            attendee.Userid = userid;
+            attendee.Postid = postid;
+            attendee.Organiser = false;
+            db.Attendees.Add(attendee);
+            db.SaveChanges();
+        }
+
+        public void DeleteAttendingPost(int userid, int postid)
+        {
+            db.Attendees.Remove(db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault());
             db.SaveChanges();
         }
 

@@ -24,14 +24,14 @@ namespace Loppuprojekti_AW.Models
         public virtual DbSet<Sport> Sports { get; set; }
         public virtual DbSet<UsersSport> UsersSports { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=localhost;database=Moveo;trusted_connection=true");
-            }
-        }
+//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//        {
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseSqlServer("");
+//            }
+//        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -82,6 +82,12 @@ namespace Loppuprojekti_AW.Models
                     .HasMaxLength(300)
                     .IsUnicode(false)
                     .HasColumnName("description");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(320)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
 
                 entity.Property(e => e.Photo).HasColumnName("photo");
 
@@ -147,6 +153,14 @@ namespace Loppuprojekti_AW.Models
                     .HasColumnName("description");
 
                 entity.Property(e => e.Duration).HasColumnName("duration");
+
+                entity.Property(e => e.Latitude)
+                    .HasColumnType("decimal(12, 9)")
+                    .HasColumnName("latitude");
+
+                entity.Property(e => e.Longitude)
+                    .HasColumnType("decimal(12, 9)")
+                    .HasColumnName("longitude");
 
                 entity.Property(e => e.Place)
                     .IsRequired()

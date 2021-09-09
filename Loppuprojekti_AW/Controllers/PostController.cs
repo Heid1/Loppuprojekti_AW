@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Loppuprojekti_AW.Controllers
 {
@@ -21,9 +20,11 @@ namespace Loppuprojekti_AW.Controllers
         // GET: PostController
         public ActionResult Index()
         {
-            //ViewBag.Organising = _data.GetPostsByAttendance(userid, true);
-            //ViewBag.Attending = _data.GetPostByAttendance(userid, false);
-            return View();
+            int userid = (int)HttpContext.Session.GetInt32("userid");
+            var organising =  _data.GetPostsByAttendance(userid, true);
+            var attending = _data.GetPostsByAttendance(userid, false);
+            ViewBag.Attending = attending;
+            return View(organising);
         }
 
         //// GET: PostController/Details/5
@@ -35,6 +36,7 @@ namespace Loppuprojekti_AW.Controllers
         // GET: PostController/Create
         public ActionResult Create()
         {
+            ViewBag.Sports = _data.GetAllSports();
             return View();
         }
 
@@ -71,9 +73,9 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: PostController/Delete/5
-        public ActionResult Delete(int postid)
+        public ActionResult Delete(int Postid)
         {
-            _data.DeletePost(postid);
+            _data.DeletePost(Postid);
             return RedirectToAction("Index", "Post");
         }
 
