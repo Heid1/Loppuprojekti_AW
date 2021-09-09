@@ -159,9 +159,10 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void DeleteAttendingPost(int userid, int postid)
+        public void CancelAttendance(int userid, int postid)
         {
-            db.Attendees.Remove(db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault());
+            var attendee = db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault();
+            db.Attendees.Remove(attendee);
             db.SaveChanges();
         }
 

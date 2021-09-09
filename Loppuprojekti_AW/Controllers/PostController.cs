@@ -50,6 +50,22 @@ namespace Loppuprojekti_AW.Controllers
             return RedirectToAction("Index", "Post");
         }
 
+        [HttpPost]
+        public ActionResult Attend(int postid)
+        {
+            var userid = (int)HttpContext.Session.GetInt32("userid");
+            _data.AttendPost(userid, postid);
+            return RedirectToAction("Index", "Post");
+        }
+
+        [HttpPost]
+        public ActionResult CancelAttendance(int postid)
+        {
+            var userid = (int)HttpContext.Session.GetInt32("userid");
+            _data.CancelAttendance(userid, postid);
+            return RedirectToAction("Index", "Post");
+        }
+
         // GET: PostController/Edit/5
         public ActionResult Edit(int postid)
         {
