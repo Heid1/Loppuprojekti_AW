@@ -21,9 +21,13 @@ namespace Loppuprojekti_AW.Controllers
         //// GET: PostController
         public ActionResult Index()
         {
-            int userid = (int)HttpContext.Session.GetInt32("userid");
-            var organising = _data.GetPostsByAttendance(userid, true);
-            var attending = _data.GetPostsByAttendance(userid, false);
+            int? userid = HttpContext.Session.GetInt32("userid");
+            if (userid == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            var organising = _data.GetPostsByAttendance((int)userid, true);
+            var attending = _data.GetPostsByAttendance((int)userid, false);
             ViewBag.Attending = attending;
             ViewBag.Organising = organising;
             return View(organising);
