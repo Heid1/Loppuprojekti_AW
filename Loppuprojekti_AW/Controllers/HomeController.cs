@@ -24,23 +24,24 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
+            //DataAccess data = new DataAccess(_context);
+            //data.ReturnCoordinates("Rakuunantie 17");
+
             DataAccess da = new DataAccess(_context);
-            var prevalencelist = da.GetPostsByPrevalence();
+            var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
             return View();
         }
+
         public IActionResult Index2()
         {
             return View();
         }
 
-
         public IActionResult Azuremap()
         {
             return View();
         }
-
-
 
         public IActionResult Login()
         {
@@ -48,7 +49,7 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string Username)
+        public async Task<IActionResult> Login(string Username)
         {
             var user = _context.Endusers.Where(u => u.Username == Username).FirstOrDefault();
 
@@ -71,19 +72,23 @@ namespace Loppuprojekti_AW.Controllers
             return View(enduser);
         }
 
-        public IActionResult AddPost()
-        {
-           
-            return View();
-        }
-
-
         public IActionResult ProfileEdit(Enduser Eu)
         {
             DataAccess.EditUser(Eu);
 
             return View(Eu);
         }
+
+        // NÄIHIN EN KEKSINYT HELPPOA RATKAISUA
+        //public IActionResult SendFeedback()
+        //{
+        //    return View();
+        //}
+        //public IActionResult SendFeedback(string text)
+        //{
+
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {

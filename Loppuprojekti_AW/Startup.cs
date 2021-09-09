@@ -1,3 +1,4 @@
+using Google.Maps;
 using Loppuprojekti_AW.Models;
 using Loppuprojekti_AW.Signalr.Hubs;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,7 @@ namespace Loppuprojekti_AW
                    options.UseSqlServer(Configuration.GetConnectionString("azure")));
             services.AddControllersWithViews();
             services.AddSession();
+            GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw"));
 
             //hubs
             services.AddSignalR();

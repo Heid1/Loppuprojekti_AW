@@ -1,4 +1,6 @@
-﻿using Loppuprojekti_AW.Models;
+﻿using Google.Maps;
+using Google.Maps.Geocoding;
+using Loppuprojekti_AW.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,6 +18,13 @@ namespace Loppuprojekti_AW
             db = data;
         }
         // ----------------------- USER ----------------------------------------------
+        public void CreateUser(Enduser Eu)
+        {
+            MoveoContext db = new MoveoContext();
+            db.Endusers.Add(Eu);
+            db.SaveChanges();
+        }
+
         public static Enduser GetUserById(int ?Identity)
         {
             MoveoContext db = new MoveoContext();
@@ -42,29 +51,25 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public static void DeleteProfile(Enduser Eu)
+        public static void DeleteUser(Enduser Eu)
         {
             MoveoContext db = new MoveoContext();
-
-            var edit = db.Endusers.Find(Eu.Userid);
-
-            db.Remove(edit);
+            var Userdelete = db.Endusers.Find(Eu.Userid);
+            db.Remove(Userdelete);
             db.SaveChanges();
         }
 
         // ----------------------- POSTS ----------------------------------------------
 
-        //hae yleisimmät postit lajin mukaan (tämä on sanapilveä varten)
-        public List<Sport> GetPostsByPrevalence()
-        {
-            var prevalencelist = db.Posts
-                                    .AsEnumerable()
-                                    .GroupBy(q => q.Sport)
-                                    .OrderByDescending(gp => gp.Count())
-                                    .Take(10)
-                                    .Select(g => g.Key).ToList();
-            return prevalencelist;
-        }
+        //hae yleisimmät lajit post määrän mukaisesti (tämä on sanapilveä varten)
+        //public List<Sport> GetSportsByPrevalence()
+        //{
+        //    var prevalencelist = (from t in db.Sports
+        //                         group t.Posts by t.Sportname into g
+        //                         select t).ToList();
+
+        //    return prevalencelist;
+        //}
 
         //hae hakusanalla posteja(tämä varsinaista hakua varten)
         public List<Post> GetPostsByCriteria(string criteria)
@@ -75,6 +80,7 @@ namespace Loppuprojekti_AW
                 || p.Postname.ToLower().Contains(criteria.ToLower())
                 || p.Place.ToLower().Contains(criteria.ToLower())
                 || p.Date.ToString().Contains(criteria)
+                || p.Sport.Sportid.ToString().Contains(criteria.ToLower())
                 || p.Sport.Sportname.ToLower().Contains(criteria.ToLower())
                 || p.Sport.Description.ToLower().Contains(criteria.ToLower())
                ).ToList();
@@ -118,8 +124,9 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void EditPost(int postid, Post post)
+        public void EditPost(Post post)
         {
+            var postid = post.Postid;
             db.Posts.Find(postid).Postname = post.Postname;
             db.Posts.Find(postid).Sportid = post.Sportid;
             db.Posts.Find(postid).Description = post.Description;
@@ -159,9 +166,10 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void DeleteAttendingPost(int userid, int postid)
+        public void CancelAttendance(int userid, int postid)
         {
-            db.Attendees.Remove(db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault());
+            var attendee = db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault();
+            db.Attendees.Remove(attendee);
             db.SaveChanges();
         }
 
@@ -189,11 +197,33 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void EditSport(int sportid, Sport sport)
+        public void EditSport(Sport sport)
         {
+            var sportid = sport.Sportid;
             db.Sports.Find(sportid).Sportname = sport.Sportname;
             db.Sports.Find(sportid).Description = sport.Description;
             db.SaveChanges();
+        }
+
+        public void LikeSport(UsersSport userssport)
+        {
+            db.UsersSports.Add(userssport);
+            db.SaveChanges();
+        }
+
+        public void RemovePostFromFavourites(int sportid)
+        {
+            var sport = db.Sports.Find(sportid);
+            db.Remove(sport);
+            db.SaveChanges();
+        }
+        public List<UsersSport> FindUsersSports(int? userid)
+        {
+            if (userid == null)
+            {
+                return null;
+            }
+            return db.UsersSports.Where(s => s.Userid == userid).ToList();
         }
 
 
@@ -259,6 +289,28 @@ namespace Loppuprojekti_AW
 
             messagesWithUsers = db.Endusers.Where(u => messagesWithIds.Contains(u.Userid)).ToList();
             return messagesWithUsers;
+        }
+
+        public void ReturnCoordinates(string address)
+        {
+
+            var request = new GeocodingRequest();
+            request.Address = address;
+            var response = new GeocodingService().GetResponse(request);
+
+            if (response.Status == ServiceResponseStatus.Ok && response.Results.Count() > 0)
+            {
+                var result = response.Results.First();
+
+                Console.WriteLine("Full Address: " + result.FormattedAddress);         // "1600 Pennsylvania Ave NW, Washington, DC 20500, USA"
+                Console.WriteLine("Latitude: " + result.Geometry.Location.Latitude);   // 38.8976633
+                Console.WriteLine("Longitude: " + result.Geometry.Location.Longitude); // -77.0365739
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("Unable to geocode.  Status={0} and ErrorMessage={1}", response.Status, response.ErrorMessage);
+            }
         }
     }
 }
