@@ -206,15 +206,16 @@ namespace Loppuprojekti_AW
         /// </summary>
         /// <param name="userId"></param>
         /// <returns>dict of the other party's id as key and as value list of message objects </returns>
-        public static Dictionary<int, List<Message>> GetMessagesOfUser(int userId)
+        public Dictionary<int, List<Message>> GetMessagesOfUser(int userId)
         {
             Dictionary<int, List<Message>> usersMessages = new Dictionary<int, List<Message>>();
-            MoveoContext db = new MoveoContext();
-            var messagesToIds = db.Messages.Where(u => u.Senderid == userId).Select(u => (int)u.Receiverid).ToList();
-            var messagesFromIds = db.Messages.Where(u => u.Receiverid == userId).Select(u => u.Senderid).ToList();
-            if(messagesToIds !=  null || messagesFromIds != null)
+ 
+            var messagesSentToIds = db.Messages.Where(u => u.Senderid == userId).Select(u => (int)u.Receiverid).ToList();
+            var messagesReceivedFromIds = db.Messages.Where(u => u.Receiverid == userId).Select(u => u.Senderid).ToList();
+            
+            if(messagesSentToIds !=  null || messagesReceivedFromIds != null)
             {
-                var messagesWithIds = messagesToIds.Union(messagesFromIds).ToList();
+                var messagesWithIds = messagesSentToIds.Union(messagesReceivedFromIds).ToList();
                 for(int i = 0; i < messagesWithIds.Count; i++)
                 {
                     var messages = GetMessagesBetweenUsers(userId, messagesWithIds[i]);
@@ -230,14 +231,34 @@ namespace Loppuprojekti_AW
         /// <param name="userId1">Id of first user..</param>
         /// <param name="userId2">Id of second user.</param>
         /// <returns>list of messages between the two users.</returns>
-        public static List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
+        public List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
         {
-            MoveoContext db = new MoveoContext();
             var messages = db.Messages.Where(u => u.Receiverid == userId1 && u.Senderid == userId2 ||
             u.Receiverid == userId2 && u.Senderid == userId1).OrderBy(m => m.Sendtime).ToList();
             return messages;
         }
 
 
+        /// <summary>
+        /// Returns a list of enduser objects the user specified by the userid has messaged with
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public List<Enduser> GetUsersMessagedWith(int userId)
+        {
+
+            var messagesSentToIds = db.Messages.Where(u => u.Senderid == userId).Select(u => (int)u.Receiverid).ToList();
+            var messagesReceivedFromIds = db.Messages.Where(u => u.Receiverid == userId).Select(u => u.Senderid).ToList();
+            List<int> messagesWithIds = new List<int>();
+            List<Enduser> messagesWithUsers = new List<Enduser>();
+
+            if (messagesSentToIds != null || messagesReceivedFromIds != null)
+            {
+                messagesWithIds = messagesSentToIds.Union(messagesReceivedFromIds).ToList();
+            }
+
+            messagesWithUsers = db.Endusers.Where(u => messagesWithIds.Contains(u.Userid)).ToList();
+            return messagesWithUsers;
+        }
     }
 }
