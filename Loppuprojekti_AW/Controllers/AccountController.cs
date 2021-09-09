@@ -21,6 +21,13 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult Create(Enduser eu)
         {
             DataAccess da = new DataAccess(_context);
@@ -41,7 +48,6 @@ namespace Loppuprojekti_AW.Controllers
             {
                 return RedirectToAction("Virhe", "Home");
             }
-
         }
 
         [HttpGet]
@@ -64,13 +70,22 @@ namespace Loppuprojekti_AW.Controllers
             return View(Eu);
 
         }
-        public IActionResult ProfileDelete()
+        public IActionResult Delete()
         {
             var userid = HttpContext.Session.GetInt32("userid");
             var user = DataAccess.GetUserById(userid);
-            DataAccess.DeleteUser(user);
-            HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
+            if (user == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            else
+            {
+                DataAccess.DeleteUser(user);
+                HttpContext.Session.Clear();
+                return RedirectToAction("Index", "Home");
+            }
+
+
         }
     }
 }
