@@ -19,8 +19,13 @@
                 <span asp-validation-for="Postname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Sportid" class="control-label"></label>
-                <select asp-for="Sportid" class="form-control" asp-items="ViewBag.Sportid"></select>
+                <label asp-for="Sportid" class="control-label">Laji</label>
+                <select asp-for="Sportid" class="form-control">
+                    @foreach (var item in ViewBag.Sports)
+                    {
+                        <option value="@item.Sportid">@item.Sportname</option>
+                    }
+                </select>
                 <span asp-validation-for="Sportid" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -42,6 +47,16 @@
                 <label asp-for="Place" class="control-label"></label>
                 <input asp-for="Place" class="form-control" />
                 <span asp-validation-for="Place" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Latitude" class="control-label"></label>
+                <input asp-for="Latitude" class="form-control" />
+                <span asp-validation-for="Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Longitude" class="control-label"></label>
+                <input asp-for="Longitude" class="form-control" />
+                <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
