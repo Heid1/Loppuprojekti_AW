@@ -18,18 +18,12 @@ namespace Loppuprojekti_AW
             db = data;
         }
         // ----------------------- USER ----------------------------------------------
-        
-        public void CreateUser(Enduser Eu)
+        public static Enduser GetUserById(int ?Identity)
         {
             MoveoContext db = new MoveoContext();
-            db.Endusers.Add(Eu);
-            db.SaveChanges();
-        }
-        
-        public static Enduser GetUserById(int? userid)
-        {
-            MoveoContext db = new MoveoContext();
-            var Enduser = db.Endusers.Find(userid);
+
+            var Enduser = db.Endusers.Find(Identity);
+
             return Enduser;
         }
 
@@ -37,6 +31,7 @@ namespace Loppuprojekti_AW
         {
             MoveoContext db = new MoveoContext();
             var edit = db.Endusers.Find(Eu.Userid);
+
             edit.Userid = Eu.Userid;
             edit.Username = Eu.Username;
             edit.Birthday = Eu.Birthday;
@@ -45,14 +40,17 @@ namespace Loppuprojekti_AW
             edit.UsersSports = Eu.UsersSports;
             edit.Club = Eu.Club;
             edit.Photo = Eu.Photo;
+
             db.SaveChanges();
         }
 
-        public static void DeleteUser(Enduser Eu)
+        public static void DeleteProfile(Enduser Eu)
         {
             MoveoContext db = new MoveoContext();
-            var Userdelete = db.Endusers.Find(Eu.Userid);
-            db.Remove(Userdelete);
+
+            var edit = db.Endusers.Find(Eu.Userid);
+
+            db.Remove(edit);
             db.SaveChanges();
         }
 
@@ -102,6 +100,8 @@ namespace Loppuprojekti_AW
                          join a in db.Attendees on p.Postid equals a.Postid
                          where a.Userid == userid && a.Organiser == organiser
                          select p;
+            //var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
+            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
             return posts.ToList();
         }
 
@@ -120,9 +120,8 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void EditPost(Post post)
+        public void EditPost(int postid, Post post)
         {
-            int postid = post.Postid;
             db.Posts.Find(postid).Postname = post.Postname;
             db.Posts.Find(postid).Sportid = post.Sportid;
             db.Posts.Find(postid).Description = post.Description;
@@ -162,10 +161,9 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void CancelAttendance(int userid, int postid)
+        public void DeleteAttendingPost(int userid, int postid)
         {
-            var attendee = db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault();
-            db.Attendees.Remove(attendee);
+            db.Attendees.Remove(db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault());
             db.SaveChanges();
         }
 
@@ -193,17 +191,10 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void EditSport(Sport sport)
+        public void EditSport(int sportid, Sport sport)
         {
-            var sportid = sport.Sportid;
             db.Sports.Find(sportid).Sportname = sport.Sportname;
             db.Sports.Find(sportid).Description = sport.Description;
-            db.SaveChanges();
-        }
-
-        public void LikeSport(UsersSport userssport)
-        {
-            db.UsersSports.Add(userssport);
             db.SaveChanges();
         }
 
@@ -274,7 +265,7 @@ namespace Loppuprojekti_AW
 
         public void ReturnCoordinates(string address)
         {
-            Console.WriteLine("jou" + address);
+
             var request = new GeocodingRequest();
             request.Address = address;
             var response = new GeocodingService().GetResponse(request);
