@@ -32,13 +32,16 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult Profile()
         {
             var userid = HttpContext.Session.GetInt32("userid");
-            if (userid != null) {
-            var enduser = DataAccess.GetUserById(userid);
-            return View(enduser);
-            } else {
+            if (userid != null)
+            {
+                var enduser = DataAccess.GetUserById(userid);
+                return View(enduser);
+            }
+            else
+            {
                 return RedirectToAction("Virhe", "Home");
             }
-            
+
         }
 
         [HttpGet]
@@ -59,11 +62,12 @@ namespace Loppuprojekti_AW.Controllers
         {
             DataAccess.EditUser(Eu);
             return View(Eu);
+
         }
         public IActionResult ProfileDelete()
         {
             var userid = HttpContext.Session.GetInt32("userid");
-            var user =  DataAccess.GetUserById(userid);
+            var user = DataAccess.GetUserById(userid);
             DataAccess.DeleteUser(user);
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
