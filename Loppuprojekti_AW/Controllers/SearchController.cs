@@ -20,6 +20,15 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
+        public IActionResult GetPostBySportId(int sportid)
+        {
+                DataAccess da = new DataAccess(_context);
+                string id = sportid.ToString();
+                var postlist = da.GetPostsByCriteria(id);
+                ViewBag.Posts = postlist;
+                return View();
+        }
+
         public IActionResult GetPostsByCriteria(string criteria)
         {
             if (criteria != null)
@@ -30,8 +39,6 @@ namespace Loppuprojekti_AW.Controllers
                 return View();
 
             } else {
-                //string error = "Anna hakusana";
-                //ViewBag.Alert = error; //Tässä viewbagiin menee error viesti joka tulostetaan viewissä bootstrap alertissa
                 return View();
             }
         }

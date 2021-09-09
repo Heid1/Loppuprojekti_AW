@@ -24,15 +24,24 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
-            DataAccess data = new DataAccess(_context);
-            data.ReturnCoordinates("Rakuunantie 17");
+            //DataAccess data = new DataAccess(_context);
+            //data.ReturnCoordinates("Rakuunantie 17");
+
+            DataAccess da = new DataAccess(_context);
+            var prevalencelist = da.GetAllSports();
+            ViewBag.CommonPosts = prevalencelist;
             return View();
         }
+
         public IActionResult Index2()
         {
             return View();
         }
 
+        public IActionResult Azuremap()
+        {
+            return View();
+        }
 
         public IActionResult Login()
         {
