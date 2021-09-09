@@ -13,24 +13,29 @@
 </form>
 
 @if (ViewBag.Posts != null)
-    {
-<div class="accordion accordion-flush" id="results">
-    @foreach (var item in ViewBag.Posts)
-    {
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Accordion Item #1
-            </button>
-        </h2>
+{
+    <div class="accordion" id="accordionPost">
+        @foreach (var item in ViewBag.Posts)
+        {
+            var iditem = String.Join("", item.Postname.Split(' '));
+            <div class="card">
+                <div class="card-header" id="headingPost">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#@iditem" aria-expanded="false" aria-controls="@iditem">
+                            @item.Postname
+                        </button>
+                    </h2>
+                </div>
+                <div id="@iditem" class="collapse" aria-labelledby="headingSport" data-parent="#results">
+                    <div class="card-body">
+                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport</p>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-            <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport</p>
-        </div>
-    </div>
-    }
-</div>
-} else {
-@*@ViewBag.Alert;*@
+}
+else
+{
+    @*@ViewBag.Alert;*@
 }

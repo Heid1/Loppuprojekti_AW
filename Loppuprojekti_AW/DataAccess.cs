@@ -56,17 +56,15 @@ namespace Loppuprojekti_AW
 
         // ----------------------- POSTS ----------------------------------------------
 
-        //hae yleisimmät postit lajin mukaan (tämä on sanapilveä varten)
-        public List<Sport> GetPostsByPrevalence()
-        {
-            var prevalencelist = db.Posts
-                                    .AsEnumerable()
-                                    .GroupBy(q => q.Sport)
-                                    .OrderByDescending(gp => gp.Count())
-                                    .Take(10)
-                                    .Select(g => g.Key).ToList();
-            return prevalencelist;
-        }
+        //hae yleisimmät lajit post määrän mukaisesti (tämä on sanapilveä varten)
+        //public List<Sport> GetSportsByPrevalence()
+        //{
+        //    var prevalencelist = (from t in db.Sports
+        //                         group t.Posts by t.Sportname into g
+        //                         select t).ToList();
+
+        //    return prevalencelist;
+        //}
 
         //hae hakusanalla posteja(tämä varsinaista hakua varten)
         public List<Post> GetPostsByCriteria(string criteria)
@@ -77,6 +75,7 @@ namespace Loppuprojekti_AW
                 || p.Postname.ToLower().Contains(criteria.ToLower())
                 || p.Place.ToLower().Contains(criteria.ToLower())
                 || p.Date.ToString().Contains(criteria)
+                || p.Sport.Sportid.ToString().Contains(criteria.ToLower())
                 || p.Sport.Sportname.ToLower().Contains(criteria.ToLower())
                 || p.Sport.Description.ToLower().Contains(criteria.ToLower())
                ).ToList();

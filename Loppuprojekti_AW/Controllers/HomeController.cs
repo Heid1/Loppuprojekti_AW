@@ -25,22 +25,20 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult Index()
         {
             DataAccess da = new DataAccess(_context);
-            var prevalencelist = da.GetPostsByPrevalence();
+            var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
             return View();
         }
+
         public IActionResult Index2()
         {
             return View();
         }
 
-
         public IActionResult Azuremap()
         {
             return View();
         }
-
-
 
         public IActionResult Login()
         {
@@ -60,29 +58,6 @@ namespace Loppuprojekti_AW.Controllers
             }
             ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
             return RedirectToAction("Index");
-
-        }
-
-        public IActionResult Profile()
-        {
-            var id = HttpContext.Session.GetInt32("userid");
-            var enduser = DataAccess.GetUserById(id);
-
-            return View(enduser);
-        }
-
-        public IActionResult AddPost()
-        {
-           
-            return View();
-        }
-
-
-        public IActionResult ProfileEdit(Enduser Eu)
-        {
-            DataAccess.EditUser(Eu);
-
-            return View(Eu);
         }
 
         public IActionResult Privacy()

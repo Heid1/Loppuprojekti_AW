@@ -19,13 +19,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         @using Microsoft.AspNetCore.Http;
-                        @{var id = Context.Session.GetInt32("id");}
-                        @if (id != null)
+                        @{var userid = Context.Session.GetInt32("userid");}
+                        @if (userid != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Pääsivu</a>
                             </li>
-
                         }
                         else
                         {
@@ -44,7 +43,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="Index">Lajit</a>
                         </li>
 
-                        @if (id != null)
+                        @if (userid != null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="Index">Profiili</a>
