@@ -207,6 +207,21 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
+        public void RemovePostFromFavourites(int sportid)
+        {
+            var sport = db.Sports.Find(sportid);
+            db.Remove(sport);
+            db.SaveChanges();
+        }
+        public List<UsersSport> FindUsersSports(int? userid)
+        {
+            if (userid == null)
+            {
+                return null;
+            }
+            return db.UsersSports.Where(s => s.Userid == userid).ToList();
+        }
+
 
         // ----------------------- MESSAGES ----------------------------------------------
 

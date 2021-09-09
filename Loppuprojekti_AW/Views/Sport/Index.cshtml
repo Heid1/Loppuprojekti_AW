@@ -35,11 +35,17 @@ else
             </div>
             <div id="@iditem" class="collapse" aria-labelledby="headingSport" data-parent="#accordionSport">
                 <div class="card-body">
-                    @*@if (Viewbag.IsChosen)
+                    @if (ViewBag.Userid == null)
                     {
-                        Html.ActionLink("Poista suosikeita")
-                    }*@
-                    @Html.ActionLink("Valitse suosikkeihin", "ChooseSport", "Sport", new { sportid = item.Sportid })<br />
+                        <br />
+                    }
+                     else if (ViewBag.IsChosen != null && ViewBag.IsChosen.Contains(item.Sportid))
+                    {
+                        @Html.ActionLink("Poista suosikeita", "RemovePostFromFavourites", new { sportid = item.Sportid })<br />
+                    }
+                    else {
+                        @Html.ActionLink("Valitse suosikkeihin", "ChooseSport", "Sport", new { sportid = item.Sportid })<br />
+                    }
                     @item.Description
                 </div>
             </div>

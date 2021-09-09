@@ -74,15 +74,16 @@ namespace Loppuprojekti_AW.Controllers
             return View(Eu);
         }
 
-        public IActionResult SendFeedback()
-        {
-            return View();
-        }
-        public IActionResult SendFeedback(string feedback)
-        {
+        // NÄIHIN EN KEKSINYT HELPPOA RATKAISUA
+        //public IActionResult SendFeedback()
+        //{
+        //    return View();
+        //}
+        //public IActionResult SendFeedback(string text)
+        //{
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {
