@@ -71,18 +71,21 @@ namespace Loppuprojekti_AW.Controllers
             return View(enduser);
         }
 
-        public IActionResult AddPost()
-        {
-           
-            return View();
-        }
-
-
         public IActionResult ProfileEdit(Enduser Eu)
         {
             DataAccess.EditUser(Eu);
 
             return View(Eu);
+        }
+
+        public IActionResult SendFeedback()
+        {
+            return View();
+        }
+        public IActionResult SendFeedback(string feedback)
+        {
+
+            return View();
         }
 
         public IActionResult Privacy()
