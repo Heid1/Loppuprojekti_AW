@@ -69,22 +69,23 @@ namespace Loppuprojekti_AW.Controllers
         // GET: PostController/Edit/5
         public ActionResult Edit(int postid)
         {
+            ViewBag.Sports = _data.GetAllSports();
             return View(_data.GetPostById(postid));
         }
 
         // POST: PostController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int postid, Post post)
+        public ActionResult Edit(Post post)
         {
             try
             {
-                _data.EditPost(postid, post);
+                _data.EditPost(post);
                 return RedirectToAction("Index", "Post");
             }
             catch
             {
-                return View(_data.GetPostById(postid));
+                return View();
             }
         }
 
@@ -94,21 +95,5 @@ namespace Loppuprojekti_AW.Controllers
             _data.DeletePost(Postid);
             return RedirectToAction("Index", "Post");
         }
-
-        //// POST: PostController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int postid, Post post)
-        //{
-            
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }

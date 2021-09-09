@@ -98,8 +98,6 @@ namespace Loppuprojekti_AW
                          join a in db.Attendees on p.Postid equals a.Postid
                          where a.Userid == userid && a.Organiser == organiser
                          select p;
-            //var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
-            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
             return posts.ToList();
         }
 
@@ -118,8 +116,9 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void EditPost(int postid, Post post)
+        public void EditPost(Post post)
         {
+            int postid = post.Postid;
             db.Posts.Find(postid).Postname = post.Postname;
             db.Posts.Find(postid).Sportid = post.Sportid;
             db.Posts.Find(postid).Description = post.Description;
