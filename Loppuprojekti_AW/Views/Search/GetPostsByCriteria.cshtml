@@ -15,20 +15,21 @@
 @if (ViewBag.Posts != null)
 {
     <div class="accordion" id="accordionPost">
+
         @foreach (var item in ViewBag.Posts)
         {
             var iditem = String.Join("", item.Postname.Split(' '));
             <div class="card">
                 <div class="card-header" id="headingPost">
-                    <h2 class="accordion-header" id="headingOne">
+                    <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#@iditem" aria-expanded="false" aria-controls="@iditem">
                             @item.Postname
                         </button>
                     </h2>
                 </div>
-                <div id="@iditem" class="collapse" aria-labelledby="headingSport" data-parent="#results">
+                <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
-                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport</p>
+                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
                     </div>
                 </div>
             </div>
@@ -39,3 +40,4 @@ else
 {
     @*@ViewBag.Alert;*@
 }
+
