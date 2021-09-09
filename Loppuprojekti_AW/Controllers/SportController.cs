@@ -26,6 +26,7 @@ namespace Loppuprojekti_AW.Controllers
         // GET: SportController/Details/5
         public IActionResult Details(int sportid)
         {
+            //ViewBag.IsChosen = _data.
             return View(_data.GetSportById(sportid));
         }
 
