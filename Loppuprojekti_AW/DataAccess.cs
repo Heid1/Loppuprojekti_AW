@@ -279,19 +279,19 @@ namespace Loppuprojekti_AW
             //request.Address = address;
             //var response = new GeocodingService().GetResponse(request);
 
-            //if (response.Status == ServiceResponseStatus.Ok && response.Results.Count() > 0)
-            //{
-            //    var result = response.Results.First();
+            if (response.Status == ServiceResponseStatus.Ok && response.Results.Count() > 0)
+            {
+                var result = response.Results.First();
 
-            //    Console.WriteLine("Full Address: " + result.FormattedAddress);         // "1600 Pennsylvania Ave NW, Washington, DC 20500, USA"
-            //    Console.WriteLine("Latitude: " + result.Geometry.Location.Latitude);   // 38.8976633
-            //    Console.WriteLine("Longitude: " + result.Geometry.Location.Longitude); // -77.0365739
-            //    Console.WriteLine();
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Unable to geocode.  Status={0} and ErrorMessage={1}", response.Status, response.ErrorMessage);
-           // }
+               Console.WriteLine("Full Address: " + result.FormattedAddress);         // "1600 Pennsylvania Ave NW, Washington, DC 20500, USA"
+               Console.WriteLine("Latitude: " + result.Geometry.Location.Latitude);   // 38.8976633
+               Console.WriteLine("Longitude: " + result.Geometry.Location.Longitude); // -77.0365739
+               Console.WriteLine();
+            }
+            else
+            {
+               Console.WriteLine("Unable to geocode.  Status={0} and ErrorMessage={1}", response.Status, response.ErrorMessage);
+           }
         }
     }
 }
