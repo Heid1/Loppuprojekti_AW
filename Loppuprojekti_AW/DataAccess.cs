@@ -91,8 +91,8 @@ namespace Loppuprojekti_AW
         /// <summary>
         /// Hakee kaikki ilmoitukset, jotka käyttäjä on luonut tai liittynyt parametrien arvojen mukaan.
         /// </summary>
-        /// <param name="userid">käyttäjä</param>
-        /// <param name="organiser">järjestäjä=true, ilmoittautunut=false</param>
+        /// <param// name="userid">käyttäjä</param>
+        /// <param //name="organiser">järjestäjä=true, ilmoittautunut=false</param>
         /// <returns></returns>
         public List<Post> GetPostsByAttendance(int userid, bool organiser)
         {
@@ -107,8 +107,8 @@ namespace Loppuprojekti_AW
         /// Luo ilmoituksen ja sen jälkeen Attendee-olion, joka yhdistää ilmoituksen ja ilmoituksen luoja
         /// ja määrittää käyttäjän sen järjestäjäksi.
         /// </summary>
-        /// <param name="userid"></param>
-        /// <param name="post"></param>
+        /// <param// name="userid"></param>
+        /// <param// name="post"></param>
         public void CreatePost(int userid, Post post)
         {
             db.Posts.Add(post);
@@ -138,7 +138,7 @@ namespace Loppuprojekti_AW
         /// Poistaa sekä ilmoituksen tekijän että osallistujat Attendeesta 
         /// ja sen jälkeen itse ilmoituksen.
         /// </summary>
-        /// <param name="postid"></param>
+        /// <param //name="postid"></param>
         public void DeletePost(int postid)
         {
             foreach (var a in db.Attendees.Where(p => p.Postid == postid))
@@ -213,7 +213,7 @@ namespace Loppuprojekti_AW
         /// the other user's id and value is the list of messages with the other user.
         /// If the user has no messages empty dict is returned.
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param //name="userId"></param>
         /// <returns>dict of the other party's id as key and as value list of message objects </returns>
         public Dictionary<int, List<Message>> GetMessagesOfUser(int userId)
         {
@@ -237,8 +237,8 @@ namespace Loppuprojekti_AW
         /// <summary>
         /// Returns messages between two users bases on their ids.
         /// </summary>
-        /// <param name="userId1">Id of first user..</param>
-        /// <param name="userId2">Id of second user.</param>
+        ///// <param name="userId1">Id of first user..</param>
+        ///// <param name="userId2">Id of second user.</param>
         /// <returns>list of messages between the two users.</returns>
         public List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
         {
@@ -251,7 +251,7 @@ namespace Loppuprojekti_AW
         /// <summary>
         /// Returns a list of enduser objects the user specified by the userid has messaged with
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param //name="userId"></param>
         /// <returns></returns>
         public List<Enduser> GetUsersMessagedWith(int userId)
         {
@@ -268,6 +268,29 @@ namespace Loppuprojekti_AW
 
             messagesWithUsers = db.Endusers.Where(u => messagesWithIds.Contains(u.Userid)).ToList();
             return messagesWithUsers;
+        }
+       
+       
+        public static void ReturnCoordinates(string address)
+        {
+            Console.WriteLine("jou" + address);
+            //var request = new GeocodingRequest();
+            //request.Address = address;
+            //var response = new GeocodingService().GetResponse(request);
+
+            //if (response.Status == ServiceResponseStatus.Ok && response.Results.Count() > 0)
+            //{
+            //    var result = response.Results.First();
+
+            //    Console.WriteLine("Full Address: " + result.FormattedAddress);         // "1600 Pennsylvania Ave NW, Washington, DC 20500, USA"
+            //    Console.WriteLine("Latitude: " + result.Geometry.Location.Latitude);   // 38.8976633
+            //    Console.WriteLine("Longitude: " + result.Geometry.Location.Longitude); // -77.0365739
+            //    Console.WriteLine();
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Unable to geocode.  Status={0} and ErrorMessage={1}", response.Status, response.ErrorMessage);
+           // }
         }
     }
 }
