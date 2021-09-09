@@ -13,27 +13,27 @@ namespace Loppuprojekti_AW.Controllers
     {
         private readonly DataAccess _data;
 
-        //public PostController(MoveoContext context)
-        //{
-        //    _data = new(context);
-        //}
+        public PostController(MoveoContext context)
+        {
+            _data = new(context);
+        }
 
         //// GET: PostController
-        //public ActionResult Index()
-        //{
-        //    int userid = (int)HttpContext.Session.GetInt32("userid");
-        //    var organising =  _data.GetPostsByAttendance(userid, true);
-        //    var attending = _data.GetPostsByAttendance(userid, false);
-        //    ViewBag.Attending = attending;
-        //    ViewBag.Organising = organising;
-        //    return View(organising);
-        //}
+        public ActionResult Index()
+        {
+            int userid = (int)HttpContext.Session.GetInt32("userid");
+            var organising = _data.GetPostsByAttendance(userid, true);
+            var attending = _data.GetPostsByAttendance(userid, false);
+            ViewBag.Attending = attending;
+            ViewBag.Organising = organising;
+            return View(organising);
+        }
 
         //// GET: PostController/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
+        public ActionResult Details(int id)
+        {
+            return View();
+        }
 
         // GET: PostController/Create
         public ActionResult Create()
@@ -45,12 +45,12 @@ namespace Loppuprojekti_AW.Controllers
         // POST: PostController/Create
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Create(Post post)
-        //{
-        //    var userid = HttpContext.Session.GetInt32("userid");
-        //    _data.CreatePost((int)userid, post);
-        //    return RedirectToAction("Index", "Post");
-        //}
+        public ActionResult Create(Post post)
+        {
+            var userid = HttpContext.Session.GetInt32("userid");
+            _data.CreatePost((int)userid, post);
+            return RedirectToAction("Index", "Post");
+        }
 
         [HttpPost]
         public ActionResult Attend(int postid)
