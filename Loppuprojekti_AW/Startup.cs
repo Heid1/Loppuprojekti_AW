@@ -26,7 +26,7 @@ namespace Loppuprojekti_AW
                    options.UseSqlServer(Configuration.GetConnectionString("azure")));
             services.AddControllersWithViews();
             services.AddSession();
-            GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw"));
+            GoogleSigned.AssignAllServices(new GoogleSigned("YOUR_API_KEY"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
