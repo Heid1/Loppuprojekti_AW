@@ -6,7 +6,7 @@
     <style type="text/css">
         /* Set the size of the div element that contains the map */
         #map {
-            height: 600px;
+            height: 400px;
             /* The height is 400 pixels */
             width: 100%;
             /* The width is the width of the web page */
@@ -15,72 +15,92 @@
     <script>
         // Initialize and add the map
         function initMap() {
-            // The location of Uluru
+
+            var paikka4 = {
+                lat: 60.1623901,
+                lng: 24.931080
+            };
+
+            var paikka3 = {
+                lat: 60.1673901,
+                lng: 24.937080
+            };
+
+            var paikka2 = {
+                lat: 60.1673901,
+                lng: 24.911080
+            };
+
+            var paikka1 = {
+                lat: 60.1677901,
+                lng: 24.931080
+            };
+
+            const paikat = [paikka1, paikka2, paikka3, paikka4];
+
+            var paini = {
+                url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+                
+            };
+
+
+            // The location of Kamppi
             const kamppi = { lat: 60.167390, lng: 24.931080 };
-            const kamppi2 = { lat: 60.167555, lng: 24.83200 };
-            const kamppi3 = { lat: 60.177555, lng: 24.83200 };
-            // The map, centered at Uluru
+            // The map, centered at kamppi
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 11.5,
                 center: kamppi,
             });
-            
+            ///metodi ottaa aikaisemman listan ja luo markkerit+infoikkunan
+            function populate() {
 
-            var icon = {
-                url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
-                scaledSize: new google.maps.Size(50, 50), // scaled size
-                origin: new google.maps.Point(0, 0), // origin
-                anchor: new google.maps.Point(0, 0) // anchor
-            };
-            var icon2 = {
-                url: "https://cdn0.iconfinder.com/data/icons/dance-fitness/68/06-512.png", // url
-                scaledSize: new google.maps.Size(50, 50), // scaled size
-                origin: new google.maps.Point(0, 0), // origin
-                anchor: new google.maps.Point(0, 0) // anchor
-            };
+                
+                for (var i = 0; i < paikat.length; i++) {
 
-            var icon3 = {
-                url: "https://www.hectortenis.com/wp-content/uploads/2017/07/padel.png", // url
-                scaledSize: new google.maps.Size(50, 50), // scaled size
-                origin: new google.maps.Point(0, 0), // origin
-                anchor: new google.maps.Point(0, 0) // anchor
-            };
+                    const content = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        "</div>" +
+     
+                        '<h1 id="firstHeading" class="firstHeading">Jaakko tarjoaa Yksitysitunteja!</h1>' +
+                        '<div id="bodyContent">' +
+                        '<div width:20%;"><img src="https://st3.depositphotos.com/4297569/18992/i/950/depositphotos_189928686-stock-photo-attractive-white-guy-smiling-at.jpg" width="120" height="80"/></div>'+
+                        "<p><b>Minä olen Jaakko!</b>, Jaakko on nimitetty suomen nopeimmaksi tanssijaksi 3 vuotta putkeen ja nyt hän tarjoaa yksityistunteja aloittelijoille</p > " +
+                         +
+                        "</div>" +
+                        "</div>";
 
-            // The marker, positioned at Helsinki
-            const marker = new google.maps.Marker({
-                position: kamppi,
-                map: map,
-                icon: icon
-            });
-            const marker2 = new google.maps.Marker({
-                position: kamppi2,
-                map: map,
-                icon: icon2
-            });
+                    const marker = new google.maps.Marker({
+                        position: paikat[i],
+                        map: map,
+                        icon: paini
+                    });
 
-            const marker3 = new google.maps.Marker({
-                position: kamppi3,
-                map: map,
-                icon: icon3
-            });
-
-            var hello = "hullo kaikille";
-            const infowindow = new google.maps.InfoWindow({
-                content: hello,
-            });
-            marker.addListener("click", () => {
-                map.setZoom(15);
-                map.setCenter(marker.getPosition());
-            });
-            marker.addListener("click", () => {
+                    const infowindow = new google.maps.InfoWindow({
+                        content: content,
+                    });
+                    marker.addListener("click", () => {
                 infowindow.open(marker.get("map"), marker);
-            });
+                     });
+
+                   
+                }
+                
+            }
+
             
+            //marker.addListener("click", () => {
+            //    map.setZoom(15);
+            //    map.setCenter(marker.getPosition());
+            //});
+            
+
+            populate();
         }
     </script>
 </head>
 <body>
-    <h3>My Google Maps Demo</h3>
+    <h3>ilmoitukset</h3>
     <!--The div element for the map -->
     <div id="map"></div>
 

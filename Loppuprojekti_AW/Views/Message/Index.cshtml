@@ -1,0 +1,72 @@
+﻿@*@model IEnumerable<Loppuprojekti_AW.Models.Message>*@
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+    var messagesInfo = (Dictionary<int, List<Message>>)ViewData["messages"];
+}
+
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@if (messagesInfo != null)
+{
+    @foreach (var item in messagesInfo)
+    {
+        <button type="button" id=@item.Key>@item.Key</button>
+    }
+
+}
+@if (messagesInfo == null)
+            {
+                <p>tyhjä</p>
+            }
+
+
+@*
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sendtime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Messagebody)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Receiver)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sender)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sendtime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Messagebody)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Receiver.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sender.Username)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Messageid">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Messageid">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Messageid">Delete</a>
+                </td>
+            </tr>
+    }*@
+</tbody>
+</table>
