@@ -1,4 +1,6 @@
-﻿using Loppuprojekti_AW.Models;
+﻿using Google.Maps;
+using Google.Maps.Geocoding;
+using Loppuprojekti_AW.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -16,18 +18,19 @@ namespace Loppuprojekti_AW
             db = data;
         }
         // ----------------------- USER ----------------------------------------------
-        
         public void CreateUser(Enduser Eu)
         {
             MoveoContext db = new MoveoContext();
             db.Endusers.Add(Eu);
             db.SaveChanges();
         }
-        
-        public static Enduser GetUserById(int? userid)
+
+        public static Enduser GetUserById(int ?Identity)
         {
             MoveoContext db = new MoveoContext();
-            var Enduser = db.Endusers.Find(userid);
+
+            var Enduser = db.Endusers.Find(Identity);
+
             return Enduser;
         }
 
@@ -35,6 +38,7 @@ namespace Loppuprojekti_AW
         {
             MoveoContext db = new MoveoContext();
             var edit = db.Endusers.Find(Eu.Userid);
+
             edit.Userid = Eu.Userid;
             edit.Username = Eu.Username;
             edit.Birthday = Eu.Birthday;
@@ -43,6 +47,7 @@ namespace Loppuprojekti_AW
             edit.UsersSports = Eu.UsersSports;
             edit.Club = Eu.Club;
             edit.Photo = Eu.Photo;
+
             db.SaveChanges();
         }
 
@@ -119,8 +124,9 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void EditPost(int postid, Post post)
+        public void EditPost(Post post)
         {
+            var postid = post.Postid;
             db.Posts.Find(postid).Postname = post.Postname;
             db.Posts.Find(postid).Sportid = post.Sportid;
             db.Posts.Find(postid).Description = post.Description;
@@ -160,9 +166,10 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void DeleteAttendingPost(int userid, int postid)
+        public void CancelAttendance(int userid, int postid)
         {
-            db.Attendees.Remove(db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault());
+            var attendee = db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault();
+            db.Attendees.Remove(attendee);
             db.SaveChanges();
         }
 
@@ -190,11 +197,33 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void EditSport(int sportid, Sport sport)
+        public void EditSport(Sport sport)
         {
+            var sportid = sport.Sportid;
             db.Sports.Find(sportid).Sportname = sport.Sportname;
             db.Sports.Find(sportid).Description = sport.Description;
             db.SaveChanges();
+        }
+
+        public void LikeSport(UsersSport userssport)
+        {
+            db.UsersSports.Add(userssport);
+            db.SaveChanges();
+        }
+
+        public void RemovePostFromFavourites(int sportid)
+        {
+            var sport = db.Sports.Find(sportid);
+            db.Remove(sport);
+            db.SaveChanges();
+        }
+        public List<UsersSport> FindUsersSports(int? userid)
+        {
+            if (userid == null)
+            {
+                return null;
+            }
+            return db.UsersSports.Where(s => s.Userid == userid).ToList();
         }
 
 
@@ -260,6 +289,28 @@ namespace Loppuprojekti_AW
 
             messagesWithUsers = db.Endusers.Where(u => messagesWithIds.Contains(u.Userid)).ToList();
             return messagesWithUsers;
+        }
+
+        public void ReturnCoordinates(string address)
+        {
+
+            var request = new GeocodingRequest();
+            request.Address = address;
+            var response = new GeocodingService().GetResponse(request);
+
+            if (response.Status == ServiceResponseStatus.Ok && response.Results.Count() > 0)
+            {
+                var result = response.Results.First();
+
+                Console.WriteLine("Full Address: " + result.FormattedAddress);         // "1600 Pennsylvania Ave NW, Washington, DC 20500, USA"
+                Console.WriteLine("Latitude: " + result.Geometry.Location.Latitude);   // 38.8976633
+                Console.WriteLine("Longitude: " + result.Geometry.Location.Longitude); // -77.0365739
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("Unable to geocode.  Status={0} and ErrorMessage={1}", response.Status, response.ErrorMessage);
+            }
         }
     }
 }

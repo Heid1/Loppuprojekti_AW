@@ -24,6 +24,8 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
+            DataAccess data = new DataAccess(_context);
+            data.ReturnCoordinates("Rakuunantie 17");
             DataAccess da = new DataAccess(_context);
             var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
@@ -46,7 +48,7 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(string Username)
+        public async Task<IActionResult> Login(string Username)
         {
             var user = _context.Endusers.Where(u => u.Username == Username).FirstOrDefault();
 
@@ -58,7 +60,34 @@ namespace Loppuprojekti_AW.Controllers
             }
             ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
             return RedirectToAction("Index");
+
         }
+
+        public IActionResult Profile()
+        {
+            var id = HttpContext.Session.GetInt32("userid");
+            var enduser = DataAccess.GetUserById(id);
+
+            return View(enduser);
+        }
+
+        public IActionResult ProfileEdit(Enduser Eu)
+        {
+            DataAccess.EditUser(Eu);
+
+            return View(Eu);
+        }
+
+        // NÄIHIN EN KEKSINYT HELPPOA RATKAISUA
+        //public IActionResult SendFeedback()
+        //{
+        //    return View();
+        //}
+        //public IActionResult SendFeedback(string text)
+        //{
+
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {

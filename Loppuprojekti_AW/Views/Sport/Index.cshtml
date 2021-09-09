@@ -10,8 +10,14 @@
 @if (Context.Session.GetString("userrole") == "admin")
 {
     <p>
-        <a asp-action="Create">Create New</a>
-    </p>    
+        <a asp-action="Create">Luo uusi laji</a>
+    </p>
+}
+else
+{
+    <p>
+        <a asp-action="SendFeedback" asp-controller="Home">Ehdota uutta lajia</a>
+    </p>
 }
 
 
@@ -29,6 +35,17 @@
             </div>
             <div id="@iditem" class="collapse" aria-labelledby="headingSport" data-parent="#accordionSport">
                 <div class="card-body">
+                    @if (ViewBag.Userid == null)
+                    {
+                        <br />
+                    }
+                     else if (ViewBag.IsChosen != null && ViewBag.IsChosen.Contains(item.Sportid))
+                    {
+                        @Html.ActionLink("Poista suosikeita", "RemovePostFromFavourites", new { sportid = item.Sportid })<br />
+                    }
+                    else {
+                        @Html.ActionLink("Valitse suosikkeihin", "ChooseSport", "Sport", new { sportid = item.Sportid })<br />
+                    }
                     @item.Description
                 </div>
             </div>
