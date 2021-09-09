@@ -1,12 +1,13 @@
 using Loppuprojekti_AW.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,21 +29,27 @@ namespace Loppuprojekti_AW
         {
             services.AddDbContext<MoveoContext>(options =>
                    options.UseSqlServer(Configuration.GetConnectionString("azure")));
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+               .AddEntityFrameworkStores<MoveoContext>();
+
             services.AddControllersWithViews();
             services.AddSession();
 
             //googlea varten tarvitaan identity
+            //services.AddIdentityCore<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true);
 
             //tässä tulee googlen oauth
-            //services.AddAuthentication()
-            //    .AddGoogle(options => {
-            //        IConfigurationSection googleAuthNSection =
-            //            Configuration.GetSection("Authentication:Google");
-
-            //        options.ClientId = googleAuthNSection["ClientId"];
-            //        options.ClientSecret = googleAuthNSection["ClientSecret"];
-            //    });
-
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                 {
+                     IConfigurationSection googleAuthNSection =
+                         Configuration.GetSection("Authentication:Google");
+                     options.ClientId = googleAuthNSection["ClientId"];
+                     options.ClientSecret = googleAuthNSection["ClientSecret"];
+                     options.ClaimActions.MapJsonKey("urn:google:email", "email", "url");
+                     options.ClaimActions.MapJsonKey("urn:google:name", "name", "string");
+                     options.SaveTokens = true;
+                 });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +71,7 @@ namespace Loppuprojekti_AW
             app.UseRouting();
             app.UseSession();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
