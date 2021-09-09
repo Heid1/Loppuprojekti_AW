@@ -24,9 +24,7 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
-            DataAccess da = new DataAccess(_context);
-            var prevalencelist = da.GetPostsByPrevalence();
-            ViewBag.CommonPosts = prevalencelist;
+            DataAccess.ReturnCoordinates("Rakuunantie 17");
             return View();
         }
         public IActionResult Index2()
@@ -35,20 +33,13 @@ namespace Loppuprojekti_AW.Controllers
         }
 
 
-        public IActionResult Azuremap()
-        {
-            return View();
-        }
-
-
-
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string Username)
+        public async Task<IActionResult> Login(string Username)
         {
             var user = _context.Endusers.Where(u => u.Username == Username).FirstOrDefault();
 
