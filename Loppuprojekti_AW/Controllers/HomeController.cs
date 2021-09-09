@@ -14,18 +14,22 @@ namespace Loppuprojekti_AW.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly MoveoContext _context;
+        private readonly MoveoContext _context; //Tämä on oikeastaan turha
+        // Lisäsin tämän
+        private readonly DataAccess _data;
 
         public HomeController(ILogger<HomeController> logger, MoveoContext context)
         {
             _logger = logger;
-            _context = context;
+            _context = context; //Tämä jää ehkä turhaksi
+            // Tämän lisäsin, luo uuden dataaccessin ja voi sit aina käyttää kuten tuossa indexissä
+            _data = new(context);
         }
 
         public IActionResult Index()
         {
-            Console.WriteLine("jou");
-            DataAccess.ReturnCoordinates("Rakuunantie 17");
+            _data.ReturnCoordinates("Rakuunantie 17");
+            //DataAccess.ReturnCoordinates("Rakuunantie 17");
             return View();
         }
         public IActionResult Index2()

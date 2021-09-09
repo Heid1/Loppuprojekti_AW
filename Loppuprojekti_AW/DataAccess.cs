@@ -271,9 +271,10 @@ namespace Loppuprojekti_AW
         }
        
        
-        public static void ReturnCoordinates(string address)
+        public void ReturnCoordinates(string address)
         {
             Console.WriteLine("jou" + address);
+            var jou = address;
             //var request = new GeocodingRequest();
             //request.Address = address;
             //var response = new GeocodingService().GetResponse(request);
