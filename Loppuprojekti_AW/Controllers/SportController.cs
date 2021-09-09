@@ -12,6 +12,7 @@ namespace Loppuprojekti_AW.Controllers
     {
         private readonly DataAccess _data;
 
+
         public SportController(MoveoContext context)
         {
             _data = new(context);
@@ -20,13 +21,20 @@ namespace Loppuprojekti_AW.Controllers
         // GET: SportController
         public IActionResult Index()
         {
+            var userid = HttpContext.Session.GetInt32("userid");
+            ViewBag.Userid = userid;
+            List<int> userssports = null;
+            if (userid != null)
+            {
+                userssports = _data.FindUsersSports(userid).Select(s => s.Sportid).ToList();
+            }
+            ViewBag.IsChosen = userssports;
             return View(_data.GetAllSports());
         }
 
         // GET: SportController/Details/5
         public IActionResult Details(int sportid)
         {
-            //ViewBag.IsChosen = _data.
             return View(_data.GetSportById(sportid));
         }
 
@@ -78,6 +86,13 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult ChooseSport(UsersSport userssport)
         {
             _data.LikeSport(userssport);
+            return RedirectToAction("Index", "Sport");
+        }
+
+        [HttpPost]
+        public IActionResult RemovePostFromFavourites(int sportid)
+        {
+            _data.RemovePostFromFavourites(sportid);
             return RedirectToAction("Index", "Sport");
         }
 
