@@ -193,13 +193,19 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void EditSport(int sportid, Sport sport)
+        public void EditSport(Sport sport)
         {
+            var sportid = sport.Sportid;
             db.Sports.Find(sportid).Sportname = sport.Sportname;
             db.Sports.Find(sportid).Description = sport.Description;
             db.SaveChanges();
         }
 
+        public void LikeSport(UsersSport userssport)
+        {
+            db.UsersSports.Add(userssport);
+            db.SaveChanges();
+        }
 
         // ----------------------- MESSAGES ----------------------------------------------
 
