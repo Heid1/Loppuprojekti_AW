@@ -70,7 +70,8 @@ namespace Loppuprojekti_AW.Controllers
             return View(Eu);
 
         }
-        public IActionResult Delete()
+
+        public IActionResult Delete(Enduser Eu)
         {
             var userid = HttpContext.Session.GetInt32("userid");
             var user = DataAccess.GetUserById(userid);
