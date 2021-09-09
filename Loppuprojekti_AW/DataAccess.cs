@@ -51,13 +51,11 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public static void DeleteProfile(Enduser Eu)
+        public static void DeleteUser(Enduser Eu)
         {
             MoveoContext db = new MoveoContext();
-
-            var edit = db.Endusers.Find(Eu.Userid);
-
-            db.Remove(edit);
+            var Userdelete = db.Endusers.Find(Eu.Userid);
+            db.Remove(Userdelete);
             db.SaveChanges();
         }
 
