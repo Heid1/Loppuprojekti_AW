@@ -1,4 +1,6 @@
-﻿using Loppuprojekti_AW.Models;
+﻿using Google.Maps;
+using Google.Maps.Geocoding;
+using Loppuprojekti_AW.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -274,15 +276,14 @@ namespace Loppuprojekti_AW
         public void ReturnCoordinates(string address)
         {
             Console.WriteLine("jou" + address);
-            var jou = address;
-            //var request = new GeocodingRequest();
-            //request.Address = address;
-            //var response = new GeocodingService().GetResponse(request);
+            var request = new GeocodingRequest();
+            request.Address = address;
+            var response = new GeocodingService().GetResponse(request);
 
             if (response.Status == ServiceResponseStatus.Ok && response.Results.Count() > 0)
             {
                 var result = response.Results.First();
-
+                
                Console.WriteLine("Full Address: " + result.FormattedAddress);         // "1600 Pennsylvania Ave NW, Washington, DC 20500, USA"
                Console.WriteLine("Latitude: " + result.Geometry.Location.Latitude);   // 38.8976633
                Console.WriteLine("Longitude: " + result.Geometry.Location.Longitude); // -77.0365739

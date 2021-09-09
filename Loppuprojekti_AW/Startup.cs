@@ -1,3 +1,4 @@
+using Google.Maps;
 using Loppuprojekti_AW.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +26,7 @@ namespace Loppuprojekti_AW
                    options.UseSqlServer(Configuration.GetConnectionString("azure")));
             services.AddControllersWithViews();
             services.AddSession();
+            GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
