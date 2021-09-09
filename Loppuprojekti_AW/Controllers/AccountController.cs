@@ -20,20 +20,42 @@ namespace Loppuprojekti_AW.Controllers
         {
             return View();
         }
-        public IActionResult ProfileCreate(Enduser eu)
+
+        public IActionResult Create(Enduser eu)
         {
             DataAccess da = new DataAccess(_context);
             da.CreateUser(eu);
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Profile(int userid)
+        [HttpGet]
+        public IActionResult Profile()
         {
+            var userid = HttpContext.Session.GetInt32("userid");
+            if (userid != null) {
             var enduser = DataAccess.GetUserById(userid);
             return View(enduser);
+            } else {
+                return RedirectToAction("Virhe", "Home");
+            }
+            
         }
 
-        public IActionResult ProfileEdit(Enduser Eu)
+        [HttpGet]
+        public IActionResult Edit()//siirrytään tiettyyn palveluun uniikin palveluid perusteella, uusi muokkausnäkymä
+        {
+            var id = HttpContext.Session.GetInt32("userid");
+            var user = DataAccess.GetUserById(id);
+            if (user == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            return View(user);
+        }
+
+
+        [HttpPost] //editoidaan henkilöä ja lähetetaan se
+        public IActionResult Edit(Enduser Eu)
         {
             DataAccess.EditUser(Eu);
             return View(Eu);
