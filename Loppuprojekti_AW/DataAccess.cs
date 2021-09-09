@@ -120,8 +120,9 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void EditPost(int postid, Post post)
+        public void EditPost(Post post)
         {
+            var postid = post.Postid;
             db.Posts.Find(postid).Postname = post.Postname;
             db.Posts.Find(postid).Sportid = post.Sportid;
             db.Posts.Find(postid).Description = post.Description;
@@ -161,9 +162,10 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void DeleteAttendingPost(int userid, int postid)
+        public void CancelAttendance(int userid, int postid)
         {
-            db.Attendees.Remove(db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault());
+            var attendee = db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault();
+            db.Attendees.Remove(attendee);
             db.SaveChanges();
         }
 
