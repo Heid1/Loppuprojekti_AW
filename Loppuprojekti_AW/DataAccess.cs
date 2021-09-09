@@ -18,6 +18,13 @@ namespace Loppuprojekti_AW
             db = data;
         }
         // ----------------------- USER ----------------------------------------------
+        public void CreateUser(Enduser Eu)
+        {
+            MoveoContext db = new MoveoContext();
+            db.Endusers.Add(Eu);
+            db.SaveChanges();
+        }
+
         public static Enduser GetUserById(int ?Identity)
         {
             MoveoContext db = new MoveoContext();
