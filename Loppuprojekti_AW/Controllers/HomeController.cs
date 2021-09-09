@@ -24,7 +24,8 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
-            DataAccess.ReturnCoordinates("Rakuunantie 17");
+            DataAccess data = new DataAccess(_context);
+            data.ReturnCoordinates("Rakuunantie 17");
             return View();
         }
         public IActionResult Index2()

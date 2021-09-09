@@ -263,9 +263,9 @@ namespace Loppuprojekti_AW
             return messagesWithUsers;
         }
 
-        public static void ReturnCoordinates(string address)
+        public void ReturnCoordinates(string address)
         {
-            GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw"));
+
             var request = new GeocodingRequest();
             request.Address = address;
             var response = new GeocodingService().GetResponse(request);
