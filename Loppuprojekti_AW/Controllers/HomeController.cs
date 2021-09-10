@@ -42,48 +42,6 @@ namespace Loppuprojekti_AW.Controllers
         //    return View();
         //}
 
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Login(string Email, string Password)
-        {
-            Enduser Eu = _context.Endusers.Where(u => u.Email == Email && u.Password == Password).FirstOrDefault();
-
-            if (Eu != null)
-            {
-                HttpContext.Session.SetInt32("userid", Eu.Userid);
-                HttpContext.Session.SetString("username", Eu.Username);
-                HttpContext.Session.SetString("userrole", Eu.Userrole);
-                return RedirectToAction("Index", "Account");
-            }
-            else
-            {
-                //ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
-                ViewBag.AuthOK = false;
-                return View();
-            }
-
-        }
-
-        public IActionResult Profile()
-        {
-            var id = HttpContext.Session.GetInt32("userid");
-            var enduser = DataAccess.GetUserById(id);
-
-            return View(enduser);
-        }
-
-        public IActionResult ProfileEdit(Enduser Eu)
-        {
-            DataAccess.EditUser(Eu);
-
-            return View(Eu);
-        }
-
         // NÄIHIN EN KEKSINYT HELPPOA RATKAISUA
         //public IActionResult SendFeedback()
         //{
