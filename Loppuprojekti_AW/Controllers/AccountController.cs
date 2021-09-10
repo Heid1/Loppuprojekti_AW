@@ -10,6 +10,8 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Text;
 
 namespace Loppuprojekti_AW.Controllers
 {
@@ -58,7 +60,7 @@ namespace Loppuprojekti_AW.Controllers
             if (result == false) //jos result on sama kuin false eli vastaavuutta ei löytynyt
             {
                 string photourl = AddPhotoInContainer(Photo);
-                //eu.Photo = photourl;
+                eu.Photo = photourl;
                 da.CreateUser(eu);
                 return RedirectToAction("Index", "Home");
             }
@@ -143,5 +145,19 @@ namespace Loppuprojekti_AW.Controllers
             return RedirectToAction("Index", "Home");
         }
     }
-}
+        public static string Hash(string value)
+        {
+            var valueBytes = KeyDerivation.Pbkdf2(
+                                password: value,
+                                salt: Encoding.UTF8.GetBytes("Passw0rd"),
+                                prf: KeyDerivationPrf.HMACSHA512,
+                                iterationCount: 10000,
+                                numBytesRequested: 256 / 8);
+
+            return Convert.ToBase64String(valueBytes);
+        }
+
+        public static bool Validate(string value, string hash)
+            => Hash(value) == hash;
+    }
 }
