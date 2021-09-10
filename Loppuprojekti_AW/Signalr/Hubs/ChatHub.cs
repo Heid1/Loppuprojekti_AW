@@ -16,7 +16,9 @@ namespace Loppuprojekti_AW.Signalr.Hubs
         public async Task SendMessage(string userId, string message)
         {
             // Call the addNewMessageToPage method to update clients.
-            await Clients.All.SendAsync("ReceiveMessage", userId, message);
+            var sendDate = DateTime.Now;
+            var sendTime = sendDate.ToString("t");
+            await Clients.All.SendAsync("ReceiveMessage", userId, message, sendTime);
         }
 
         //public void saveMessagetoDB(string userId, string message)
