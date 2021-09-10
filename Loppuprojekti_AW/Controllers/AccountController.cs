@@ -18,12 +18,14 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Nimi = HttpContext.Session.GetString("username");
             return View();
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Epäonnistui = false;
             return View();
         }
 
@@ -31,8 +33,16 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult Create(Enduser eu)
         {
             DataAccess da = new DataAccess(_context);
-            da.CreateUser(eu);
-            return RedirectToAction("Index", "Home");
+            //try
+            //{
+                da.CreateUser(eu);
+                return RedirectToAction("Index", "Home");
+            //}
+            //catch (Exception)
+            //{
+                //ViewBag.Epäonnistui = true;
+                //return View();
+            //}
         }
 
         [HttpGet]
