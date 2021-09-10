@@ -40,8 +40,8 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Logout()
         {
-                HttpContext.Session.Clear();
-                return View();
+            HttpContext.Session.Clear();
+            return View();
         }
 
         [HttpGet]
@@ -77,7 +77,7 @@ namespace Loppuprojekti_AW.Controllers
         /// <param name="Photo"></param>
         /// <returns>string URL</returns>
         [HttpPost]
-        private string AddPhotoInContainer(IFormFile Photo)
+        private string AddPhotoInContainer(IFormFile Photo, string oldPhoto = null)
         {
             if (Photo == null)
             {
@@ -87,64 +87,73 @@ namespace Loppuprojekti_AW.Controllers
             StorageSharedKeyCredential accountCredentials = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
             BlobServiceClient serviceClient = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
             BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(blobName);
+
+            if (oldPhoto != null)
+            {
+                oldPhoto = oldPhoto.Substring(oldPhoto.LastIndexOf('/')+1);
+                var bc = containerClient.DeleteBlob(oldPhoto);
+            }
+
             string photoname = Guid.NewGuid().ToString();
             containerClient.UploadBlob(photoname, imageStream);
             BlobClient blob = containerClient.GetBlobClient(photoname);
             return blob.Uri.ToString();
         }
 
-    [HttpGet]
-    public IActionResult Profile()
-    {
-        var userid = HttpContext.Session.GetInt32("userid");
-        if (userid != null)
+        [HttpGet]
+        public IActionResult Profile()
         {
+            var userid = HttpContext.Session.GetInt32("userid");
+            if (userid != null)
+            {
+                var enduser = new DataAccess(_context).GetUserById(userid);
+                return View(enduser);
+            }
+            else
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Edit()//siirrytään tiettyyn palveluun uniikin palveluid perusteella, uusi muokkausnäkymä
+        {
+            var userid = HttpContext.Session.GetInt32("userid");
             var enduser = new DataAccess(_context).GetUserById(userid);
+            if (enduser == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
             return View(enduser);
         }
-        else
-        {
-            return RedirectToAction("Virhe", "Home");
-        }
-    }
-
-    [HttpGet]
-    public IActionResult Edit()//siirrytään tiettyyn palveluun uniikin palveluid perusteella, uusi muokkausnäkymä
-    {
-        var userid = HttpContext.Session.GetInt32("userid");
-        var enduser = new DataAccess(_context).GetUserById(userid);
-        if (enduser == null)
-        {
-            return RedirectToAction("Virhe", "Home");
-        }
-        return View(enduser);
-    }
 
 
-    [HttpPost] //editoidaan henkilöä ja lähetetaan se
-    public IActionResult Edit(Enduser Eu)
-    {
-        DataAccess da = new DataAccess(_context);
-        da.EditUser(Eu);
-        return RedirectToAction("Profile", new { Id = Eu.Userid });
-    }
+        [HttpPost] //editoidaan henkilöä ja lähetetaan se
+        public IActionResult Edit(Enduser Eu, IFormFile Photo)
+        {
+            DataAccess da = new DataAccess(_context);
+            string oldPhoto = da.GetCurrentPhotoUrl(Eu.Userid);
+            Eu.Photo = AddPhotoInContainer(Photo, oldPhoto);
+            da.EditUser(Eu);
+            return RedirectToAction("Profile", new { Id = Eu.Userid });
+        }
 
-    public IActionResult Delete(Enduser Eu)
-    {
-        var userid = HttpContext.Session.GetInt32("userid");
-        DataAccess da = new DataAccess(_context);
-        var enduser = da.GetUserById(userid);
-        if (enduser == null)
+        public IActionResult Delete(Enduser Eu)
         {
-            return RedirectToAction("Virhe", "Home");
+            var userid = HttpContext.Session.GetInt32("userid");
+            DataAccess da = new DataAccess(_context);
+            var enduser = da.GetUserById(userid);
+            if (enduser == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            else
+            {
+                da.DeleteUser(enduser);
+                HttpContext.Session.Clear();
+                return RedirectToAction("Index", "Home");
+            }
         }
-        else
-        {
-            da.DeleteUser(enduser);
-            HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
-        }
-    }
         public static string Hash(string value)
         {
             var valueBytes = KeyDerivation.Pbkdf2(

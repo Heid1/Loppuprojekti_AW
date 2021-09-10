@@ -70,6 +70,10 @@ namespace Loppuprojekti_AW
             db.Remove(Userdelete);
             db.SaveChanges();
         }
+        public string GetCurrentPhotoUrl(int userid)
+        {
+            return db.Endusers.Find(userid).Photo;
+        }
 
         // ----------------------- POSTS ----------------------------------------------
 
