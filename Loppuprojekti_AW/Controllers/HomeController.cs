@@ -36,7 +36,7 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult Index2()
         {
             DataAccess da = new DataAccess(_context);
-            ViewBag.ilmoitukset = da.
+            //ViewBag.ilmoitukset = da.
 
             return View();
         }
