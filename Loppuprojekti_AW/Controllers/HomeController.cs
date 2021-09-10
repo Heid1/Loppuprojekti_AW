@@ -24,6 +24,9 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
+            //DataAccess data = new DataAccess(_context);
+            //data.ReturnCoordinates("Rakuunantie 17");
+
             DataAccess da = new DataAccess(_context);
             var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
@@ -31,16 +34,17 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         //public IActionResult Index2()
-        //{ 
-        
-            //DataAccess data = new DataAccess(_context);
-            //data.ReturnCoordinates("Rakuunantie 17");
-            //return View();
+        //{
         //    DataAccess da = new DataAccess(_context);
         //    ViewBag.ilmoitukset = da.
 
         //    return View();
         //}
+
+        public IActionResult Azuremap()
+        {
+            return View();
+        }
 
         // NÄIHIN EN KEKSINYT HELPPOA RATKAISUA
         //public IActionResult SendFeedback()
