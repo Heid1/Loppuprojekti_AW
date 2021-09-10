@@ -20,7 +20,6 @@ namespace Loppuprojekti_AW
         // ----------------------- USER ----------------------------------------------
         public void CreateUser(Enduser Eu)
         {
-            MoveoContext db = new MoveoContext();
             db.Endusers.Add(Eu);
             db.SaveChanges();
         }

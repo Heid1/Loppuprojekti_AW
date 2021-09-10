@@ -5,15 +5,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Loppuprojekti_AW.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly string blobServiceEndpoint;
+        private readonly string storageAccountName;
+        private readonly string storageAccountKey;
+        private readonly string blobName;
+
         private readonly MoveoContext _context;
-        public AccountController(MoveoContext context)
+        public AccountController(MoveoContext context, IConfiguration configuration)
         {
             _context = context;
+            blobName = configuration["BlobName"];
+            storageAccountKey = configuration["StorageAccountKey"];
+            storageAccountName = configuration["StorageAccountName"];
+            blobServiceEndpoint = configuration["StorageEndPoint"];
         }
 
         public IActionResult Index()
@@ -28,11 +42,29 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Enduser eu)
+        public IActionResult Create(Enduser eu, IFormFile Photo)
         {
             DataAccess da = new DataAccess(_context);
+            string photourl = AddPhotoInContainer(Photo);
             da.CreateUser(eu);
             return RedirectToAction("Index", "Home");
+        }
+        //NÄMÄ LISÄTTY
+        [HttpPost]
+        private string AddPhotoInContainer(IFormFile Photo)
+        {
+            if (Photo == null)
+            {
+                return null;
+            }
+            using Stream imageStream = Photo.OpenReadStream();
+            StorageSharedKeyCredential accountCredentials = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+            BlobServiceClient serviceClient = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
+            BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(blobName);
+            string photoname = Guid.NewGuid().ToString();
+            containerClient.UploadBlob(photoname, imageStream);
+            BlobClient blob = containerClient.GetBlobClient(photoname);
+            return blob.Uri.ToString();
         }
 
         [HttpGet]
