@@ -26,13 +26,13 @@ namespace Loppuprojekti_AW.Controllers
         {
             //DataAccess data = new DataAccess(_context);
             //data.ReturnCoordinates("Rakuunantie 17");
+            //return View();
 
             DataAccess da = new DataAccess(_context);
             var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
             return View();
         }
-
         public IActionResult Index2()
         {
             DataAccess da = new DataAccess(_context);
@@ -41,10 +41,6 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
-        public IActionResult Azuremap()
-        {
-            return View();
-        }
 
         public IActionResult Login()
         {
@@ -52,18 +48,23 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string Email)
+        public IActionResult Login(string Email, string Password)
         {
-            var user = _context.Endusers.Where(u => u.Email == Email).FirstOrDefault();
+            Enduser Eu = _context.Endusers.Where(u => u.Email == Email && u.Password == Password).FirstOrDefault();
 
-            if (user != null)
+            if (Eu != null)
             {
-                HttpContext.Session.SetInt32("userid", user.Userid);
-                HttpContext.Session.SetString("userrole", user.Userrole);
+                HttpContext.Session.SetInt32("userid", Eu.Userid);
+                HttpContext.Session.SetString("username", Eu.Username);
+                HttpContext.Session.SetString("userrole", Eu.Userrole);
+                return RedirectToAction("Index", "Account");
+            }
+            else
+            {
+                //ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
+                ViewBag.AuthOK = false;
                 return View();
             }
-            ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
-            return RedirectToAction("Index");
 
         }
 
