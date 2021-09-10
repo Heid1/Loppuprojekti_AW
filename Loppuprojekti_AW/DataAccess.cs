@@ -99,12 +99,17 @@ namespace Loppuprojekti_AW
             return db.Posts.Find(postid);
         }
 
+        public List<Post> GetAllPosts()
+        {
+            return db.Posts.Where(p => p.Place != null).ToList();
+        }
+
         /// <summary>
         /// Hakee kaikki ilmoitukset, jotka käyttäjä on luonut tai liittynyt parametrien arvojen mukaan.
         /// </summary>
         /// <param name="userid">käyttäjä</param>
         /// <param name="organiser">järjestäjä=true, ilmoittautunut=false</param>
-        /// <returns></returns>
+        /// <returns>Lista ilmoituksista</returns>
         public List<Post> GetPostsByAttendance(int userid, bool organiser)
         {
             var posts = from p in db.Posts
@@ -224,6 +229,7 @@ namespace Loppuprojekti_AW
             db.Remove(sport);
             db.SaveChanges();
         }
+
         public List<UsersSport> FindUsersSports(int? userid)
         {
             if (userid == null)
