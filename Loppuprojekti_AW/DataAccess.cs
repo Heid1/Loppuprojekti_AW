@@ -104,8 +104,6 @@ namespace Loppuprojekti_AW
                          join a in db.Attendees on p.Postid equals a.Postid
                          where a.Userid == userid && a.Organiser == organiser
                          select p;
-            //var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
-            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
             return posts.ToList();
         }
 
