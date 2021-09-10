@@ -26,22 +26,18 @@ namespace Loppuprojekti_AW.Controllers
         {
             //DataAccess data = new DataAccess(_context);
             //data.ReturnCoordinates("Rakuunantie 17");
+            //return View();
 
             DataAccess da = new DataAccess(_context);
             var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
             return View();
         }
-
         public IActionResult Index2()
         {
             return View();
         }
 
-        public IActionResult Azuremap()
-        {
-            return View();
-        }
 
         public IActionResult Login()
         {
@@ -49,9 +45,9 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(string Username)
+        public async Task<IActionResult> Login(string Email, string Password)
         {
-            var user = _context.Endusers.Where(u => u.Username == Username).FirstOrDefault();
+            var user = _context.Endusers.Where(u => u.Email == Email).FirstOrDefault();
 
             if (user != null)
             {
