@@ -102,7 +102,7 @@ namespace Loppuprojekti_AW
         /// </summary>
         /// <param name="userid">käyttäjä</param>
         /// <param name="organiser">järjestäjä=true, ilmoittautunut=false</param>
-        /// <returns></returns>
+        /// <returns>Lista ilmoituksista</returns>
         public List<Post> GetPostsByAttendance(int userid, bool organiser)
         {
             var posts = from p in db.Posts
@@ -222,6 +222,7 @@ namespace Loppuprojekti_AW
             db.Remove(sport);
             db.SaveChanges();
         }
+
         public List<UsersSport> FindUsersSports(int? userid)
         {
             if (userid == null)
