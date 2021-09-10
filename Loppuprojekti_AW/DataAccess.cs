@@ -35,16 +35,23 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public static Enduser GetUserById(int ?Identity)
+        public bool GetUsersByEmail(string email)
         {
-            MoveoContext db = new MoveoContext();
-            var Enduser = db.Endusers.Find(Identity);
+            if (db.Endusers.Where(eu => eu.Email == email).FirstOrDefault() != null) //jos kannasta löytyy vastaavaavuus eli ei null
+            {
+                return true; //palauta true, löytyy
+            }
+            return false;
+        }
+
+        public Enduser GetUserById(int? userid)
+        {
+            var Enduser = db.Endusers.Find(userid);
             return Enduser;
         }
 
-        public static void EditUser(Enduser Eu)
+        public void EditUser(Enduser Eu)
         {
-            MoveoContext db = new MoveoContext();
             var edit = db.Endusers.Find(Eu.Userid);
             edit.Userid = Eu.Userid;
             edit.Username = Eu.Username;
@@ -54,13 +61,11 @@ namespace Loppuprojekti_AW
             edit.UsersSports = Eu.UsersSports;
             edit.Club = Eu.Club;
             edit.Photo = Eu.Photo;
-
             db.SaveChanges();
         }
 
-        public static void DeleteUser(Enduser Eu)
+        public void DeleteUser(Enduser Eu)
         {
-            MoveoContext db = new MoveoContext();
             var Userdelete = db.Endusers.Find(Eu.Userid);
             db.Remove(Userdelete);
             db.SaveChanges();
