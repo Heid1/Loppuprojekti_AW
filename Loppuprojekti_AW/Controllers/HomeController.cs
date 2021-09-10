@@ -24,60 +24,23 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
-            //DataAccess data = new DataAccess(_context);
-            //data.ReturnCoordinates("Rakuunantie 17");
-
             DataAccess da = new DataAccess(_context);
             var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
             return View();
         }
 
-        public IActionResult Index2()
-        {
-            return View();
-        }
+        //public IActionResult Index2()
+        //{ 
+        
+            //DataAccess data = new DataAccess(_context);
+            //data.ReturnCoordinates("Rakuunantie 17");
+            //return View();
+        //    DataAccess da = new DataAccess(_context);
+        //    ViewBag.ilmoitukset = da.
 
-        public IActionResult Azuremap()
-        {
-            return View();
-        }
-
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(string Email)
-        {
-            var user = _context.Endusers.Where(u => u.Email == Email).FirstOrDefault();
-
-            if (user != null)
-            {
-                HttpContext.Session.SetInt32("userid", user.Userid);
-                HttpContext.Session.SetString("userrole", user.Userrole);
-                return View();
-            }
-            ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
-            return RedirectToAction("Index");
-
-        }
-
-        public IActionResult Profile()
-        {
-            var id = HttpContext.Session.GetInt32("userid");
-            var enduser = DataAccess.GetUserById(id);
-
-            return View(enduser);
-        }
-
-        public IActionResult ProfileEdit(Enduser Eu)
-        {
-            DataAccess.EditUser(Eu);
-
-            return View(Eu);
-        }
+        //    return View();
+        //}
 
         // NÄIHIN EN KEKSINYT HELPPOA RATKAISUA
         //public IActionResult SendFeedback()
