@@ -6,8 +6,11 @@
 
 <h1>Create</h1>
 
-<h4>Enduser</h4>
 <hr />
+@if(ViewBag.Epäonnistui)
+            {
+<h2 style="color: red">Käyttäjätunnus varattu, yritä uudelleen!</h2>
+            }
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">

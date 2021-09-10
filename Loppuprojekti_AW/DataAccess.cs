@@ -17,10 +17,20 @@ namespace Loppuprojekti_AW
         {
             db = data;
         }
+
         // ----------------------- USER ----------------------------------------------
+
+        public bool TarkistaKäyttäjänAuth(string username, string password)
+        {
+            if (db.Endusers.Where(k => k.Username == username).FirstOrDefault() != null && db.Endusers.Where(k => k.Username == username).FirstOrDefault().Password == password)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void CreateUser(Enduser Eu)
         {
-            MoveoContext db = new MoveoContext();
             db.Endusers.Add(Eu);
             db.SaveChanges();
         }
@@ -28,9 +38,7 @@ namespace Loppuprojekti_AW
         public static Enduser GetUserById(int ?Identity)
         {
             MoveoContext db = new MoveoContext();
-
             var Enduser = db.Endusers.Find(Identity);
-
             return Enduser;
         }
 
@@ -38,7 +46,6 @@ namespace Loppuprojekti_AW
         {
             MoveoContext db = new MoveoContext();
             var edit = db.Endusers.Find(Eu.Userid);
-
             edit.Userid = Eu.Userid;
             edit.Username = Eu.Username;
             edit.Birthday = Eu.Birthday;

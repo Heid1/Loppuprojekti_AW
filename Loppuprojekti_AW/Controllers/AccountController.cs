@@ -33,16 +33,17 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult Create(Enduser eu)
         {
             DataAccess da = new DataAccess(_context);
-            //try
-            //{
+            try
+            {
                 da.CreateUser(eu);
                 return RedirectToAction("Index", "Home");
-            //}
-            //catch (Exception)
-            //{
-                //ViewBag.Epäonnistui = true;
-                //return View();
-            //}
+            }
+
+            catch (Exception)
+            {
+                ViewBag.Epäonnistui = true;
+                return View();
+            }
         }
 
         [HttpGet]
@@ -78,7 +79,6 @@ namespace Loppuprojekti_AW.Controllers
         {
             DataAccess.EditUser(Eu);
             return View(Eu);
-
         }
 
         public IActionResult Delete(Enduser Eu)
