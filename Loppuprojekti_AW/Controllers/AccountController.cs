@@ -16,9 +16,14 @@ namespace Loppuprojekti_AW.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task <IActionResult> Index()
         {
-            ViewBag.Nimi = HttpContext.Session.GetString("username");
+            DataAccess da = new DataAccess(_context);
+            var userid = HttpContext.Session.GetInt32("userid");
+            ViewBag.Username = HttpContext.Session.GetString("username");
+
+            ViewBag.UserOwnPosts = await Task.Run(() => da.GetUserPosts(userid));
+            ViewBag.UserAttendenceToday = await Task.Run(() => da.GetOtherPostsByAttendanceToday(userid));
             return View();
         }
 
