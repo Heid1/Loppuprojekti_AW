@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <title>Add Map</title>
@@ -12,8 +13,163 @@
             /* The width is the width of the web page */
         }
     </style>
+    @*<script>
+            // Initialize and add the map
+
+            const nimi = @ViewBag.nimi;
+            const posts = @ViewBag.Posts;
+            function initMap() {
+
+
+                var paikka4 = {
+                    lat: 60.1623901,
+                    lng: 24.931080
+                };
+
+                var paikka3 = {
+                    lat: 60.1673901,
+                    lng: 24.937080
+                };
+
+                var paikka2 = {
+                    lat: 60.1673901,
+                    lng: 24.911080
+                };
+
+                var paikka1 = {
+                    lat: 60.1677901,
+                    lng: 24.931080
+                };
+
+                const paikat = [paikka1, paikka2, paikka3, paikka4];
+
+                var paini = {
+                    url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
+                    scaledSize: new google.maps.Size(50, 50), // scaled size
+
+                };
+
+
+                // The location of Kamppi
+                const kamppi = { lat: 60.167390, lng: 24.931080 };
+                // The map, centered at kamppi
+                const map = new google.maps.Map(document.getElementById("map"), {
+                    zoom: 11.5,
+                    center: kamppi,
+                });
+
+
+
+                ///metodi ottaa aikaisemman listan ja luo markkerit+infoikkunan
+                //function populate() {
+
+
+                //    for (var i = 0; i < Posts.length; i++) {
+
+                //        var description = Posts[i].Description;
+                //        var postname = Posts[i].Postname;
+
+
+                //        var lat = Posts[i].Latitude;
+                //        var lng = Posts[i].Longitude;
+
+                //        const location = {
+                //            lat: lat,
+                //            lng: lng
+                //        };
+
+
+                //        const content = '<div id="content">' +
+                //            '<div id="infoWindow">' +
+                //            "</div>" +
+
+                //            '<h1 id="firstHeading" class="firstHeading">' + postname + '</h1>' +
+                //            '<div id="bodyContent">' +
+                //            '<div width:20%;"><img src="https://st3.depositphotos.com/4297569/18992/i/950/depositphotos_189928686-stock-photo-attractive-white-guy-smiling-at.jpg" width="120" height="80"/></div>' +
+                //            "<p><b>" + description + "</p > " +
+                //             +
+                //            "</div>" +
+                //            "</div>";
+
+                //        const marker = new google.maps.Marker({
+                //            position: location,
+                //            map: map,
+                //            icon: paini
+                //        });
+
+                //        const infowindow = new google.maps.InfoWindow({
+                //            content: content,
+                //        });
+                //        marker.addListener("click", () => {
+                //    infowindow.open(marker.get("map"), marker);
+                //         });
+
+
+                //    }
+
+                //}
+
+              function populate() {
+
+
+                    for (var i = 0; i < paikat.length; i++) {
+
+                        const content = '<div id="content">' +
+                            '<div id="siteNotice">' +
+                            "</div>" +
+
+                            '<h1 id="firstHeading" class="firstHeading">tarjoaa Yksitysitunteja!</h1>' +
+                            '<div id="bodyContent">' +
+                            '<div width:20%;"><img src="https://st3.depositphotos.com/4297569/18992/i/950/depositphotos_189928686-stock-photo-attractive-white-guy-smiling-at.jpg" width="120" height="80"/></div>' +
+                            "<p><b>Minä olen Jaakko!</b>, Jaakko on nimitetty suomen nopeimmaksi tanssijaksi 3 vuotta putkeen ja nyt hän tarjoaa yksityistunteja aloittelijoille</p > " +
+                            +
+                            "</div>" +
+                            "</div>";
+
+                        const marker = new google.maps.Marker({
+                            position: paikat[i],
+                            map: map,
+                            icon: paini
+                        });
+
+                        const infowindow = new google.maps.InfoWindow({
+                            content: content,
+                        });
+                        marker.addListener("click", () => {
+                            infowindow.open(marker.get("map"), marker);
+                        });
+
+
+                    }
+
+                }
+
+
+                //marker.addListener("click", () => {
+                //    map.setZoom(15);
+                //    map.setCenter(marker.getPosition());
+                //});
+
+                populate();
+
+            }
+        </script>*@
+</head>
+<body>
+    <h3>Jiihaa</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+
+    <script>
+
+        var lista = '@ViewBag.jsonlist';
+        var lista2 = JSON.parse(lista);
+
+        console.log(lista2);
+    </script>
     <script>
         // Initialize and add the map
+         
         function initMap() {
 
             var paikka4 = {
@@ -41,7 +197,7 @@
             var paini = {
                 url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
-                
+
             };
 
 
@@ -52,60 +208,60 @@
                 zoom: 11.5,
                 center: kamppi,
             });
-            ///metodi ottaa aikaisemman listan ja luo markkerit+infoikkunan
-            function populate() {
 
-                
-                for (var i = 0; i < paikat.length; i++) {
 
-                    const content = '<div id="content">' +
-                        '<div id="siteNotice">' +
-                        "</div>" +
-     
-                        '<h1 id="firstHeading" class="firstHeading">Jaakko tarjoaa Yksitysitunteja!</h1>' +
-                        '<div id="bodyContent">' +
-                        '<div width:20%;"><img src="https://st3.depositphotos.com/4297569/18992/i/950/depositphotos_189928686-stock-photo-attractive-white-guy-smiling-at.jpg" width="120" height="80"/></div>'+
-                        "<p><b>Minä olen Jaakko!</b>, Jaakko on nimitetty suomen nopeimmaksi tanssijaksi 3 vuotta putkeen ja nyt hän tarjoaa yksityistunteja aloittelijoille</p > " +
-                         +
-                        "</div>" +
-                        "</div>";
 
-                    const marker = new google.maps.Marker({
-                        position: paikat[i],
-                        map: map,
-                        icon: paini
-                    });
+            //function populate() {
 
-                    const infowindow = new google.maps.InfoWindow({
-                        content: content,
-                    });
-                    marker.addListener("click", () => {
-                infowindow.open(marker.get("map"), marker);
-                     });
 
-                   
-                }
-                
-            }
+            //       for (var i = 0; i < Paikat.length; i++) {
 
-            
+            //           const content = '<div id="content">' +
+            //               '<div id="siteNotice">' +
+            //               "</div>" +
+
+            //               '<h1 id="firstHeading" class="firstHeading">tarjoaa Yksitysitunteja!</h1>' +
+            //               '<div id="bodyContent">' +
+            //               '<div width:20%;"><img src="https://st3.depositphotos.com/4297569/18992/i/950/depositphotos_189928686-stock-photo-attractive-white-guy-smiling-at.jpg" width="120" height="80"/></div>' +
+            //               "<p><b>Minä olen Jaakko!</b>, Jaakko on nimitetty suomen nopeimmaksi tanssijaksi 3 vuotta putkeen ja nyt hän tarjoaa yksityistunteja aloittelijoille</p > " +
+            //               +
+            //               "</div>" +
+            //               "</div>";
+
+            //           const marker = new google.maps.Marker({
+            //               position: paikat[i],
+            //               map: map,
+            //               icon: paini
+            //           });
+
+            //           const infowindow = new google.maps.InfoWindow({
+            //               content: content,
+            //           });
+
+            //           marker.addListener("click", () => {
+            //               infowindow.open(marker.get("map"), marker);
+            //          });
+
+
+            //         }
+
+            //}
+
+            ///-------------- metodin LOPPU
+
             //marker.addListener("click", () => {
             //    map.setZoom(15);
             //    map.setCenter(marker.getPosition());
             //});
-            
 
-            populate();
-        }
+           populate();
+            var lista = '@ViewBag.jsonlist';
+            var lista2 = JSON.Parse(lista);
+    }
     </script>
-</head>
-<body>
-    <h3>ilmoitukset</h3>
-    <!--The div element for the map -->
-    <div id="map"></div>
-
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw&callback=initMap&libraries=&v=weekly"
-            async></script>
+            ></script>
+
 </body>
 </html>

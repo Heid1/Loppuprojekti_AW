@@ -1,13 +1,11 @@
 ﻿using Loppuprojekti_AW.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-
+using Newtonsoft.Json;
 
 namespace Loppuprojekti_AW.Controllers
 {
@@ -24,9 +22,7 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
-            //DataAccess data = new DataAccess(_context);
-            //data.ReturnCoordinates("Rakuunantie 17");
-
+          
             DataAccess da = new DataAccess(_context);
             var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
@@ -36,7 +32,15 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult Index2()
         {
             DataAccess da = new DataAccess(_context);
-            ViewBag.ilmoitukset = da.
+
+            var lista = da.GetAllPosts();
+            if(da.GetAllPosts() != null)
+            {
+                ViewBag.Posts = da.GetAllPosts();
+            } else { ViewBag.Posts = "ei oo";  }
+
+            var json = JsonConvert.SerializeObject(lista);
+            ViewBag.jsonlist = json;
 
             return View();
         }

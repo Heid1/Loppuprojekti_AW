@@ -92,6 +92,7 @@ namespace Loppuprojekti_AW
             return db.Posts.Find(postid);
         }
 
+
         public List<Post> GetAllPosts()
         {
             return db.Posts.Where(p => p.Place != null).ToList();
