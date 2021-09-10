@@ -260,5 +260,13 @@ namespace Loppuprojekti_AW
             messagesWithUsers = db.Endusers.Where(u => messagesWithIds.Contains(u.Userid)).ToList();
             return messagesWithUsers;
         }
+
+        
+        //public void AddNewMessageToDatabase(Message msg)
+        //{
+            
+        //    db.Messages.Add(msg);
+        //    db.SaveChanges();
+        //}
     }
 }
