@@ -53,11 +53,27 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult Create(Enduser eu, IFormFile Photo)
         {
             DataAccess da = new DataAccess(_context);
-            string photourl = AddPhotoInContainer(Photo);
-            da.CreateUser(eu);
-            return RedirectToAction("Index", "Home");
+            bool result = da.GetUsersByEmail(eu.Email); //boolin result on joko false tai true
+
+            if (result == false) //jos result on sama kuin false eli vastaavuutta ei löytynyt
+            {
+                string photourl = AddPhotoInContainer(Photo);
+                //eu.Photo = photourl;
+                da.CreateUser(eu);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ViewBag.Epäonnistui = true;
+                return View();
+            }
         }
-        //NÄMÄ LISÄTTY
+
+        /// <summary>
+        /// Lisää kuvan Blobiin ja palauttaa kuvan URL:n
+        /// </summary>
+        /// <param name="Photo"></param>
+        /// <returns>string URL</returns>
         [HttpPost]
         private string AddPhotoInContainer(IFormFile Photo)
         {
@@ -74,35 +90,6 @@ namespace Loppuprojekti_AW.Controllers
             BlobClient blob = containerClient.GetBlobClient(photoname);
             return blob.Uri.ToString();
         }
-
-        [HttpGet]
-        public IActionResult Profile()
-        {
-            var userid = HttpContext.Session.GetInt32("userid");
-            if (userid != null)
-            {
-                var enduser = DataAccess.GetUserById(userid);
-                return View(enduser);
-            }
-            else
-            {
-                return RedirectToAction("Virhe", "Home");
-            }
-        }
-            bool result = da.GetUsersByEmail(eu.Email); //boolin result on joko false tai true
-
-            if (result == false) //jos result on sama kuin false eli vastaavuutta ei löytynyt
-            {
-                da.CreateUser(eu);
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ViewBag.Epäonnistui = true;
-                return View();
-            }
-        }
-    
 
     [HttpGet]
     public IActionResult Profile()
