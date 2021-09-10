@@ -20,7 +20,7 @@ namespace Loppuprojekti_AW
 
         // ----------------------- USER ----------------------------------------------
 
-        public bool TarkistaKäyttäjänAuth(string username, string password)
+        public bool CheckUserAuthority(string username, string password)
         {
             if (db.Endusers.Where(k => k.Username == username).FirstOrDefault() != null && db.Endusers.Where(k => k.Username == username).FirstOrDefault().Password == password)
             {
@@ -112,6 +112,30 @@ namespace Loppuprojekti_AW
         public List<Post> GetAllPosts()
         {
             return db.Posts.Where(p => p.Place != null).ToList();
+        }
+
+        public List<Post> GetUserPosts(int? userid)
+        {
+            DateTime today = DateTime.Now.AddHours(24);
+            bool organiser = true;
+            var organizingtoday = (from p in db.Posts
+                                  join a in db.Attendees on p.Postid equals a.Postid
+                                  where a.Userid == userid && a.Organiser == organiser
+                                  where p.Date <= today
+                                  select p).ToList();
+            return organizingtoday;
+        }
+
+        public List<Post> GetOtherPostsByAttendanceToday(int? userid)
+        {
+            DateTime today = DateTime.Now.AddHours(24);
+            bool organiser = false;
+            var attendingtoday = (from p in db.Posts
+                                  join a in db.Attendees on p.Postid equals a.Postid
+                                  where a.Userid == userid && a.Organiser == organiser
+                                  where p.Date <= today
+                                  select p).ToList();
+            return attendingtoday;
         }
 
         /// <summary>
