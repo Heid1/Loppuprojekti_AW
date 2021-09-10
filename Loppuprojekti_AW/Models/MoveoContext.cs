@@ -89,6 +89,7 @@ namespace Loppuprojekti_AW.Models
                 entity.Property(e => e.Photo)
                     .HasMaxLength(500)
                     .IsUnicode(false)
+                    .HasColumnName("description")
                     .HasColumnName("photo");
 
                 entity.Property(e => e.Username)
