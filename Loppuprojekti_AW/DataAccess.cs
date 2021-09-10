@@ -92,6 +92,11 @@ namespace Loppuprojekti_AW
             return db.Posts.Find(postid);
         }
 
+        public List<Post> GetAllPosts()
+        {
+            return db.Posts.Where(p => p.Place != null).ToList();
+        }
+
         /// <summary>
         /// Hakee kaikki ilmoitukset, jotka käyttäjä on luonut tai liittynyt parametrien arvojen mukaan.
         /// </summary>
