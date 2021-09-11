@@ -19,41 +19,41 @@ namespace Loppuprojekti_AW.Signalr.Hubs
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
 
-        public override Task OnConnected()
-        {
-            // Get UserID. Assumed the user is logged before connecting to chat and userid is saved in session.
-            string UserID = (string)HttpContext.Current.Session["userid"];
+        //public override Task OnConnected()
+        //{
+        //    // Get UserID. Assumed the user is logged before connecting to chat and userid is saved in session.
+        //    string UserID = (string)HttpContext.Current.Session["userid"];
           
-            // Get ChatHistory and call the client function. See below
-            this.GetHistory(UserID);
+        //    // Get ChatHistory and call the client function. See below
+        //    this.GetHistory(UserID);
 
-            // Get ConnID
-            string ConnID = Context.ConnectionId;
+        //    // Get ConnID
+        //    string ConnID = Context.ConnectionId;
 
-            // Save them in DB. You got to create a DB class to handle this. (Optional)
-            DB.UpdateConnID(UserID, ConnID);
-        }
+        //    // Save them in DB. You got to create a DB class to handle this. (Optional)
+        //    DB.UpdateConnID(UserID, ConnID);
+        //}
 
-        private void GetHistory(UserID)
-        {
-            // Get Chat History from DB. You got to create a DB class to handle this.
-            string History = DB.GetChatHistory(UserID);
+        //private void GetHistory(UserID)
+        //{
+        //    // Get Chat History from DB. You got to create a DB class to handle this.
+        //    string History = DB.GetChatHistory(UserID);
 
-            // Send Chat History to Client. You got to create chatHistory handler in Client side.
-            Clients.Caller.chatHistory(History);
-        }
+        //    // Send Chat History to Client. You got to create chatHistory handler in Client side.
+        //    Clients.Caller.chatHistory(History);
+        //}
 
-        // This method is to be called by Client 
-        public void Chat(string Message)
-        {
-            // Get UserID. Assumed the user is logged before connecting to chat and userid is saved in session.
-            string UserID = (string)HttpContext.Current.Session["userid"];
+        //// This method is to be called by Client 
+        //public void Chat(string Message)
+        //{
+        //    // Get UserID. Assumed the user is logged before connecting to chat and userid is saved in session.
+        //    string UserID = (string)HttpContext.Current.Session["userid"];
 
-            // Save Chat in DB. You got to create a DB class to handle this
-            DB.SaveChat(UserID, Message);
+        //    // Save Chat in DB. You got to create a DB class to handle this
+        //    DB.SaveChat(UserID, Message);
 
-            // Send Chat Message to All connected Clients. You got to create chatMessage handler in Client side.
-            Clients.All.chatMessage(Message);
-        }
+        //    // Send Chat Message to All connected Clients. You got to create chatMessage handler in Client side.
+        //    Clients.All.chatMessage(Message);
+        //}
     }
 }
