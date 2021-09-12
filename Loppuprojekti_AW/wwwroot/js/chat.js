@@ -1,53 +1,14 @@
 ﻿"use strict";
 
-////var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
-//////Disable send button until connection is established
-////document.getElementById("sendButton").disabled = true;
-
-////connection.on("ReceiveMessage", function (user, message, sendTime) {
-////    var li = document.createElement("li");
-////    document.getElementById("messagesList").appendChild(li);
-////    // We can assign user-supplied strings to an element's textContent because it
-////    // is not interpreted as markup. If you're assigning in any other way, you 
-////    // should be aware of possible script injection concerns.
-////    li.textContent = `${sendTime} ${user}: ${message}`;
-////    //:${sendTime.getHours()}:${sendTime.getMinutes()}
-////});
-
-////connection.start().then(function () {
-////    document.getElementById("sendButton").disabled = false;
-////}).catch(function (err) {
-////    return console.error(err.toString());
-////});
-
-////document.getElementById("sendButton").addEventListener("click", function (event) {
-////    //var user = document.getElementById("userInput").value;
-////    var user = "1";
-////    var message = document.getElementById("messageInput").value;
-////    connection.invoke("SendMessage", user, message).catch(function (err) {
-////        return console.error(err.toString());
-////    });
-////    event.preventDefault();
-////});
-
-
-
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
+// attempt to set scrollbar to bottom of the page
 //document.getElementsByClassName('px-4 py-5 chat-box bg-white')[0].scrollTop = document.getElementsByClassName('px-4 py-5 chat-box bg-white')[0].scrollHeight;
 
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
-connection.on("ReceiveMessage", function (user, message, sendTime, sendDate) {
-    /*var li = document.createElement("li");
-    document.getElementById("messagesList").appendChild(li);
-    // We can assign user-supplied strings to an element's textContent because it
-    // is not interpreted as markup. If you're assigning in any other way, you 
-    // should be aware of possible script injection concerns.
-    li.textContent = `${sendTime} ${user}: ${message}`;*/
-
+connection.on("ReceiveMessage", function (userId, message, sendTime, sendDate) {
 
     var div1 = document.createElement('div');
     div1.className = 'media w-50 ml-auto mb-3';
@@ -72,6 +33,7 @@ connection.on("ReceiveMessage", function (user, message, sendTime, sendDate) {
     div1.appendChild(div2);
     document.getElementById("chatBox").appendChild(div1);
 
+    // example structure of one message created above
     //<div class="media w-50 ml-auto mb-3">
     //    <div class="media-body">
     //        <div class="bg-primary rounded py-2 px-3 mb-2">
@@ -91,11 +53,12 @@ connection.start().then(function () {
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
     //var user = document.getElementById("userInput").value;
-
-    var user = "1";
+    
+    var userId = "44";
+    var senderId = document.get
     var message = document.getElementById("messageInput").value;
     document.getElementById("messageInput").value = '';
-    connection.invoke("SendMessage", user, message).catch(function (err) {
+    connection.invoke("SendMessage", userId, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();

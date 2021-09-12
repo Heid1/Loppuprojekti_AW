@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-
-
-
 using System.Web;
 using Microsoft.AspNetCore.Http;
 
@@ -15,12 +12,13 @@ namespace Loppuprojekti_AW.Signalr.Hubs
     {
         public async Task SendMessage(string userId, string message)
         {
-            // Call the addNewMessageToPage method to update clients.
             var sendDate = DateTime.Now;
             var sendTime = sendDate.ToString("t");
             var sDate = sendDate.ToString("dd.M.yyyy");
             await Clients.All.SendAsync("ReceiveMessage", userId, message, sendTime, sDate);
         }
+
+
 
         //public void saveMessagetoDB(string userId, string message)
         //{
@@ -35,6 +33,7 @@ namespace Loppuprojekti_AW.Signalr.Hubs
         //{
         //    // Get UserID. Assumed the user is logged before connecting to chat and userid is saved in session.
         //    string UserID = (string)HttpContext.Current.Session["userid"];
+
 
         //    // Get ChatHistory and call the client function. See below
         //    this.GetHistory(UserID);
