@@ -20,9 +20,10 @@ namespace Loppuprojekti_AW.Models
         public DateTime? Birthday { get; set; }
         public string Userrole { get; set; }
         public string Description { get; set; }
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
         public string Club { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
 
         public virtual ICollection<Attendee> Attendees { get; set; }
         public virtual ICollection<Message> MessageReceivers { get; set; }

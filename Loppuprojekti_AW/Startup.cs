@@ -1,3 +1,4 @@
+using Google.Maps;
 using Loppuprojekti_AW.Models;
 using Loppuprojekti_AW.Signalr.Hubs;
 using Microsoft.AspNetCore.Builder;
@@ -32,22 +33,10 @@ namespace Loppuprojekti_AW
                    options.UseSqlServer(Configuration.GetConnectionString("azure")));
             services.AddControllersWithViews();
             services.AddSession();
+            GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw"));
 
             //hubs
             services.AddSignalR();
-
-            //googlea varten tarvitaan identity
-
-            //tässä tulee googlen oauth
-            //services.AddAuthentication()
-            //    .AddGoogle(options => {
-            //        IConfigurationSection googleAuthNSection =
-            //            Configuration.GetSection("Authentication:Google");
-
-            //        options.ClientId = googleAuthNSection["ClientId"];
-            //        options.ClientSecret = googleAuthNSection["ClientSecret"];
-            //    });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

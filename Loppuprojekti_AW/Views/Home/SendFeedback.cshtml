@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Lähetä palautetta";
+}
+
+<h1>Lähetä palautetta</h1>
+
+<hr />
+@using (Html.BeginForm("CreateMessage", "Messages", FormMethod.Post))
+{
+    <p>Comment: @Html.TextBox("Text")</p>
+    <input type="submit" value="Lähetä" />
+}
+
+<div>
+    <a asp-action="Index">Takaisin...</a>
+</div>
+

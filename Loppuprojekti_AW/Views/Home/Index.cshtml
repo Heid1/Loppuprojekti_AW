@@ -5,13 +5,13 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
 
-    @*@if (ViewBag.CommonPosts != null)
-    {
-        <ul class="cloud" role="navigation" aria-label="Moveo lajien sanapilvi">
-            @foreach (var item in ViewBag.CommonPosts)
+    @if (ViewBag.CommonPosts != null)
+        {
+    <ul class="cloud" role="navigation" aria-label="Webdev tag cloud">
+        @foreach (var post in ViewBag.CommonPosts)
             {
-                <li>@item.Sportname</li>
-            }
-        </ul>
-    }*@
+        <li class="pilvilinkki"> @Html.ActionLink($"{post.Sportname}", "GetPostBySportId", "Search", new {id = post.Sportid })</li>
+    }
+    </ul>
+    }
 </div>

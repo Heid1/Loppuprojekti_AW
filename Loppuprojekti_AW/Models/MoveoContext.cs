@@ -24,15 +24,6 @@ namespace Loppuprojekti_AW.Models
         public virtual DbSet<Sport> Sports { get; set; }
         public virtual DbSet<UsersSport> UsersSports { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("");
-//            }
-//        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
@@ -89,7 +80,17 @@ namespace Loppuprojekti_AW.Models
                     .IsUnicode(false)
                     .HasColumnName("email");
 
-                entity.Property(e => e.Photo).HasColumnName("photo");
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(300)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.Photo)
+                    .HasMaxLength(500)
+                    .IsUnicode(false)
+                    .HasColumnName("description")
+                    .HasColumnName("photo");
 
                 entity.Property(e => e.Username)
                     .IsRequired()
