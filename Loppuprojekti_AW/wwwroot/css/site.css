@@ -133,11 +133,35 @@ body {
     font-size: 0.9rem;
 }
 
-.messages-box,
-.chat-box {
+.conversations-box {
+    height: 510px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.messages-box {
     height: 510px;
     overflow-y: scroll;
 }
+
+.chat-box {
+    height: 510px;
+    overflow-y: scroll;
+    /* display: flex;
+    flex-direction: column-reverse;*/
+}
+/*#chatArea {
+    height: 510px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+}*/
+
+/*#typingArea{
+    position:absolute;
+    bottom: 0;
+}*/
 
 .rounded-lg {
     border-radius: 0.5rem;
@@ -146,5 +170,12 @@ body {
 input::placeholder {
     font-size: 0.9rem;
     color: #999;
+}
+
+#newConversationButton {
+    text-align: center;
+    position: absolute;
+    top: 5px;
+    right: 15px;
 }
 
