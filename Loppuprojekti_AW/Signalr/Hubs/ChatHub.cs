@@ -18,7 +18,8 @@ namespace Loppuprojekti_AW.Signalr.Hubs
             // Call the addNewMessageToPage method to update clients.
             var sendDate = DateTime.Now;
             var sendTime = sendDate.ToString("t");
-            await Clients.All.SendAsync("ReceiveMessage", userId, message, sendTime);
+            var sDate = sendDate.ToString("dd.M.yyyy");
+            await Clients.All.SendAsync("ReceiveMessage", userId, message, sendTime, sDate);
         }
 
         //public void saveMessagetoDB(string userId, string message)
