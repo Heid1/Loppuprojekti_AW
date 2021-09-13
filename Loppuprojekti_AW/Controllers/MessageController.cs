@@ -21,15 +21,17 @@ namespace Loppuprojekti_AW.Controllers
         {
             //ViewData["messages"] = _data.GetMessagesOfUser(userId);
             //ViewData["users"] = _data.GetUsersMessagedWith(userId);
-            //return View(ViewData);
             int? userId = HttpContext.Session.GetInt32("userid");
             if (userId == null)
             {
                 return RedirectToAction("Virhe", "Home");
             }
-            
+            string userName = _data.GetUserById(userId).Username;
+            var usersMessagedWith = _data.GetUsersMessagedWith((int)userId);
+
             ViewData["currentUserId"] = userId.Value;
-            //ViewData["usersMessagedWith"] = _data.GetUsersMessagedWith((int)userId);
+            ViewData["currentUserName"] = userName;
+            ViewData["usersMessagedWith"] = usersMessagedWith;
             //ViewData["messagesHistory"] = _data.GetMessagesOfUser((int)userId);
             //ViewBag.userName = _data.GetUserById(userId).Username;
             return View();

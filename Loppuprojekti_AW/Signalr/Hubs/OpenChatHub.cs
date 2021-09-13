@@ -11,7 +11,6 @@ namespace Loppuprojekti_AW.Signalr.Hubs
     {
         public async Task SendMessage(string senderName, string message)
         {
-            
             var sendDate = DateTime.Now;
             var sendTime = sendDate.ToString("t");
             var sDate = sendDate.ToString("dd.M.yyyy");
