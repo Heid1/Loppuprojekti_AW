@@ -1,6 +1,18 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+body {
+    background-image: url('../background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+
+main {
+    background-color: rgba(255,255,255, 0.5);
+    backdrop-filter: blur(20px);
+    padding: 20px;
+}
+
 .accordion > .card:last-of-type {
     border-bottom: 1px solid lightgray !important;
 }
@@ -50,6 +62,11 @@ a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
+}
+
+nav {
+    background-color: rgba(255,255,255, 0.5)!important;
+    backdrop-filter: blur(20px)!important;
 }
 
 /* Provide sufficient contrast against white background */

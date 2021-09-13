@@ -55,7 +55,7 @@ namespace Loppuprojekti_AW.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Epäonnistui = false;
+            ViewBag.Failed = false;
             return View();
         }
 
@@ -75,7 +75,7 @@ namespace Loppuprojekti_AW.Controllers
             }
             else
             {
-                ViewBag.Epäonnistui = true;
+                ViewBag.Failed = true;
                 return View();
             }
         }
