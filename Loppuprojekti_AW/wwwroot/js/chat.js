@@ -54,7 +54,7 @@ connection.start().then(function () {
 document.getElementById("sendButton").addEventListener("click", function (event) {
     //var user = document.getElementById("userInput").value;
     
-    var userId = "44";
+    var userId = document.getElementById("user").innerText;
     var senderId = document.get
     var message = document.getElementById("messageInput").value;
     document.getElementById("messageInput").value = '';

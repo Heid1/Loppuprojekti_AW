@@ -28,10 +28,10 @@ namespace Loppuprojekti_AW.Controllers
                 return RedirectToAction("Virhe", "Home");
             }
             
-            //ViewData["currentUserId"] = userId;
+            ViewData["currentUserId"] = userId.Value;
             //ViewData["usersMessagedWith"] = _data.GetUsersMessagedWith((int)userId);
             //ViewData["messagesHistory"] = _data.GetMessagesOfUser((int)userId);
-            ViewBag.userName = _data.GetUserById(userId).Username;
+            //ViewBag.userName = _data.GetUserById(userId).Username;
             return View();
         }
 
