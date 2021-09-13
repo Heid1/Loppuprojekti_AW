@@ -181,6 +181,8 @@ namespace Loppuprojekti_AW
             db.Posts.Find(postid).Duration = post.Duration;
             db.Posts.Find(postid).Privacy = post.Privacy;
             db.Posts.Find(postid).Price = post.Price;
+            db.Posts.Find(postid).Latitude = ReturnCoordinates(db.Posts.Find(postid).Place, true);
+            db.Posts.Find(postid).Longitude = ReturnCoordinates(db.Posts.Find(postid).Place, false);
             db.SaveChanges();
         }
 
