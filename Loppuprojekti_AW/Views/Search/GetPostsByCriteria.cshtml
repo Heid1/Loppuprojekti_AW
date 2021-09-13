@@ -29,7 +29,9 @@
                 </div>
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
-                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
+                        <p>@item.Postid | @item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
+                        <a asp-action="Attend" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Ilmoittaudu</a>
+                        <a asp-action="Cancel" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick = "alertDelete()">Poista ilmoittautumisesi</a>
                     </div>
                 </div>
             </div>
@@ -38,6 +40,12 @@
 }
 else
 {
-    @*@ViewBag.Alert;*@
+   <p>Hae uudestaan sanalla</p>
 }
+
+<script>
+    function alertDelete() {
+        alert("Haluatko varmasti poistaa ilmoituksen?");
+    }
+</script>
 

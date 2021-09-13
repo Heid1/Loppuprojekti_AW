@@ -38,8 +38,11 @@ namespace Loppuprojekti_AW.Controllers
             var userid = HttpContext.Session.GetInt32("userid");
             ViewBag.Username = HttpContext.Session.GetString("username");
 
-            ViewBag.UserOwnPosts = await Task.Run(() => da.GetUserPosts(userid));
-            ViewBag.UserAttendenceToday = await Task.Run(() => da.GetOtherPostsByAttendanceToday(userid));
+            var enduser = new DataAccess(_context).GetUserById(userid);
+            ViewBag.Avatar = enduser.Photo;
+
+            ViewBag.UserOwnPosts = await Task.Run(() => da.GetUserPosts(userid)); //organiser true
+            ViewBag.UserAttendenceToday = await Task.Run(() => da.GetOtherPostsByAttendanceToday(userid)); //organiser false
             return View();
         }
 

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Loppuprojekti_AW
 {
@@ -116,24 +117,26 @@ namespace Loppuprojekti_AW
 
         public List<Post> GetUserPosts(int? userid)
         {
-            DateTime today = DateTime.Now.AddHours(24);
+            DateTime now = DateTime.Now;
+            DateTime future = DateTime.Now.AddHours(24);
             bool organiser = true;
             var organizingtoday = (from p in db.Posts
                                   join a in db.Attendees on p.Postid equals a.Postid
                                   where a.Userid == userid && a.Organiser == organiser
-                                  where p.Date <= today
+                                  where p.Date <= future && p.Date >= now
                                   select p).ToList();
             return organizingtoday;
         }
 
         public List<Post> GetOtherPostsByAttendanceToday(int? userid)
         {
-            DateTime today = DateTime.Now.AddHours(24);
+            DateTime now = DateTime.Now;
+            DateTime future = DateTime.Now.AddHours(24);
             bool organiser = false;
             var attendingtoday = (from p in db.Posts
                                   join a in db.Attendees on p.Postid equals a.Postid
                                   where a.Userid == userid && a.Organiser == organiser
-                                  where p.Date <= today
+                                  where p.Date <= future && p.Date >= now
                                   select p).ToList();
             return attendingtoday;
         }
@@ -371,5 +374,39 @@ namespace Loppuprojekti_AW
                 return 0;
             }
         }
+
+        public string ReturnPostObjects()
+        {
+            var postobject = (from p in db.Posts
+                              join a in db.Attendees
+                              on p.Postid equals a.Postid
+                              join u in db.Endusers
+                              on a.Userid equals u.Userid
+                              where a.Organiser == true
+                              select new
+                              {
+                                  Postname = p.Postname,
+                                  Description = p.Description,
+                                  ImgUrl = u.Photo,
+                                  Duration = p.Duration,
+                                  Latitude = p.Latitude,
+                                  Longitude = p.Longitude,
+                                  Address = p.Place,
+                                  Sport = p.Sportid
+                              }).ToList();
+
+            string objects = JsonConvert.SerializeObject(postobject);
+
+            return objects;
+
+
+        }
+
+        //public void AddNewMessageToDatabase(Message msg)
+        //{
+
+        //    db.Messages.Add(msg);
+        //    db.SaveChanges();
+        //}
     }
 }
