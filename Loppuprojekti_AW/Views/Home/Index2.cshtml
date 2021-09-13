@@ -23,11 +23,24 @@
         function initMap() {
 
            
-            var paini = {
+            var wrestling = {
                 url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
                 
             };
+
+            var Padel = {
+                url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Emojione_BW_1F3BE.svg", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+
+            };
+     
+            var dance = {
+                url: "https://cdn3.iconfinder.com/data/icons/dancing-dancer/214/dance-dancing-010-512.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+
+            };
+
 
 
             // The location of Kamppi
@@ -44,10 +57,18 @@
 
 
                 for (var i = 0; i < list2.length; i++) {
-
+                    var icon;
                     var location = {
                         lat: list2[i].Latitude,
                         lng: list2[i].Longitude
+                    }
+
+                    if (list2[i].Sportid == 1) {
+                        icon = dance;
+                    } else if (list2[i].Sportid == 2) {
+                        icon = Padel;
+                    } else {
+                        icon = dance;
                     }
 
                     console.log(location);
@@ -69,7 +90,7 @@
 
                         '<h1 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h1>' +
                         '<div id="bodyContent">' +
-                        '<div width:20%;"><img src="https://th.bing.com/th/id/R.f231605ff0ff0d6e34cd7c0f4f12230b?rik=Hx5BHOkF4kkafA&pid=ImgRaw&r=0" width="120" height="80"/></div>' +
+                        '<div width:20%;"><img src=""'+list[i].ImgUrl+ '"" width="120" height="80"/></div>' +
                         "<p>" + list2[i].Description + "</p > " +
                         "<p> Osoite :" + list2[i].Address + "</p > " +
                         "<p> Kesto :" + list2[i].Duration.toString() + "</p > "
@@ -77,10 +98,11 @@
                         "</div>" +
                         "</div>";
 
+
                     const marker = new google.maps.Marker({
                         position: location,
                         map: map,
-                        icon: paini
+                        icon: icon
                     });
 
                     const infowindow = new google.maps.InfoWindow({
