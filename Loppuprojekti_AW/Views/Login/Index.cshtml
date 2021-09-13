@@ -21,10 +21,12 @@
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Kirjaudu" class="btn btn-outline-primary" />
-                    <button class="btn btn-outline-primary">@Html.ActionLink("Rekisteröidy", "Create", "Account")</button>
                 </div>
             </form>
         }
+        @Html.ActionLink("Rekisteröidy", "Index", "Home", new { @class = "btn btn-outline-primary" })
+
+
     </div>
     <div class="leipäteksti">
         @if (ViewBag.AuthOK == false)
