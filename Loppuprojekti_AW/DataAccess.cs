@@ -105,6 +105,16 @@ namespace Loppuprojekti_AW
             return postlist;
         }
 
+        public List<Post> GetPostsByFavouriteSport(int userid)
+        {
+            var postlist = (from p in db.Posts
+                           join s in db.Sports on p.Sportid equals s.Sportid
+                           join us in db.UsersSports on s.Sportid equals us.Sportid
+                           where us.Userid == userid
+                           select p).Include(s => s.Sport).ToList();
+                return postlist;
+        }
+
         public Post GetPostById(int postid)
         {
             return db.Posts.Find(postid);
@@ -112,7 +122,7 @@ namespace Loppuprojekti_AW
 
         public List<Post> GetAllPosts()
         {
-            return db.Posts.Where(p => p.Place != null).ToList();
+            return db.Posts.Include(s => s.Sport).Where(p => p.Place != null).ToList();
         }
 
         public List<Post> GetUserPosts(int? userid)
@@ -149,10 +159,10 @@ namespace Loppuprojekti_AW
         /// <returns>Lista ilmoituksista</returns>
         public List<Post> GetPostsByAttendance(int userid, bool organiser)
         {
-            var posts = from p in db.Posts
+            var posts = (from p in db.Posts
                          join a in db.Attendees on p.Postid equals a.Postid
                          where a.Userid == userid && a.Organiser == organiser
-                         select p;
+                         select p).Include(s=>s.Sport);
             return posts.ToList();
         }
 
