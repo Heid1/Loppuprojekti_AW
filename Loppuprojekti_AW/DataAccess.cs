@@ -150,8 +150,6 @@ namespace Loppuprojekti_AW
                          join a in db.Attendees on p.Postid equals a.Postid
                          where a.Userid == userid && a.Organiser == organiser
                          select p;
-            //var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
-            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
             return posts.ToList();
         }
 
@@ -338,7 +336,7 @@ namespace Loppuprojekti_AW
             return messagesWithUsers;
         }
 
-        public decimal ReturnCoordinates(string address, bool lat)
+        public void ReturnCoordinates(string address)
         {
 
             var request = new GeocodingRequest();
@@ -349,16 +347,6 @@ namespace Loppuprojekti_AW
             {
                 var result = response.Results.First();
 
-                decimal latitude = (decimal)result.Geometry.Location.Latitude;
-                decimal longitude = (decimal)result.Geometry.Location.Longitude;
-                if(lat == true)
-                {
-                    return latitude;
-                }
-                else {
-                    return longitude;
-                }
-
                 Console.WriteLine("Full Address: " + result.FormattedAddress);         // "1600 Pennsylvania Ave NW, Washington, DC 20500, USA"
                 Console.WriteLine("Latitude: " + result.Geometry.Location.Latitude);   // 38.8976633
                 Console.WriteLine("Longitude: " + result.Geometry.Location.Longitude); // -77.0365739
@@ -367,16 +355,7 @@ namespace Loppuprojekti_AW
             else
             {
                 Console.WriteLine("Unable to geocode.  Status={0} and ErrorMessage={1}", response.Status, response.ErrorMessage);
-                return 0;
             }
         }
-
-        
-        //public void AddNewMessageToDatabase(Message msg)
-        //{
-            
-        //    db.Messages.Add(msg);
-        //    db.SaveChanges();
-        //}
     }
 }
