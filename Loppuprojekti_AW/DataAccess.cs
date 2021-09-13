@@ -368,6 +368,7 @@ namespace Loppuprojekti_AW
             else
             {
                 Console.WriteLine("Unable to geocode.  Status={0} and ErrorMessage={1}", response.Status, response.ErrorMessage);
+                return 0;
             }
         }
     }
