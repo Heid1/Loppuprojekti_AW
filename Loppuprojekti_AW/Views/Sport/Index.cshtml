@@ -41,10 +41,10 @@ else
                     }
                      else if (ViewBag.IsChosen != null && ViewBag.IsChosen.Contains(item.Sportid))
                     {
-                        @Html.ActionLink("Poista suosikeita", "RemovePostFromFavourites", new { sportid = item.Sportid })<br />
+                        @Html.ActionLink("Poista suosikeita", "RemovePostFromFavourites", new { sportid = item.Sportid }, new { @class = "btn btn-outline-danger" })<br />
                     }
                     else {
-                        @Html.ActionLink("Valitse suosikkeihin", "ChooseSport", "Sport", new { sportid = item.Sportid })<br />
+                        @Html.ActionLink("Valitse suosikkeihin", "ChooseSport", "Sport", new { sportid = item.Sportid }, new { @class = "btn btn-outline-success" })<br />
                     }
                     @item.Description
                 </div>
