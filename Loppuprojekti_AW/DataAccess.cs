@@ -338,7 +338,7 @@ namespace Loppuprojekti_AW
             return messagesWithUsers;
         }
 
-        public void ReturnCoordinates(string address)
+        public void ReturnCoordinates(string address, bool lat)
         {
 
             var request = new GeocodingRequest();
