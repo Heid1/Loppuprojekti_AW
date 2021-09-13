@@ -27,8 +27,6 @@ namespace Loppuprojekti_AW.Controllers
                 return RedirectToAction("Virhe", "Home");
             }
             var organising = _data.GetPostsByAttendance((int)userid, true);
-            var attending = _data.GetPostsByAttendance((int)userid, false);
-            ViewBag.Attending = attending;
             ViewBag.Organising = organising;
             return View(organising);
         }
@@ -49,15 +47,27 @@ namespace Loppuprojekti_AW.Controllers
 
         // POST: PostController/Create
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public ActionResult Create(Post post)
         {
             var userid = HttpContext.Session.GetInt32("userid");
+            post.Latitude = _data.ReturnCoordinates(post.Place, true);
+            post.Longitude = _data.ReturnCoordinates(post.Place, false);
             _data.CreatePost((int)userid, post);
             return RedirectToAction("Index", "Post");
         }
 
-        [HttpPost]
+        [HttpGet]
+        public ActionResult Attending()
+        {
+            int? userid = HttpContext.Session.GetInt32("userid");
+            if (userid == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            var attending = _data.GetPostsByAttendance((int)userid, false);
+            ViewBag.Attending = attending;
+            return View(attending);
+        }
         public ActionResult Attend(int postid)
         {
             var userid = (int)HttpContext.Session.GetInt32("userid");
@@ -65,8 +75,7 @@ namespace Loppuprojekti_AW.Controllers
             return RedirectToAction("Index", "Post");
         }
 
-        [HttpPost]
-        public ActionResult CancelAttendance(int postid)
+        public ActionResult Cancel(int postid)
         {
             var userid = (int)HttpContext.Session.GetInt32("userid");
             _data.CancelAttendance(userid, postid);

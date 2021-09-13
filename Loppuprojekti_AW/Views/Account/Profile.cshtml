@@ -8,7 +8,9 @@
 
 <div>
     <hr />
-    <img src="@(Model.Photo)" alt="photo" class="resizePhoto" title="Kuva" />
+    @if (Model.Photo != null) {
+        <img src="@(Model.Photo)" alt="photo" class="resizePhoto" title="Kuva" />
+    }
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Username)
@@ -44,7 +46,7 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Userid" class="btn btn-outline-success">Muokkaa tietojasi</a>
-    <a asp-action="Delete" asp-route-id="@Model.Userid" class="btn btn-outline-danger">Poista tunnuksesi</a>
+    <a asp-action="Delete" asp-route-id="@Model.Userid" class="btn btn-outline-danger" onclick = "return confirm('Haluatko varmasti poistaa profiilisi?');">Poista tunnuksesi</a>
 
     <a asp-action="Index">Back to List</a>
 </div>

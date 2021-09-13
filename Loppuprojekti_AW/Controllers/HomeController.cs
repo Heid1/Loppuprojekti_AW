@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 
 namespace Loppuprojekti_AW.Controllers
@@ -24,22 +25,22 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
-            //DataAccess data = new DataAccess(_context);
-            //data.ReturnCoordinates("Rakuunantie 17");
-
+           
             DataAccess da = new DataAccess(_context);
             var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
             return View();
         }
 
-        //public IActionResult Index2()
-        //{
-        //    DataAccess da = new DataAccess(_context);
-        //    ViewBag.ilmoitukset = da.
+        public IActionResult Index2()
+        {
+            DataAccess da = new DataAccess(_context);
 
-        //    return View();
-        //}
+            
+            ViewBag.Posts = da.ReturnPostObjects();
+
+            return View();
+        }
 
         public IActionResult Azuremap()
         {
@@ -47,10 +48,10 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // NÄIHIN EN KEKSINYT HELPPOA RATKAISUA
-        //public IActionResult SendFeedback()
-        //{
-        //    return View();
-        //}
+        public IActionResult SendFeedback()
+        {
+            return View();
+        }
         //public IActionResult SendFeedback(string text)
         //{
 

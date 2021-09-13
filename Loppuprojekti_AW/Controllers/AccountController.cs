@@ -38,8 +38,11 @@ namespace Loppuprojekti_AW.Controllers
             var userid = HttpContext.Session.GetInt32("userid");
             ViewBag.Username = HttpContext.Session.GetString("username");
 
-            ViewBag.UserOwnPosts = await Task.Run(() => da.GetUserPosts(userid));
-            ViewBag.UserAttendenceToday = await Task.Run(() => da.GetOtherPostsByAttendanceToday(userid));
+            var enduser = new DataAccess(_context).GetUserById(userid);
+            ViewBag.Avatar = enduser.Photo;
+
+            ViewBag.UserOwnPosts = await Task.Run(() => da.GetUserPosts(userid)); //organiser true
+            ViewBag.UserAttendenceToday = await Task.Run(() => da.GetOtherPostsByAttendanceToday(userid)); //organiser false
             return View();
         }
 
@@ -52,7 +55,7 @@ namespace Loppuprojekti_AW.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Epäonnistui = false;
+            ViewBag.Failed = false;
             return View();
         }
 
@@ -72,7 +75,7 @@ namespace Loppuprojekti_AW.Controllers
             }
             else
             {
-                ViewBag.Epäonnistui = true;
+                ViewBag.Failed = true;
                 return View();
             }
         }
@@ -95,16 +98,24 @@ namespace Loppuprojekti_AW.Controllers
             BlobServiceClient serviceClient = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
             BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(blobName);
 
-            if (oldPhoto != null)
-            {
-                oldPhoto = oldPhoto.Substring(oldPhoto.LastIndexOf('/')+1);
-                var bc = containerClient.DeleteBlob(oldPhoto);
-            }
+            DeletePhotoFromContainer(oldPhoto);
 
-            string photoname = Guid.NewGuid().ToString();
+            string photoname = Guid.NewGuid().ToString() + Photo.FileName.Substring(Photo.FileName.LastIndexOf('.'));
             containerClient.UploadBlob(photoname, imageStream);
             BlobClient blob = containerClient.GetBlobClient(photoname);
             return blob.Uri.ToString();
+        }
+        [HttpPost]
+        private void DeletePhotoFromContainer(string oldPhoto)
+        {
+            if (oldPhoto != null)
+            {
+                StorageSharedKeyCredential accountCredentials = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+                BlobServiceClient serviceClient = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
+                BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(blobName);
+                oldPhoto = oldPhoto.Substring(oldPhoto.LastIndexOf('/') + 1);
+                var bc = containerClient.DeleteBlob(oldPhoto);
+            }
         }
 
         [HttpGet]
@@ -161,6 +172,11 @@ namespace Loppuprojekti_AW.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        /// <summary>
+        /// Muokkaa salasanan eri muotoon, jottei näy suoraan tietokannassa.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string Hash(string value)
         {
             var valueBytes = KeyDerivation.Pbkdf2(
@@ -172,7 +188,6 @@ namespace Loppuprojekti_AW.Controllers
 
             return Convert.ToBase64String(valueBytes);
         }
-
         public static bool Validate(string value, string hash)
             => Hash(value) == hash;
     }
