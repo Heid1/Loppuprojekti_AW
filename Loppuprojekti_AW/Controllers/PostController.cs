@@ -27,8 +27,6 @@ namespace Loppuprojekti_AW.Controllers
                 return RedirectToAction("Virhe", "Home");
             }
             var organising = _data.GetPostsByAttendance((int)userid, true);
-            var attending = _data.GetPostsByAttendance((int)userid, false);
-            ViewBag.Attending = attending;
             ViewBag.Organising = organising;
             return View(organising);
         }
@@ -60,10 +58,14 @@ namespace Loppuprojekti_AW.Controllers
         [HttpGet]
         public ActionResult Attending()
         {
-            var userid = HttpContext.Session.GetInt32("userid");
-            bool organiser = false;
-            ViewBag.UserAttendence = _data.GetPostsByAttendance((int)userid, organiser); //organiser false
-            return View();
+            int? userid = HttpContext.Session.GetInt32("userid");
+            if (userid == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            var attending = _data.GetPostsByAttendance((int)userid, false);
+            ViewBag.Attending = attending;
+            return View(attending);
         }
 
         [HttpPost]
@@ -75,7 +77,7 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpPost]
-        public ActionResult CancelAttendance(int postid)
+        public ActionResult Cancel(int postid)
         {
             var userid = (int)HttpContext.Session.GetInt32("userid");
             _data.CancelAttendance(userid, postid);

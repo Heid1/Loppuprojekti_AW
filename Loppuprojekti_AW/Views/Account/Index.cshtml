@@ -8,11 +8,10 @@
 }
 <h3>Hei @ViewBag.Username!</h3>
 <p>Olet kirjautunut sisään.</p>
-
-
 <img src="@(ViewBag.Avatar)" alt="photo" class="resizePhoto" title="Kuva" />
-
 <h4>Tänään on @DateTime.Today.ToString("d")</h4>
+
+
 <h5>Sinun ilmoitukset tälle päivälle</h5>
 @if (ViewBag.UserOwnPosts != null)
 {
@@ -31,6 +30,10 @@
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
                         <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport</p>
+                        <p>
+                            <a asp-action="Edit" asp-controller="Post" asp-route-id="@Model.Postid" class="btn btn-outline-success">Muokkaa ilmoitusta</a>
+                            <a asp-action="Delete" asp-controller="Post" asp-route-id="@Model.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -62,6 +65,10 @@ else
                         <p>
                             @item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname
                         </p>
+                        <p>
+                            <a asp-action="Attend" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Ilmoittaudu</a>
+                            <a asp-action="Cancel" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Peruuta ilmoittautumisesi</a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -73,3 +80,8 @@ else
     <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
 }
 
+<script>
+    function alertDelete() {
+        alert("Haluatko varmasti peruuttaa ilmoittautumisen?");
+    }
+</script>

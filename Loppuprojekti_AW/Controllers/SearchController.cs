@@ -43,23 +43,5 @@ namespace Loppuprojekti_AW.Controllers
                 return View();
             }
         }
-
-        [HttpPost]
-        public ActionResult Attend(int postid)
-        {
-            DataAccess da = new DataAccess(_context);
-            var userid = (int)HttpContext.Session.GetInt32("userid");
-            da.AttendPost(userid, postid);
-            return RedirectToAction("Index", "Post");
-        }
-
-        [HttpPost]
-        public ActionResult CancelAttendance(int postid)
-        {
-            DataAccess da = new DataAccess(_context);
-            var userid = (int)HttpContext.Session.GetInt32("userid");
-            da.CancelAttendance(userid, postid);
-            return RedirectToAction("Index", "Post");
-        }
     }
 }
