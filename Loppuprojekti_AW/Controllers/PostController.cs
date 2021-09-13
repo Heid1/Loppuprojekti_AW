@@ -77,7 +77,6 @@ namespace Loppuprojekti_AW.Controllers
             return RedirectToAction("Index", "Post");
         }
 
-        [HttpPost]
         public ActionResult Cancel(int postid)
         {
             var userid = (int)HttpContext.Session.GetInt32("userid");
