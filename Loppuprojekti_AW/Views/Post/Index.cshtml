@@ -84,7 +84,7 @@
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Postid" class="btn btn-outline-success">Muokkaa</a>
-                        <a asp-action="Delete" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista</a>
+                        <a asp-action="Delete" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="return confirm('Haluatko varmasti poistaa ilmoituksen?')">Poista</a>
                     </td>
                 </tr>
             }
