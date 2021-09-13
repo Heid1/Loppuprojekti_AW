@@ -1,12 +1,10 @@
 ﻿using Google.Maps;
 using Google.Maps.Geocoding;
 using Loppuprojekti_AW.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Loppuprojekti_AW
 {
@@ -298,7 +296,7 @@ namespace Loppuprojekti_AW
             return messagesWithUsers;
         }
 
-        public void ReturnCoordinates(string address)
+        public decimal ReturnCoordinates(string address, bool lat)
         {
 
             var request = new GeocodingRequest();
@@ -308,6 +306,12 @@ namespace Loppuprojekti_AW
             if (response.Status == ServiceResponseStatus.Ok && response.Results.Count() > 0)
             {
                 var result = response.Results.First();
+                decimal latitude = (decimal)result.Geometry.Location.Latitude;
+                decimal longitude = (decimal)result.Geometry.Location.Longitude;
+                if (lat == true) { return latitude} else
+                { 
+                return longitude 
+                }
 
                 Console.WriteLine("Full Address: " + result.FormattedAddress);         // "1600 Pennsylvania Ave NW, Washington, DC 20500, USA"
                 Console.WriteLine("Latitude: " + result.Geometry.Location.Latitude);   // 38.8976633
@@ -317,7 +321,11 @@ namespace Loppuprojekti_AW
             else
             {
                 Console.WriteLine("Unable to geocode.  Status={0} and ErrorMessage={1}", response.Status, response.ErrorMessage);
+
+                return 0;
             }
+
+
         }
     }
 }

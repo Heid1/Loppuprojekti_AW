@@ -162,15 +162,16 @@
 
     <script>
 
-        var lista = '@ViewBag.jsonlist';
+        var lista = '@Html.Raw(ViewBag.jsonlist)'
         var lista2 = JSON.parse(lista);
-
-        console.log(lista2);
+        
+        console.log(lista);
     </script>
     <script>
         // Initialize and add the map
          
         function initMap() {
+
 
             var paikka4 = {
                 lat: 60.1623901,
@@ -208,6 +209,12 @@
                 zoom: 11.5,
                 center: kamppi,
             });
+
+            const marker = new google.maps.Marker({
+                          position: paikat[i],
+                          map: map,
+                          icon: paini
+                       });
 
 
 
@@ -255,8 +262,7 @@
             //});
 
            populate();
-            var lista = '@ViewBag.jsonlist';
-            var lista2 = JSON.Parse(lista);
+           
     }
     </script>
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
