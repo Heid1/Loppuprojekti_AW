@@ -254,16 +254,16 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void LikeSport(UsersSport userssport)
+        public void AddSportToFavourites(UsersSport userssport)
         {
             db.UsersSports.Add(userssport);
             db.SaveChanges();
         }
 
-        public void RemovePostFromFavourites(int sportid)
+        public void RemoveSportFromFavourites(int userid, int sportid)
         {
-            var sport = db.Sports.Find(sportid);
-            db.Remove(sport);
+            var userssport = db.UsersSports.Where(us => us.Userid == userid && us.Sportid == sportid).FirstOrDefault();
+            db.UsersSports.Remove(userssport);
             db.SaveChanges();
         }
 

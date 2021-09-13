@@ -75,7 +75,7 @@ namespace Loppuprojekti_AW.Controllers
             return View("Index");
         }
 
-        public IActionResult ChooseSport(int sportid)
+        public IActionResult AddSportToFavourites(int sportid)
         {
             ViewBag.Userid = HttpContext.Session.GetInt32("userid");
             ViewBag.Sportid = sportid;
@@ -83,32 +83,17 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpPost]
-        public IActionResult ChooseSport(UsersSport userssport)
+        public IActionResult AddSportToFavourites(UsersSport userssport)
         {
-            _data.LikeSport(userssport);
+            _data.AddSportToFavourites(userssport);
             return RedirectToAction("Index", "Sport");
         }
 
-        [HttpPost]
-        public IActionResult RemovePostFromFavourites(int sportid)
+        public IActionResult RemoveSportFromFavourites(int sportid)
         {
-            _data.RemovePostFromFavourites(sportid);
+            var userid = (int)HttpContext.Session.GetInt32("userid");
+            _data.RemoveSportFromFavourites(userid, sportid);
             return RedirectToAction("Index", "Sport");
         }
-
-        //// POST: SportController/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }
