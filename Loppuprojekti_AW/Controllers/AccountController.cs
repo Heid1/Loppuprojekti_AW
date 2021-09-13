@@ -98,16 +98,24 @@ namespace Loppuprojekti_AW.Controllers
             BlobServiceClient serviceClient = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
             BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(blobName);
 
-            if (oldPhoto != null)
-            {
-                oldPhoto = oldPhoto.Substring(oldPhoto.LastIndexOf('/')+1);
-                var bc = containerClient.DeleteBlob(oldPhoto);
-            }
+            DeletePhotoFromContainer(oldPhoto);
 
-            string photoname = Guid.NewGuid().ToString();
+            string photoname = Guid.NewGuid().ToString() + Photo.FileName.Substring(Photo.FileName.LastIndexOf('.'));
             containerClient.UploadBlob(photoname, imageStream);
             BlobClient blob = containerClient.GetBlobClient(photoname);
             return blob.Uri.ToString();
+        }
+        [HttpPost]
+        private void DeletePhotoFromContainer(string oldPhoto)
+        {
+            if (oldPhoto != null)
+            {
+                StorageSharedKeyCredential accountCredentials = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+                BlobServiceClient serviceClient = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
+                BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(blobName);
+                oldPhoto = oldPhoto.Substring(oldPhoto.LastIndexOf('/') + 1);
+                var bc = containerClient.DeleteBlob(oldPhoto);
+            }
         }
 
         [HttpGet]
@@ -164,6 +172,11 @@ namespace Loppuprojekti_AW.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        /// <summary>
+        /// Muokkaa salasanan eri muotoon, jottei näy suoraan tietokannassa.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string Hash(string value)
         {
             var valueBytes = KeyDerivation.Pbkdf2(
@@ -175,7 +188,6 @@ namespace Loppuprojekti_AW.Controllers
 
             return Convert.ToBase64String(valueBytes);
         }
-
         public static bool Validate(string value, string hash)
             => Hash(value) == hash;
     }
