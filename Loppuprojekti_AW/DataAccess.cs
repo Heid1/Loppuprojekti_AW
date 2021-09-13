@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Loppuprojekti_AW
 {
@@ -373,10 +374,36 @@ namespace Loppuprojekti_AW
             }
         }
 
-        
+        public string ReturnPostObjects()
+        {
+            var postobject = (from p in db.Posts
+                              join a in db.Attendees
+                              on p.Postid equals a.Postid
+                              join u in db.Endusers
+                              on a.Userid equals u.Userid
+                              where a.Organiser == true
+                              select new
+                              {
+                                  Postname = p.Postname,
+                                  Description = p.Description,
+                                  ImgUrl = u.Photo,
+                                  Duration = p.Duration,
+                                  Latitude = p.Latitude,
+                                  Longitude = p.Longitude,
+                                  Address = p.Place,
+                                  Sport = p.Sportid
+                              }).ToList();
+
+            string objects = JsonConvert.SerializeObject(postobject);
+
+            return objects;
+
+
+        }
+
         //public void AddNewMessageToDatabase(Message msg)
         //{
-            
+
         //    db.Messages.Add(msg);
         //    db.SaveChanges();
         //}
