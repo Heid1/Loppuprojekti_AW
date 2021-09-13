@@ -60,16 +60,17 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Enduser eu, IFormFile Photo)
+        public IActionResult Create(Enduser enduser, IFormFile Photo)
         {
             DataAccess da = new DataAccess(_context);
-            bool result = da.GetUsersByEmail(eu.Email); //boolin result on joko false tai true
+            bool result = da.GetUsersByEmail(enduser.Email); //boolin result on joko false tai true
 
             if (result == false) //jos result on sama kuin false eli vastaavuutta ei löytynyt
             {
                 string photourl = AddPhotoInContainer(Photo);
-                eu.Photo = photourl;
-                da.CreateUser(eu);
+                enduser.Photo = photourl;
+                enduser.Password = Hash(enduser.Password);
+                da.CreateUser(enduser);
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -80,10 +81,11 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         /// <summary>
-        /// Lisää kuvan Blobiin ja palauttaa kuvan URL:n
+        /// Lisää uuden kuvan Blobiin ja poistaa samalla vanhan, jos sellainen löytyy.
         /// </summary>
         /// <param name="Photo"></param>
-        /// <returns>string URL</returns>
+        /// <param name="oldPhoto"></param>
+        /// <returns>Kuvan url</returns>
         [HttpPost]
         private string AddPhotoInContainer(IFormFile Photo, string oldPhoto = null)
         {
@@ -137,13 +139,13 @@ namespace Loppuprojekti_AW.Controllers
 
 
         [HttpPost] //editoidaan henkilöä ja lähetetaan se
-        public IActionResult Edit(Enduser Eu, IFormFile Photo)
+        public IActionResult Edit(Enduser enduser, IFormFile Photo)
         {
             DataAccess da = new DataAccess(_context);
-            string oldPhoto = da.GetCurrentPhotoUrl(Eu.Userid);
-            Eu.Photo = AddPhotoInContainer(Photo, oldPhoto);
-            da.EditUser(Eu);
-            return RedirectToAction("Profile", new { Id = Eu.Userid });
+            enduser.Photo = AddPhotoInContainer(Photo, da.GetCurrentPhotoUrl(enduser.Userid));
+            enduser.Password = Hash(enduser.Password);
+            da.EditUser(enduser);
+            return RedirectToAction("Profile", new { Id = enduser.Userid });
         }
 
         public IActionResult Delete(Enduser Eu)

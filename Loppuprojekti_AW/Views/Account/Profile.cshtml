@@ -44,7 +44,7 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Userid" class="btn btn-outline-success">Muokkaa tietojasi</a>
-    <a asp-action="Delete" asp-route-id="@Model.Userid" class="btn btn-outline-danger">Poista tunnuksesi</a>
+    <a asp-action="Delete" asp-route-id="@Model.Userid" class="btn btn-outline-danger" onclick = "return confirm('Haluatko varmasti poistaa profiilisi?');">Poista tunnuksesi</a>
 
     <a asp-action="Index">Back to List</a>
 </div>

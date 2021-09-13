@@ -47,10 +47,11 @@ namespace Loppuprojekti_AW.Controllers
 
         // POST: PostController/Create
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public ActionResult Create(Post post)
         {
             var userid = HttpContext.Session.GetInt32("userid");
+            post.Latitude = _data.ReturnCoordinates(post.Place, true);
+            post.Longitude = _data.ReturnCoordinates(post.Place, false);
             _data.CreatePost((int)userid, post);
             return RedirectToAction("Index", "Post");
         }

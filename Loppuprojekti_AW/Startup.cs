@@ -1,5 +1,6 @@
 using Google.Maps;
 using Loppuprojekti_AW.Models;
+using Loppuprojekti_AW.Signalr.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace Loppuprojekti_AW
 {
@@ -33,6 +35,8 @@ namespace Loppuprojekti_AW
             services.AddSession();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw"));
 
+            //hubs
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +65,12 @@ namespace Loppuprojekti_AW
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<ChatHub>("/ChatHub");
             });
+
+            
+            
         }
     }
 }
