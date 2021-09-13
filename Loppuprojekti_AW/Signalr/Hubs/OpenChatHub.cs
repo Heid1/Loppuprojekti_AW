@@ -9,13 +9,13 @@ namespace Loppuprojekti_AW.Signalr.Hubs
 {
     public class OpenChatHub: Hub
     {
-        public async Task SendMessage(string userName, string message)
+        public async Task SendMessage(string senderName, string message)
         {
             
             var sendDate = DateTime.Now;
             var sendTime = sendDate.ToString("t");
             var sDate = sendDate.ToString("dd.M.yyyy");
-            await Clients.All.SendAsync("ReceiveMessage", userName, message, sendTime, sDate);
+            await Clients.All.SendAsync("ReceiveMessage", senderName, message, sendTime, sDate);
         }
     }
 }

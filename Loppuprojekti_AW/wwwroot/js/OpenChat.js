@@ -78,6 +78,7 @@ connection.on("ReceiveMessage", function (userName, message, sendTime, sendDate)
     document.getElementById("chatBox").appendChild(div1);
 
     // example structure of one message created above
+
     //<div class="media w-50 ml-auto mb-3">
     //    <div class="media-body">
     //        <p class="small text-muted">Esko</p>
@@ -99,10 +100,10 @@ connection.start().then(function () {
 document.getElementById("sendButton").addEventListener("click", function (event) {
     //var user = document.getElementById("userInput").value;
 
-    var userName = document.getElementById("userNameHeading").innerHTML;
+    var senderName = document.getElementById("userNameHeading").innerHTML;
     var message = document.getElementById("messageInput").value;
     document.getElementById("messageInput").value = '';
-    connection.invoke("SendMessage", userName, message).catch(function (err) {
+    connection.invoke("SendMessage", senderName, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
