@@ -57,6 +57,15 @@ namespace Loppuprojekti_AW.Controllers
             return RedirectToAction("Index", "Post");
         }
 
+        [HttpGet]
+        public ActionResult Attending()
+        {
+            var userid = HttpContext.Session.GetInt32("userid");
+            bool organiser = false;
+            ViewBag.UserAttendence = _data.GetPostsByAttendance((int)userid, organiser); //organiser false
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Attend(int postid)
         {

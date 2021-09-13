@@ -1,49 +1,22 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model Loppuprojekti_AW.Models.Post;
+@model Loppuprojekti_AW.Models.Post
+
 @{
     ViewData["Title"] = "Pääsivu";
 }
 <h3>Hei @ViewBag.Username!</h3>
 <p>Olet kirjautunut sisään.</p>
 
-<h4>Tänään @DateTime.Today.ToString("d")</h4>
 
-@if (ViewBag.UserAttendenceToday != null)
-{
+<img src="@(ViewBag.Avatar)" alt="photo" class="resizePhoto" title="Kuva" />
 
-    <div class="accordion" id="accordionPost">
-        @foreach (var item in ViewBag.UserAttendenceToday)
-        {
-            var iditem = String.Join("", item.Postname.Split(' '));
-            <div class="card">
-                <div class="card-header" id="headingPost">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#@iditem" aria-expanded="false" aria-controls="@iditem">
-                            @item.Postname
-                        </button>
-                    </h2>
-                </div>
-                <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
-                    <div class="card-body">
-                        <p>
-                        @item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname
-                        </p>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-
-} else {
-    <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
-}
-
+<h4>Tänään on @DateTime.Today.ToString("d")</h4>
+<h5>Sinun ilmoitukset tälle päivälle</h5>
 @if (ViewBag.UserOwnPosts != null)
 {
     <div class="accordion" id="accordionPost">
-
         @foreach (var item in ViewBag.UserOwnPosts)
         {
             var iditem = String.Join("", item.Postname.Split(' '));
@@ -68,3 +41,35 @@ else
 {
     <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
 }
+
+<h5>Sinun ilmoittautumiset tälle päivälle</h5>
+@if (ViewBag.UserAttendenceToday != null)
+{
+    <div class="accordion" id="accordionPost">
+        @foreach (var item in ViewBag.UserAttendenceToday)
+        {
+            var iditem = String.Join("", item.Postname.Split(' '));
+            <div class="card">
+                <div class="card-header" id="headingPost">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#@iditem" aria-expanded="false" aria-controls="@iditem">
+                            @item.Postname
+                        </button>
+                    </h2>
+                </div>
+                <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
+                    <div class="card-body">
+                        <p>
+                            @item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
+}
+

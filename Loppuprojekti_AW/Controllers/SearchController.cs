@@ -1,4 +1,5 @@
 ﻿using Loppuprojekti_AW.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,24 @@ namespace Loppuprojekti_AW.Controllers
             } else {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public ActionResult Attend(int postid)
+        {
+            DataAccess da = new DataAccess(_context);
+            var userid = (int)HttpContext.Session.GetInt32("userid");
+            da.AttendPost(userid, postid);
+            return RedirectToAction("Index", "Post");
+        }
+
+        [HttpPost]
+        public ActionResult CancelAttendance(int postid)
+        {
+            DataAccess da = new DataAccess(_context);
+            var userid = (int)HttpContext.Session.GetInt32("userid");
+            da.CancelAttendance(userid, postid);
+            return RedirectToAction("Index", "Post");
         }
     }
 }
