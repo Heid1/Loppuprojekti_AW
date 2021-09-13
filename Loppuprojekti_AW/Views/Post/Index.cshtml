@@ -80,8 +80,8 @@
                     @Html.DisplayFor(modelItem => item.Sport.Sportname)
                 </td>
                 <td>
-                    @Html.ActionLink("Muokkaa", "Edit", "Post", new { postid = item.Postid }) | 
-                    @Html.ActionLink("Poista", "Delete", "Post", new { postid = item.Postid }, new { onclick = "alertDelete();" })
+                    @Html.ActionLink("Muokkaa", "Edit", "Post", new { postid = item.Postid }) |
+                    <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" onclick="return confirm('Haluatko varmasti poistaa ilmoituksen?');">Poista</a>
                 </td>
             </tr>
         }
@@ -159,10 +159,3 @@
 }
     </tbody>
 </table>
-
-
-<script>
-function alertDelete() {
-  alert("Haluatko varmasti poistaa ilmoituksen?");
-}
-</script>
