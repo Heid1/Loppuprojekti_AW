@@ -1,4 +1,5 @@
 ﻿using Loppuprojekti_AW.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,34 @@ namespace Loppuprojekti_AW.Controllers
             _data = new(context);
             
         }
-        public IActionResult Index(int userId)
+        public IActionResult Index()
         {
-            ViewData["messages"] = _data.GetMessagesOfUser(userId);
-            ViewData["users"] = _data.GetUsersMessagedWith(userId);
+            //ViewData["messages"] = _data.GetMessagesOfUser(userId);
+            //ViewData["users"] = _data.GetUsersMessagedWith(userId);
+            //return View(ViewData);
+            int? userId = HttpContext.Session.GetInt32("userid");
+            if (userId == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            
+            //ViewData["currentUserId"] = userId;
+            //ViewData["usersMessagedWith"] = _data.GetUsersMessagedWith((int)userId);
+            //ViewData["messagesHistory"] = _data.GetMessagesOfUser((int)userId);
+            ViewBag.userName = _data.GetUserById(userId).Username;
+            return View();
+        }
+
+        public IActionResult OpenChat()
+        {
+            int? userId = HttpContext.Session.GetInt32("userid");
+            if (userId == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            ViewBag.userName = _data.GetUserById(userId).Username;
+            ViewData["currentUser"]= _data.GetUserById(userId);
             return View(ViewData);
-            //return View(_data.GetMessagesOfUser(userId));
         }
     }
 }

@@ -1,72 +1,292 @@
-﻿@*@model IEnumerable<Loppuprojekti_AW.Models.Message>*@
+﻿@page
 
-@{
-    ViewData["Title"] = "Index";
-    Layout = null;
-    var messagesInfo = (Dictionary<int, List<Message>>)ViewData["messages"];
+@{ 
+    //var MessageHistory = (Dictionary<int, List<Message>>)ViewData["messagesHistory"];
+    //var UsersMessagesWith = (List<Enduser>)ViewData["usersMessagedWith"];
+    //var currentUser = (int)ViewData["currentUserId"];
 }
+    
+<div class="container py-5 px-4">
+
+    <div class="row rounded-lg overflow-hidden shadow">
+
+        <!-- Users box-->
+        <div class="col-5 px-0">
+            <div class="bg-white">
+
+                <div class="bg-gray px-4 py-2 bg-light">
+                    <p class="h5 mb-0 py-1">Keskustelut</p>
+                    <input id="newConversationButton" type="button" value="+" class="btn btn-outline-secondary" />
+
+                </div>
+
+                <div class="messages-box">
+                    <div class="list-group rounded-0">
+                        <a class="list-group-item list-group-item-action active text-white rounded-0">
+                            <div class="media">
+                                @*<img src="" alt="user" width="50" class="rounded-circle">*@
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
+                                    </div>
+                                    <p class="font-italic mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                            <div class="media">
+                                @*<img src="" alt="user" width="50" class="rounded-circle">*@
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">14 Dec</small>
+                                    </div>
+                                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur. incididunt ut labore.</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                            <div class="media">
+                                @*<img src="" alt="user" width="50" class="rounded-circle">*@
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">9 Nov</small>
+                                    </div>
+                                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                            <div class="media">
+                                @*<img src="" alt="user" width="50" class="rounded-circle">*@
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">18 Oct</small>
+                                    </div>
+                                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                            <div class="media">
+                                @*<img src="" alt="user" width="50" class="rounded-circle">*@
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">17 Oct</small>
+                                    </div>
+                                    <p class="font-italic text-muted mb-0 text-small">consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                            <div class="media">
+                                @*<img src="" alt="user" width="50" class="rounded-circle">*@
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">2 Sep</small>
+                                    </div>
+                                    <p class="font-italic text-muted mb-0 text-small">Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                            <div class="media">
+                                @*<img src="" alt="user" width="50" class="rounded-circle">*@
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">30 Aug</small>
+                                    </div>
+                                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+                            <div class="media">
+                                @*<img src="" alt="user" width="50" class="rounded-circle">*@
+                                <div class="media-body ml-4">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">21 Aug</small>
+                                    </div>
+                                    <p class="font-italic text-muted mb-0 text-small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-<h1>Index</h1>
+        <!-- Chat Box-->
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-@if (messagesInfo != null)
-{
-    @foreach (var item in messagesInfo)
-    {
-        <button type="button" id=@item.Key>@item.Key</button>
-    }
+        <div class="col-7 px-0" id="chatArea">
+            <div @*class="px-4 py-5 chat-box bg-white"*@ class="px-4 chat-box py-5 bg-white" id="chat-area">
+                <div id="chatBox">
 
-}
-@if (messagesInfo == null)
-            {
-                <p>tyhjä</p>
+                    <!-- Sender Message -->
+                    <div class="media w-50 mb-3">
+                        @*<img src="" alt="user" width="50" class="rounded-circle">*@
+                        <div class="media-body ml-3">
+                            <div class="bg-light rounded py-2 px-3 mb-2">
+                                <p class="text-small mb-0 text-muted">Hello there!</p>
+                            </div>
+                            <p class="small text-muted">12:00 | Syyskuu 10</p>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Reciever Message -->
+                    <div class="media w-50 ml-auto mb-3">
+                        <div class="media-body">
+                            <div class="bg-primary rounded py-2 px-3 mb-2">
+                                <p class="text-small mb-0 text-white">testi!</p>
+                            </div>
+                            <p class="small text-muted">12:00 | Syyskuu 10</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <!-- Typing area -->
+                <form action="#" class="bg-light" id="typingArea">
+                    <div class="input-group">
+                        <input type="text" id="messageInput" placeholder="Kirjoita viesti" class="form-control rounded-0 border-0 py-4 bg-light">
+                        @*<input type="text" id="messageInput" placeholder="Kirjoita viesti" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">*@
+                        <div class="input-group-append">
+                            <input id="sendButton" type="button" value="Lähetä" class="btn btn-primary" />
+                            @*<button id="sendButton" type="button" value="Send Message" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>*@
+                            <!-- id="button-addon2" type="submit" -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    @*<div class="container">
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-2">UserId</div>
+                    <div class="col-4"><input type="text" id="userInput" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-2">Message</div>
+                    <div class="col-4"><input type="text" id="messageInput" /></div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="button" id="sendButton" value="Send Message" />
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-12">
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <ul id="messagesList"></ul>
+            </div>
+        </div>*@
+
+
+
+
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+
+
+
+    @*<style>
+            div.panel-body {
+                overflow: scroll;
+                background: url('http://subtlepatterns.com/patterns/geometry2.png');
             }
+        </style>
+        <h2>ChatBox</h2>
+        <div class="chat-panel panel panel-default">
+            <div class="panel-heading">
+                ChatBox using SingalR
+                <i class="fa fa-paper-plane fa-fw"></i>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body" id="chat" style="height:250px;">
+                <input type="hidden" id="displayname" />
 
+                <p id="discussion"></p>
+            </div>
+            <!-- /.panel-body -->
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input id="message" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." />
 
-@*
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Sendtime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Messagebody)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Receiver)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Sender)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
+                    <span class="input-group-btn">
+                        <input type="button" class="btn btn-warning btn-sm" id="sendmessage" value="Send">
 
-    @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sendtime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Messagebody)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Receiver.Username)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sender.Username)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Messageid">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Messageid">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Messageid">Delete</a>
-                </td>
-            </tr>
-    }*@
-</tbody>
-</table>
+                    </span>
+                </div>
+            </div>
+        </div>
+        @section scripts {
+            <!--Script references. -->
+            <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+            <!--Reference the SignalR library. -->
+            <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
+            <!--Reference the autogenerated SignalR hub script. -->
+            <script src="~/signalr/hubs"></script>
+            <!--SignalR script to update the chat page and send messages.-->
+            <script>
+                $(function () {
+                    // Reference the auto-generated proxy for the hub.
+                    var chat = $.connection.chatHub;
+                    // Create a function that the hub can call back to display messages.
+                    chat.client.addNewMessageToPage = function (name, message) {
+                        if (name == "Atir") {
+                            // Add the message to the page.
+                            $('#discussion').append('<p style="color:green; text-align:left; width:500px"><strong><img = src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_7.png" title="Atir">'
+                                + ' </strong> ' + htmlEncode(message) + '</p>');
+                        }
+                        else if (name != "Atir") {
+                            // Add the message to the page.
+                            $('#discussion').append('<p style="color:blue;text-align:right;"><strong><img = src="https://www.phplivesupport.com/pics/icons/avatars/public/avatar_71.png" title="Peter">'
+                                + ' </strong> ' + htmlEncode(message) + '</p>');
+                        }
+                    };
+                    // Get the user name and store it to prepend to messages.
+                    $('#displayname').val(prompt('Enter your name:', ''));
+                    // Set initial focus to message input box.
+                    $('#message').focus();
+                    // Start the connection.
+                    $.connection.hub.start().done(function () {
+                        $('#sendmessage').click(function () {
+                            // Call the Send method on the hub.
+                            chat.server.send($('#displayname').val(), $('#message').val());
+                            // Clear text box and reset focus for next comment.
+                            $('#message').val('').focus();
+                        });
+                    });
+                });
+                // This optional function html-encodes messages for display in the page.
+                function htmlEncode(value) {
+                    var encodedValue = $('<div />').text(value).html();
+                    return encodedValue;
+                }
+            </script>
+        }
+    *@

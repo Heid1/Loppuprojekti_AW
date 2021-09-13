@@ -15,28 +15,42 @@ namespace Loppuprojekti_AW
         {
             db = data;
         }
+
         // ----------------------- USER ----------------------------------------------
+
+        public bool CheckUserAuthority(string username, string password)
+        {
+            if (db.Endusers.Where(k => k.Username == username).FirstOrDefault() != null && db.Endusers.Where(k => k.Username == username).FirstOrDefault().Password == password)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void CreateUser(Enduser Eu)
         {
-            MoveoContext db = new MoveoContext();
             db.Endusers.Add(Eu);
             db.SaveChanges();
         }
 
-        public static Enduser GetUserById(int ?Identity)
+        public bool GetUsersByEmail(string email)
         {
-            MoveoContext db = new MoveoContext();
+            if (db.Endusers.Where(eu => eu.Email == email).FirstOrDefault() != null) //jos kannasta löytyy vastaavaavuus eli ei null
+            {
+                return true; //palauta true, löytyy
+            }
+            return false;
+        }
 
-            var Enduser = db.Endusers.Find(Identity);
-
+        public Enduser GetUserById(int? userid)
+        {
+            var Enduser = db.Endusers.Find(userid);
             return Enduser;
         }
 
-        public static void EditUser(Enduser Eu)
+        public void EditUser(Enduser Eu)
         {
-            MoveoContext db = new MoveoContext();
             var edit = db.Endusers.Find(Eu.Userid);
-
             edit.Userid = Eu.Userid;
             edit.Username = Eu.Username;
             edit.Birthday = Eu.Birthday;
@@ -45,16 +59,19 @@ namespace Loppuprojekti_AW
             edit.UsersSports = Eu.UsersSports;
             edit.Club = Eu.Club;
             edit.Photo = Eu.Photo;
-
             db.SaveChanges();
         }
 
-        public static void DeleteUser(Enduser Eu)
+        public void DeleteUser(Enduser Eu)
         {
-            MoveoContext db = new MoveoContext();
             var Userdelete = db.Endusers.Find(Eu.Userid);
             db.Remove(Userdelete);
             db.SaveChanges();
+        }
+
+        public string GetCurrentPhotoUrl(int userid)
+        {
+            return db.Endusers.Find(userid).Photo;
         }
 
         // ----------------------- POSTS ----------------------------------------------
@@ -94,6 +111,30 @@ namespace Loppuprojekti_AW
         public List<Post> GetAllPosts()
         {
             return db.Posts.Where(p => p.Place != null).ToList();
+        }
+
+        public List<Post> GetUserPosts(int? userid)
+        {
+            DateTime today = DateTime.Now.AddHours(24);
+            bool organiser = true;
+            var organizingtoday = (from p in db.Posts
+                                  join a in db.Attendees on p.Postid equals a.Postid
+                                  where a.Userid == userid && a.Organiser == organiser
+                                  where p.Date <= today
+                                  select p).ToList();
+            return organizingtoday;
+        }
+
+        public List<Post> GetOtherPostsByAttendanceToday(int? userid)
+        {
+            DateTime today = DateTime.Now.AddHours(24);
+            bool organiser = false;
+            var attendingtoday = (from p in db.Posts
+                                  join a in db.Attendees on p.Postid equals a.Postid
+                                  where a.Userid == userid && a.Organiser == organiser
+                                  where p.Date <= today
+                                  select p).ToList();
+            return attendingtoday;
         }
 
         /// <summary>
@@ -327,5 +368,13 @@ namespace Loppuprojekti_AW
 
 
         }
+
+        
+        //public void AddNewMessageToDatabase(Message msg)
+        //{
+            
+        //    db.Messages.Add(msg);
+        //    db.SaveChanges();
+        //}
     }
 }

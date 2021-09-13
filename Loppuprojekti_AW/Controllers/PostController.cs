@@ -40,6 +40,7 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: PostController/Create
+        [HttpGet]
         public ActionResult Create()
         {
             ViewBag.Sports = _data.GetAllSports();
@@ -47,7 +48,7 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // POST: PostController/Create
-        //[HttpPost]
+        [HttpPost]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Post post)
         {
