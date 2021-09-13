@@ -8,7 +8,9 @@
 
 <div>
     <hr />
+    @if (Model.Photo != null) {
         <img src="@(Model.Photo)" alt="photo" class="resizePhoto" title="Kuva" />
+    }
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Username)

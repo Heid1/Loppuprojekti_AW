@@ -153,8 +153,6 @@ namespace Loppuprojekti_AW
                          join a in db.Attendees on p.Postid equals a.Postid
                          where a.Userid == userid && a.Organiser == organiser
                          select p;
-            //var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
-            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
             return posts.ToList();
         }
 
@@ -256,16 +254,16 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void LikeSport(UsersSport userssport)
+        public void AddSportToFavourites(UsersSport userssport)
         {
             db.UsersSports.Add(userssport);
             db.SaveChanges();
         }
 
-        public void RemovePostFromFavourites(int sportid)
+        public void RemoveSportFromFavourites(int userid, int sportid)
         {
-            var sport = db.Sports.Find(sportid);
-            db.Remove(sport);
+            var userssport = db.UsersSports.Where(us => us.Userid == userid && us.Sportid == sportid).FirstOrDefault();
+            db.UsersSports.Remove(userssport);
             db.SaveChanges();
         }
 
@@ -356,11 +354,12 @@ namespace Loppuprojekti_AW
 
                 decimal latitude = (decimal)result.Geometry.Location.Latitude;
                 decimal longitude = (decimal)result.Geometry.Location.Longitude;
-                if(lat == true)
+                if (lat == true)
                 {
                     return latitude;
                 }
-                else {
+                else
+                {
                     return longitude;
                 }
 
