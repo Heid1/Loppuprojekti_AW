@@ -47,10 +47,10 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // NÄIHIN EN KEKSINYT HELPPOA RATKAISUA
-        //public IActionResult SendFeedback()
-        //{
-        //    return View();
-        //}
+        public IActionResult SendFeedback()
+        {
+            return View();
+        }
         //public IActionResult SendFeedback(string text)
         //{
 
