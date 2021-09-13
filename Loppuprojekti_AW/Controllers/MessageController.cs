@@ -27,10 +27,12 @@ namespace Loppuprojekti_AW.Controllers
             {
                 return RedirectToAction("Virhe", "Home");
             }
-            ViewData["currentUserId"] = HttpContext.Session.GetInt32("userid");
-            ViewData["usersMessagedWith"] = _data.GetUsersMessagedWith((int)userId);
-            ViewData["messagesHistory"] = _data.GetMessagesOfUser((int)userId);
-            return View(ViewData);
+            
+            //ViewData["currentUserId"] = userId;
+            //ViewData["usersMessagedWith"] = _data.GetUsersMessagedWith((int)userId);
+            //ViewData["messagesHistory"] = _data.GetMessagesOfUser((int)userId);
+            ViewBag.userName = _data.GetUserById(userId).Username;
+            return View();
         }
 
         public IActionResult OpenChat()

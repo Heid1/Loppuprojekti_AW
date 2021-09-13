@@ -15,6 +15,7 @@ namespace Loppuprojekti_AW.Signalr.Hubs
             var sendDate = DateTime.Now;
             var sendTime = sendDate.ToString("t");
             var sDate = sendDate.ToString("dd.M.yyyy");
+
             await Clients.All.SendAsync("ReceiveMessage", userId, message, sendTime, sDate);
         }
 
