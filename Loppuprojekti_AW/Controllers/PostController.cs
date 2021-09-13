@@ -68,8 +68,6 @@ namespace Loppuprojekti_AW.Controllers
             ViewBag.Attending = attending;
             return View(attending);
         }
-
-        [HttpPost]
         public ActionResult Attend(int postid)
         {
             var userid = (int)HttpContext.Session.GetInt32("userid");
