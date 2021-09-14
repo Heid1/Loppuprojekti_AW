@@ -7,12 +7,12 @@
 
 <hr />
 @using (Html.BeginForm("CreateMessage", "Messages", FormMethod.Post))
-{
-    <p>Comment: @Html.TextBox("Text")</p>
+{ <label for="Feedback" class="control-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">Palautteesi:</label><br />
+    @Html.TextArea("Feedback")<br />
     <input type="submit" value="Lähetä" class="btn btn-outline-primary"/>
 }
-
-<div>
+<br />
+<p>
     <a asp-action="Index" class="btn btn-outline-primary">Takaisin</a>
-</div>
+</p>
 
