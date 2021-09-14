@@ -3,16 +3,16 @@
     ViewData["Title"] = "Lähetä palautetta";
 }
 
-<h1>Lähetä palautetta</h1>
+<h3>Lähetä palautetta</h3>
 
 <hr />
 @using (Html.BeginForm("CreateMessage", "Messages", FormMethod.Post))
 {
     <p>Comment: @Html.TextBox("Text")</p>
-    <input type="submit" value="Lähetä" />
+    <input type="submit" value="Lähetä" class="btn btn-outline-primary"/>
 }
 
 <div>
-    <a asp-action="Index">Takaisin...</a>
+    <a asp-action="Index" class="btn btn-outline-primary">Takaisin</a>
 </div>
 
