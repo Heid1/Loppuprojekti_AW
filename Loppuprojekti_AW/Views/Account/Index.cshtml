@@ -11,10 +11,13 @@
 <img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
 <h4>Tänään on @DateTime.Today.ToString("d")</h4>
 
-
 <h5>Sinun ilmoitukset tälle päivälle</h5>
-@if (ViewBag.UserOwnPosts != null)
+@if (ViewBag.UserOwnPosts == null)
 {
+    <div class="alert alert-info" role="alert">
+        <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
+    </div>
+} else {
     <div class="accordion" id="accordionPost">
         @foreach (var item in ViewBag.UserOwnPosts)
         {
@@ -40,14 +43,15 @@
         }
     </div>
 }
-else
-{
-    <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
-}
+
 
 <h5>Sinun ilmoittautumiset tälle päivälle</h5>
-@if (ViewBag.UserAttendenceToday != null)
+@if (ViewBag.UserAttendenceToday == null)
 {
+    <div class="alert alert-info" role="alert">
+        <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
+    </div>
+} else {
     <div class="accordion" id="accordionPost">
         @foreach (var item in ViewBag.UserAttendenceToday)
         {
@@ -74,10 +78,6 @@ else
             </div>
         }
     </div>
-}
-else
-{
-    <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
 }
 
 <script>
