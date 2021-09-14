@@ -1,11 +1,11 @@
 ﻿
 @{
-    //var MessageHistory = (Dictionary<int, List<Message>>)ViewData["messagesHistory"];
+    var MessageHistory = (Dictionary<int, List<Message>>)ViewData["messagesHistory"];
     var UsersMessagesWith = (List<Enduser>)ViewData["usersMessagedWith"];
-    var currentUser = (int)ViewData["currentUserId"];
+    var currentUserId = (int)ViewData["currentUserId"];
     var currentUserName = (string)ViewData["currentUserName"];
 }
-<p id="userId" hidden>@currentUser</p>
+<p id="userId" hidden>@currentUserId</p>
 <p id="userName" hidden>@currentUserName</p>
 
 
@@ -136,9 +136,43 @@
         <div class="col-7 px-0" id="chatArea">
             <div @*class="px-4 py-5 chat-box bg-white"*@ class="px-4 chat-box py-5 bg-white" id="chat-area">
                 <div id="chatBox">
+                    @if (UsersMessagesWith.Count > 0)
+                    {
+                        @foreach (var messageObject in MessageHistory[UsersMessagesWith[0].Userid])
+                        {
+                            @if (messageObject.Senderid == currentUserId)
+                            {
 
-                    <!-- Sender Message -->
-                    <!--<div class="media w-50 mb-3">
+                                <div class="media w-50 ml-auto mb-3">
+                                    <div class="media-body">
+                                        <p class="small text-muted">@messageObject.Sender.Username</p>
+                                        <div class="bg-primary rounded py-2 px-3 mb-2">
+                                            <p class="text-small mb-0 text-white">@messageObject.Messagebody</p>
+                                        </div>
+                                        <p class="small text-muted">@messageObject.Sendtime.ToString("t") | @messageObject.Sendtime.ToString("dd.M.yyyy")</p>
+                                    </div>
+                                </div>
+
+                            }
+                            @if (messageObject.Senderid != currentUserId)
+                            {
+                                <div class="media w-50 mb-3">
+                                    <div class="media-body ml-3">
+                                        <p class="small text-muted">@messageObject.Sender.Username</p>
+                                        <div class="bg-light rounded py-2 px-3 mb-2">
+                                            <p class="text-small mb-0 text-muted">@messageObject.Messagebody</p>
+                                        </div>
+                                        <p class="small text-muted">@messageObject.Sendtime.ToString("t") | @messageObject.Sendtime.ToString("dd.M.yyyy")</p>
+                                    </div>
+                                </div>
+
+                             }
+                         }
+                      }
+
+
+                                    <!-- Sender Message -->
+                                    <!--<div class="media w-50 mb-3">
                         @*<img src="" alt="user" width="50" class="rounded-circle">*@
                         <div class="media-body ml-3">
                             <div class="bg-light rounded py-2 px-3 mb-2">
@@ -147,8 +181,8 @@
                             <p class="small text-muted">12:00 | Syyskuu 10</p>
                         </div>
                     </div>-->
-                    <!-- Reciever Message -->
-                    <!--<div class="media w-50 ml-auto mb-3">
+                                    <!-- Reciever Message -->
+                                    <!--<div class="media w-50 ml-auto mb-3">
                         <div class="media-body">
                             <div class="bg-primary rounded py-2 px-3 mb-2">
                                 <p class="text-small mb-0 text-white">testi!</p>
@@ -157,25 +191,25 @@
                         </div>
                     </div>-->
 
-                </div>
+                                </div>
 
 
 
-                <!-- Typing area -->
-                <form action="#" class="bg-light" id="typingArea">
-                    <div class="input-group">
-                        <input type="text" id="messageInput" placeholder="Kirjoita viesti" class="form-control rounded-0 border-0 py-4 bg-light">
-                        @*<input type="text" id="messageInput" placeholder="Kirjoita viesti" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">*@
-                        <div class="input-group-append">
-                            <input id="sendButton" type="button" value="Lähetä" class="btn btn-primary" />
-                            @*<button id="sendButton" type="button" value="Send Message" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>*@
-                            <!-- id="button-addon2" type="submit" -->
-                        </div>
-                    </div>
-                </form>
+                                <!-- Typing area -->
+                                <form action="#" class="bg-light" id="typingArea">
+                                    <div class="input-group">
+                                        <input type="text" id="messageInput" placeholder="Kirjoita viesti" class="form-control rounded-0 border-0 py-4 bg-light">
+                                        @*<input type="text" id="messageInput" placeholder="Kirjoita viesti" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">*@
+                                        <div class="input-group-append">
+                                            <input id="sendButton" type="button" value="Lähetä" class="btn btn-primary" />
+                                            @*<button id="sendButton" type="button" value="Send Message" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>*@
+                                            <!-- id="button-addon2" type="submit" -->
+                                        </div>
+                                    </div>
+                                </form>
 
 
-            </div>
+                            </div>
         </div>
     </div>
 </div>
@@ -186,10 +220,13 @@
     <p class="enduserId" hidden>@user.Userid</p>
 }
 
+
+
+
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js" defer></script>
 
-<a onC></a>
+
 
 
 @*<style>
