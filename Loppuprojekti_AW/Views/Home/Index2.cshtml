@@ -77,6 +77,7 @@
                     console.log(list2[i].Address)
                     console.log(list2[i].Duration)
                     console.log(list2[i].Postname)
+                    console.log(list2[i].ImgUrl)
 
                     if (location.lat == null || location.lng == null) {
                         location.lat = 0;
@@ -90,7 +91,7 @@
 
                         '<h1 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h1>' +
                         '<div id="bodyContent">' +
-                        '<div width:20%;"><img src=""'+list[i].ImgUrl+ '"" width="120" height="80"/></div>' +
+                        '<div width:20%;"><img src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' +
                         "<p>" + list2[i].Description + "</p > " +
                         "<p> Osoite :" + list2[i].Address + "</p > " +
                         "<p> Kesto :" + list2[i].Duration.toString() + "</p > "

@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Muokkaa tietojasi</h1>
 
-<h4>Enduser</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,14 +14,15 @@
             <input type="hidden" asp-for="Userid" />
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
+                <input asp-for="Username" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" />
+                <input asp-for="Password" type="password" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+            <!--- birthday ja role pois muokkauksesta lopullisessa versiossa -->
             <div class="form-group">
                 <label asp-for="Birthday" class="control-label"></label>
                 <input asp-for="Birthday" class="form-control" />
@@ -35,17 +35,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <input asp-for="Description" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" type="file" class="form-control" />
+                <input asp-for="Photo" type="file" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
                 <span asp-validation-for="Photo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Club" class="control-label"></label>
-                <input asp-for="Club" class="form-control" />
+                <input asp-for="Club" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
                 <span asp-validation-for="Club" class="text-danger"></span>
             </div>
 
@@ -57,7 +57,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-primary">Takaisin</a>
 </div>
 
 @section Scripts {

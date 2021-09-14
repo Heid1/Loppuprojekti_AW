@@ -11,7 +11,7 @@ namespace PhotoThumbnails
     public static class PhotoThumbnails
     {
         [FunctionName("Thumbnail")] //change the function-name to a more descriptive function name
-        public static void Run([BlobTrigger("userphotos/{name}", Connection = "AzureWebJobsStorage")]Stream myBlob, string name, [Blob("gallery-thumb/thumb-{name}", FileAccess.Write)] Stream outputBlob, ILogger log)
+        public static void Run([BlobTrigger("userphotos/{name}", Connection = "AzureWebJobsStorage")]Stream myBlob, string name, [Blob("userphotos-thumb/{name}", FileAccess.Write)] Stream outputBlob, ILogger log)
         {
             log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes");
 
@@ -23,8 +23,7 @@ namespace PhotoThumbnails
                     {
                         Size = new Size(150, 150),
                         Mode = ResizeMode.Crop
-                    })
-                    .Grayscale());
+                    }));
 
                     using (var ms = new MemoryStream())
                     {

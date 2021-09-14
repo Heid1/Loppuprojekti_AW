@@ -1,10 +1,10 @@
 ﻿@model Loppuprojekti_AW.Models.Enduser
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Kirjaudu";
 }
 
-<h1>Login</h1>
+<h3>Kirjaudu sisään</h3>
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Index", "Login", FormMethod.Post))
@@ -21,10 +21,11 @@
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Kirjaudu" class="btn btn-outline-primary" />
-                    <button class="btn btn-outline-primary">@Html.ActionLink("Rekisteröidy", "Create", "Account")</button>
                 </div>
             </form>
         }
+
+        @Html.ActionLink("Rekisteröidy", "Index", "Home", new { @class = "btn btn-outline-primary" })
     </div>
     <div class="leipäteksti">
         @if (ViewBag.AuthOK == false)
@@ -35,7 +36,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class = "btn btn-outline-primary">Takaisin</a>
 </div>
 
 @section Scripts {

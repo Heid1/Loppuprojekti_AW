@@ -7,11 +7,26 @@
 }
 
 <h3>Hae ilmoituksia</h3>
-<form action="GetPostsByCriteria" method="post">
-    <input type="text" name="criteria" value="" />
-    <input type="submit" value="Hae" />
-</form>
-
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <form action="GetPostsByCriteria" method="post">
+                <input type="text" name="criteria" value="" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <input type="submit" value="Hae" class = "btn btn-outline-primary"/>
+            </form>
+        </div>
+        @if (ViewBag.Userid != null)
+        {
+            <div class="col-sm">
+                @Html.ActionLink("Suosikkilajit", "GetPostsByCriteria", "Search", new { button = "favouriteSportsButton" }, new { @class = "btn btn-outline-primary" })
+            @*<div class="col-sm">*@
+                @Html.ActionLink("Omat ilmoitukset", "GetPostsByCriteria", "Search", new { button = "ownPostsButton" }, new { @class = "btn btn-outline-primary" })
+            @*<div class="col-sm">*@
+                @Html.ActionLink("Ilmoittautumiset", "GetPostsByCriteria", "Search", new { button = "attendanceButton" }, new { @class = "btn btn-outline-primary" })
+            </div>
+        }
+    </div>
+</div>
 @if (ViewBag.Posts != null)
 {
     <div class="accordion" id="accordionPost">
@@ -32,7 +47,7 @@
                         <p>@item.Postid | @item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
                         @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
                         @Html.ActionLink("Peru ilmoittautuminen", "Cancel", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Are sure wants to delete?');" })
-                        </div>
+                    </div>
                 </div>
             </div>
         }
@@ -40,12 +55,6 @@
 }
 else
 {
-   <p>Hae uudestaan sanalla</p>
+    <p>Hae uudestaan sanalla</p>
 }
-
-<script>
-    function alertDelete() {
-        alert("Haluatko varmasti poistaa ilmoituksen?");
-    }
-</script>
 
