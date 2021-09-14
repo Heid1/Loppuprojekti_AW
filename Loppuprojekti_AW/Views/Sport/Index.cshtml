@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Lajit";
+    int i = 1;
 }
 
 <h2 class="display-5">Tervetuloa</h2>
@@ -25,7 +26,8 @@ else
 <div class="accordion" id="accordionSport">
     @foreach (var item in Model)
     {
-        var iditem = String.Join("", item.Sportname.Split(' '));
+        var iditem = "sporthtmlid" + i;
+        i++;
         <div class="card">
             <div class="card-header" id="headingSport">
                 <h2 class="mb-0">
