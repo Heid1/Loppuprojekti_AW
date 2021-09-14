@@ -92,9 +92,10 @@ namespace Loppuprojekti_AW
         //hae hakusanalla posteja(tämä varsinaista hakua varten)
         public List<Post> GetPostsByCriteria(string criteria)
         {
-            var postlist = db.Posts.Include(
-                   s => s.Sport).Where(
-                   p => p.Description.ToLower().Contains(criteria.ToLower())
+            var postlist = db.Posts
+                .Include(s => s.Sport)
+                .Include(a => a.AttendeesNavigation)
+                .Where(p => p.Description.ToLower().Contains(criteria.ToLower())
                 || p.Postname.ToLower().Contains(criteria.ToLower())
                 || p.Place.ToLower().Contains(criteria.ToLower())
                 || p.Date.ToString().Contains(criteria)
@@ -111,7 +112,7 @@ namespace Loppuprojekti_AW
                            join s in db.Sports on p.Sportid equals s.Sportid
                            join us in db.UsersSports on s.Sportid equals us.Sportid
                            where us.Userid == userid
-                           select p).Include(s => s.Sport).ToList();
+                           select p).Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
                 return postlist;
         }
 
@@ -122,7 +123,7 @@ namespace Loppuprojekti_AW
 
         public List<Post> GetAllPosts()
         {
-            return db.Posts.Include(s => s.Sport).Where(p => p.Place != null).ToList();
+            return db.Posts.Include(s => s.Sport).Include(a=>a.AttendeesNavigation).ToList();
         }
 
         public List<Post> GetUserPosts(int? userid)
@@ -162,8 +163,8 @@ namespace Loppuprojekti_AW
             var posts = (from p in db.Posts
                          join a in db.Attendees on p.Postid equals a.Postid
                          where a.Userid == userid && a.Organiser == organiser
-                         select p).Include(s=>s.Sport);
-            return posts.ToList();
+                         select p).Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
+            return posts;
         }
 
         /// <summary>
@@ -230,6 +231,15 @@ namespace Loppuprojekti_AW
             var attendee = db.Attendees.Where(a => a.Userid == userid && a.Postid == postid).FirstOrDefault();
             db.Attendees.Remove(attendee);
             db.SaveChanges();
+        }
+
+        public List<Attendee> GetAttendances(int? userid)
+        {
+            if (userid==null)
+            {
+                return null;
+            }
+            return db.Attendees.Where(u => u.Userid == userid).ToList();
         }
 
         // ----------------------- SPORTS ----------------------------------------------

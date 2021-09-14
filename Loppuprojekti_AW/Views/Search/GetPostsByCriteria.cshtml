@@ -25,13 +25,14 @@
         }
     </div>
 </div>
-@if (ViewBag.Posts != null)
+@if (Model != null)
 {
     <div class="accordion" id="accordionPost">
 
         @foreach (var item in Model)
         {
             string iditem = "posthtmlid" + i;
+            i++;
             <div class="card">
                 <div class="card-header" id="headingPost">
                     <h2 class="mb-0">
@@ -43,10 +44,13 @@
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
                         <p>@item.Description</p>
-                        <p>@item.Sport.Sportname | @item.Place | @item.Date | @item.Duration min | @item.Price €</p>
+                        <p>@item.Sport.Sportname | @item.Place | @item.Date | @item.Duration min | @item.AttendeesNavigation.Count() / @item.Attendees | @item.Price €</p>
                         @if (ViewBag.Userid != null)
                         {
-                            @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                            if (item.Attendees != 0 && item.AttendeesNavigation.Count() < item.Attendees)
+                            {
+                                @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                            }
                             @Html.ActionLink("Peru ilmoittautuminen", "Cancel", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Are sure wants to delete?');" })
                         }
                     </div>
