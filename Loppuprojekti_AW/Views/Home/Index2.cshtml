@@ -26,7 +26,7 @@
             var wrestling = {
                 url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
-                
+
             };
 
             var Padel = {
@@ -34,14 +34,14 @@
                 scaledSize: new google.maps.Size(50, 50), // scaled size
 
             };
-     
+
             var dance = {
                 url: "https://cdn3.iconfinder.com/data/icons/dancing-dancer/214/dance-dancing-010-512.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
 
             };
 
-
+            var ikonit = [dance, wrestling, Padel];
 
             // The location of Kamppi
             const kamppi = { lat: 60.167390, lng: 24.931080 };
@@ -57,27 +57,13 @@
 
 
                 for (var i = 0; i < list2.length; i++) {
-                    var icon;
+
                     var location = {
                         lat: list2[i].Latitude,
                         lng: list2[i].Longitude
                     }
 
-                    if (list2[i].Sportid == 1) {
-                        icon = dance;
-                    } else if (list2[i].Sportid == 2) {
-                        icon = Padel;
-                    } else {
-                        icon = dance;
-                    }
-
-                    console.log(location);
-                    console.log(list2[i].Postname)
-                    console.log(list2[i].Description)
-                    console.log(list2[i].Address)
-                    console.log(list2[i].Duration)
-                    console.log(list2[i].Postname)
-                    console.log(list2[i].ImgUrl)
+                    var icon = i < 3 ? icon = ikonit[i] : icon = ikonit[1];
 
                     if (location.lat == null || location.lng == null) {
                         location.lat = 0;
@@ -98,7 +84,6 @@
                          +
                         "</div>" +
                         "</div>";
-
 
                     const marker = new google.maps.Marker({
                         position: location,

@@ -12,6 +12,7 @@ namespace Loppuprojekti_AW.Models
         public int? Receiverid { get; set; }
         public DateTime Sendtime { get; set; }
         public string Messagebody { get; set; }
+        public bool Isread { get; set; }
 
         public virtual Enduser Receiver { get; set; }
         public virtual Enduser Sender { get; set; }
