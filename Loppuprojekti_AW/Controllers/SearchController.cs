@@ -1,4 +1,5 @@
 ﻿using Loppuprojekti_AW.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -29,18 +30,34 @@ namespace Loppuprojekti_AW.Controllers
                 return View();
         }
 
-        public IActionResult GetPostsByCriteria(string criteria)
+        public IActionResult GetPostsByCriteria(string criteria, string button = null)
         {
+            var userid = HttpContext.Session.GetInt32("userid");
+            ViewBag.Userid = userid;
+            DataAccess da = new DataAccess(_context);
+            var postlist = new List<Post>();
             if (criteria != null)
             {
-                DataAccess da = new DataAccess(_context);
-                var postlist = da.GetPostsByCriteria(criteria);
-                ViewBag.Posts = postlist;
-                return View();
-
-            } else {
-                return View();
+                postlist = da.GetPostsByCriteria(criteria);
             }
+            else if(userid != null && button == "favouriteSportsButton")
+            {
+                postlist = da.GetPostsByFavouriteSport((int)userid);
+            }
+            else if (userid != null && button == "ownPostsButton")
+            {
+                postlist = da.GetPostsByAttendance((int)userid, true);
+            }
+            else if (userid != null && button == "attendanceButton")
+            {
+                postlist = da.GetPostsByAttendance((int)userid, false);
+            }
+            else
+            {
+                postlist = da.GetAllPosts();
+            }
+            ViewBag.Posts = postlist;
+            return View();
         }
     }
 }

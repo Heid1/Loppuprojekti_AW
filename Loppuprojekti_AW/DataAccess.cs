@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Loppuprojekti_AW
 {
@@ -104,6 +105,16 @@ namespace Loppuprojekti_AW
             return postlist;
         }
 
+        public List<Post> GetPostsByFavouriteSport(int userid)
+        {
+            var postlist = (from p in db.Posts
+                           join s in db.Sports on p.Sportid equals s.Sportid
+                           join us in db.UsersSports on s.Sportid equals us.Sportid
+                           where us.Userid == userid
+                           select p).Include(s => s.Sport).ToList();
+                return postlist;
+        }
+
         public Post GetPostById(int postid)
         {
             return db.Posts.Find(postid);
@@ -111,29 +122,31 @@ namespace Loppuprojekti_AW
 
         public List<Post> GetAllPosts()
         {
-            return db.Posts.Where(p => p.Place != null).ToList();
+            return db.Posts.Include(s => s.Sport).Where(p => p.Place != null).ToList();
         }
 
         public List<Post> GetUserPosts(int? userid)
         {
-            DateTime today = DateTime.Now.AddHours(24);
+            DateTime now = DateTime.Now;
+            DateTime future = DateTime.Now.AddHours(24);
             bool organiser = true;
             var organizingtoday = (from p in db.Posts
                                   join a in db.Attendees on p.Postid equals a.Postid
                                   where a.Userid == userid && a.Organiser == organiser
-                                  where p.Date <= today
+                                  where p.Date <= future && p.Date >= now
                                   select p).ToList();
             return organizingtoday;
         }
 
         public List<Post> GetOtherPostsByAttendanceToday(int? userid)
         {
-            DateTime today = DateTime.Now.AddHours(24);
+            DateTime now = DateTime.Now;
+            DateTime future = DateTime.Now.AddHours(24);
             bool organiser = false;
             var attendingtoday = (from p in db.Posts
                                   join a in db.Attendees on p.Postid equals a.Postid
                                   where a.Userid == userid && a.Organiser == organiser
-                                  where p.Date <= today
+                                  where p.Date <= future && p.Date >= now
                                   select p).ToList();
             return attendingtoday;
         }
@@ -146,12 +159,10 @@ namespace Loppuprojekti_AW
         /// <returns>Lista ilmoituksista</returns>
         public List<Post> GetPostsByAttendance(int userid, bool organiser)
         {
-            var posts = from p in db.Posts
+            var posts = (from p in db.Posts
                          join a in db.Attendees on p.Postid equals a.Postid
                          where a.Userid == userid && a.Organiser == organiser
-                         select p;
-            //var attendees = db.Attendees.Where(a => a.Userid == userid && a.Organiser == organiser);
-            //var posts = db.Posts.Join(attendees, p => p.Postid, a => a.Postid, (p, a) => new Post()).ToList();
+                         select p).Include(s=>s.Sport);
             return posts.ToList();
         }
 
@@ -253,16 +264,16 @@ namespace Loppuprojekti_AW
             db.SaveChanges();
         }
 
-        public void LikeSport(UsersSport userssport)
+        public void AddSportToFavourites(UsersSport userssport)
         {
             db.UsersSports.Add(userssport);
             db.SaveChanges();
         }
 
-        public void RemovePostFromFavourites(int sportid)
+        public void RemoveSportFromFavourites(int userid, int sportid)
         {
-            var sport = db.Sports.Find(sportid);
-            db.Remove(sport);
+            var userssport = db.UsersSports.Where(us => us.Userid == userid && us.Sportid == sportid).FirstOrDefault();
+            db.UsersSports.Remove(userssport);
             db.SaveChanges();
         }
 
@@ -353,11 +364,12 @@ namespace Loppuprojekti_AW
 
                 decimal latitude = (decimal)result.Geometry.Location.Latitude;
                 decimal longitude = (decimal)result.Geometry.Location.Longitude;
-                if(lat == true)
+                if (lat == true)
                 {
                     return latitude;
                 }
-                else {
+                else
+                {
                     return longitude;
                 }
 
@@ -373,10 +385,36 @@ namespace Loppuprojekti_AW
             }
         }
 
-        
+        public string ReturnPostObjects()
+        {
+            var postobject = (from p in db.Posts
+                              join a in db.Attendees
+                              on p.Postid equals a.Postid
+                              join u in db.Endusers
+                              on a.Userid equals u.Userid
+                              where a.Organiser == true
+                              select new
+                              {
+                                  Postname = p.Postname,
+                                  Description = p.Description,
+                                  ImgUrl = u.Photo,
+                                  Duration = p.Duration,
+                                  Latitude = p.Latitude,
+                                  Longitude = p.Longitude,
+                                  Address = p.Place,
+                                  Sport = p.Sportid
+                              }).ToList();
+
+            string objects = JsonConvert.SerializeObject(postobject);
+
+            return objects;
+
+
+        }
+
         //public void AddNewMessageToDatabase(Message msg)
         //{
-            
+
         //    db.Messages.Add(msg);
         //    db.SaveChanges();
         //}

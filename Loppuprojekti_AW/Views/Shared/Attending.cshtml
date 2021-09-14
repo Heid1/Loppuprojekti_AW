@@ -1,17 +1,13 @@
 ﻿@model IEnumerable<Loppuprojekti_AW.Models.Post>
 
 @{
-    ViewData["Title"] = "Omat ilmoitukset";
+    ViewData["Title"] = "Omat ilmoittautumiset";
 }
 
-<h1>Omat ilmoitukset</h1>
+<h1>Attending</h1>
 
-<p>
-    <a asp-action="Attending">Omat ilmoittautumiset</a>
-</p>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (ViewBag.Attending != null)
+{
     <table class="table">
         <thead>
             <tr>
@@ -41,6 +37,12 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Longitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Latitude)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Sport)
@@ -80,19 +82,28 @@
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Longitude)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Latitude)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Sport.Sportname)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Postid" class="btn btn-outline-success">Muokkaa</a>
-                        <a asp-action="Delete" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="return confirm('Haluatko varmasti poistaa ilmoituksen?')">Poista</a>
+                        <a asp-action="Cancel" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoittautumisesi</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+    } else
+            {
+<p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
+            }
 
 <script>
     function alertDelete() {
-        alert("Haluatko varmasti poistaa ilmoituksen?");
+        alert("Haluatko varmasti peruuttaa ilmoittautumisen?");
     }
 </script>
