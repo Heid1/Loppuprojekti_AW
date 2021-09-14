@@ -16,6 +16,7 @@ namespace Loppuprojekti_AW.Models
         public int Sportid { get; set; }
         public string Sportname { get; set; }
         public string Description { get; set; }
+        public string Category { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<UsersSport> UsersSports { get; set; }
