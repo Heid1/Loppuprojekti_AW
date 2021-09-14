@@ -36,10 +36,8 @@ namespace Loppuprojekti_AW.Controllers
         {
             DataAccess da = new DataAccess(_context);
 
-            var posts = da.GetAllPosts();
-            string posts1 = JsonConvert.SerializeObject(posts);
-
-            ViewBag.Posts = posts1;
+            
+            ViewBag.Posts = da.ReturnPostObjects();
 
             return View();
         }
