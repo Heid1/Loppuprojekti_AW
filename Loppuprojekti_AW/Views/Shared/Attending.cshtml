@@ -3,9 +3,7 @@
 @{
     ViewData["Title"] = "Omat ilmoittautumiset";
 }
-
-<h1>Attending</h1>
-
+<h3>Omat ilmoittautumiset</h3>
 @if (ViewBag.Attending != null)
 {
     <table class="table">
@@ -97,10 +95,21 @@
             }
         </tbody>
     </table>
-    } else
-            {
-<p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
-            }
+}
+else
+{
+
+    <div class="alert alert-info d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+        <div>
+            Sinulla ei ole omia tapahtumia 24h sisällä
+        </div>
+    </div>
+}
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-primary">Takaisin</a>
+</div>
 
 <script>
     function alertDelete() {
