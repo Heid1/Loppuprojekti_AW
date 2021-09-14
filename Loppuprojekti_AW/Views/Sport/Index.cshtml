@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Lajit";
+    int i = 1;
 }
 
     <h2 class="display-4">Lajit</h2>
@@ -21,35 +22,36 @@
     }
 
 
-    <div class="accordion" id="accordionSport">
-        @foreach (var item in Model)
-        {
-            var iditem = String.Join("", item.Sportname.Split(' '));
-            <div class="card">
-                <div class="card-header" id="headingSport">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#@iditem" aria-expanded="false" aria-controls="@iditem">
-                            @item.Sportname
-                        </button>
-                    </h2>
-                </div>
-                <div id="@iditem" class="collapse" aria-labelledby="headingSport" data-parent="#accordionSport">
-                    <div class="card-body">
-                        @if (ViewBag.Userid == null)
-                        {
-                            <br />
-                        }
-                        else if (ViewBag.IsChosen != null && ViewBag.IsChosen.Contains(item.Sportid))
-                        {
-                            @Html.ActionLink("Poista suosikeita", "RemoveSportFromFavourites", new { sportid = item.Sportid })<br />
-                        }
-                        else
-                        {
-                            @Html.ActionLink("Valitse suosikkeihin", "AddSportToFavourites", "Sport", new { sportid = item.Sportid })<br />
-                        }
-                        @item.Description
-                    </div>
+<div class="accordion" id="accordionSport">
+    @foreach (var item in Model)
+    {
+        var iditem = "sporthtmlid" + i;
+        i++;
+        <div class="card">
+            <div class="card-header" id="headingSport">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#@iditem" aria-expanded="false" aria-controls="@iditem">
+                        @item.Sportname
+                    </button>
+                </h2>
+            </div>
+            <div id="@iditem" class="collapse" aria-labelledby="headingSport" data-parent="#accordionSport">
+                <div class="card-body">
+                    @if (ViewBag.Userid == null)
+                    {
+                        <br />
+                    }
+                     else if (ViewBag.IsChosen != null && ViewBag.IsChosen.Contains(item.Sportid))
+                    {
+                        @Html.ActionLink("Poista suosikeita", "RemoveSportFromFavourites", new { sportid = item.Sportid })<br />
+                    }
+                    else {
+                        @Html.ActionLink("Valitse suosikkeihin", "AddSportToFavourites", "Sport", new { sportid = item.Sportid })<br />
+                    }
+                    @item.Description
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>
+
