@@ -20,13 +20,15 @@ namespace Loppuprojekti_AW.Controllers
         private readonly string blobServiceEndpoint;
         private readonly string storageAccountName;
         private readonly string storageAccountKey;
-        private readonly string blobName;
+        private readonly string photoBlob;
+        private readonly string thumbnailPhotoBlob;
 
         private readonly MoveoContext _context;
         public AccountController(MoveoContext context, IConfiguration configuration)
         {
             _context = context;
-            blobName = configuration["BlobName"];
+            photoBlob = configuration["BlobName"];
+            thumbnailPhotoBlob = photoBlob + "-thumb";
             storageAccountKey = configuration["StorageAccountKey"];
             storageAccountName = configuration["StorageAccountName"];
             blobServiceEndpoint = configuration["StorageEndPoint"];
@@ -81,13 +83,14 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         /// <summary>
-        /// Lisää uuden kuvan Blobiin ja poistaa samalla vanhan, jos sellainen löytyy.
+        /// Lisää Blobiin uuden kuvan ja poistaa samalla vanhan, jos sellainen on olemassa.
+        /// Myös vanhan kuvan thumbnailversio poistetaan.
         /// </summary>
-        /// <param name="Photo"></param>
-        /// <param name="oldPhoto"></param>
-        /// <returns>Kuvan url</returns>
+        /// <param name="Photo">Uusi kuva</param>
+        /// <param name="photoUrl">Alkuperäisen thumbnailkuvan URL</param>
+        /// <returns></returns>
         [HttpPost]
-        private string AddPhotoInContainer(IFormFile Photo, string oldPhoto = null)
+        private string AddPhotoInContainer(IFormFile Photo, string photoUrl = null)
         {
             if (Photo == null)
             {
@@ -95,27 +98,24 @@ namespace Loppuprojekti_AW.Controllers
             }
             using Stream imageStream = Photo.OpenReadStream();
             StorageSharedKeyCredential accountCredentials = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
-            BlobServiceClient serviceClient = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
-            BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(blobName);
-
-            DeletePhotoFromContainer(oldPhoto);
-
-            string photoname = Guid.NewGuid().ToString() + Photo.FileName.Substring(Photo.FileName.LastIndexOf('.'));
-            containerClient.UploadBlob(photoname, imageStream);
-            BlobClient blob = containerClient.GetBlobClient(photoname);
-            return blob.Uri.ToString();
-        }
-        [HttpPost]
-        private void DeletePhotoFromContainer(string oldPhoto)
-        {
-            if (oldPhoto != null)
+            BlobServiceClient service = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
+            BlobContainerClient container = service.GetBlobContainerClient(photoBlob);
+            string photoname = Guid.NewGuid().ToString();
+            if (photoUrl != null)
             {
-                StorageSharedKeyCredential accountCredentials = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
-                BlobServiceClient serviceClient = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
-                BlobContainerClient containerClient = serviceClient.GetBlobContainerClient(blobName);
-                oldPhoto = oldPhoto.Substring(oldPhoto.LastIndexOf('/') + 1);
-                var bc = containerClient.DeleteBlob(oldPhoto);
+                photoname = photoUrl.Substring(photoUrl.LastIndexOf('/') + 1);
             }
+            BlobClient blob = container.GetBlobClient(photoname);
+            blob.Upload(imageStream, true);
+            container = service.GetBlobContainerClient(thumbnailPhotoBlob);
+            blob = container.GetBlobClient(photoname);
+            if (blob.Exists())
+            {
+                return blob.Uri.ToString();
+            }
+            container = service.GetBlobContainerClient(photoBlob);
+            blob = container.GetBlobClient(photoname);
+            return blob.Uri.ToString();
         }
 
         [HttpGet]
