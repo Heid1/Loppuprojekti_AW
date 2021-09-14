@@ -41,6 +41,7 @@
 
             };
 
+            var ikonit = [dance, wrestling, Padel];
 
             // The location of Kamppi
             const kamppi = { lat: 60.167390, lng: 24.931080 };
@@ -62,7 +63,7 @@
                         lng: list2[i].Longitude
                     }
 
-                    var icon 
+                    var icon = i < 3 ? icon = ikonit[i] : icon = ikonit[1];
 
                     if (location.lat == null || location.lng == null) {
                         location.lat = 0;
@@ -87,7 +88,7 @@
                     const marker = new google.maps.Marker({
                         position: location,
                         map: map,
-                        icon: paini
+                        icon: icon
                     });
 
                     const infowindow = new google.maps.InfoWindow({
