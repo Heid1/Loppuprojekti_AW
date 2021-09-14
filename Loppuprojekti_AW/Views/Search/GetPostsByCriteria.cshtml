@@ -9,7 +9,7 @@
 <h3>Hae ilmoituksia</h3>
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col-sm">
             <form action="GetPostsByCriteria" method="post">
                 <input type="text" name="criteria" value="" />
                 <input type="submit" value="Hae" />
@@ -17,13 +17,13 @@
         </div>
         @if (ViewBag.Userid != null)
         {
-            <div class="col">
+            <div class="col-sm">
                 @Html.ActionLink("Suosikkilajit", "GetPostsByCriteria", "Search", new { button = "favouriteSportsButton" }, new { @class = "btn btn-outline-primary" })
             </div>
-            <div class="col">
+            <div class="col-sm">
                 @Html.ActionLink("Omat ilmoitukset", "GetPostsByCriteria", "Search", new { button = "ownPostsButton" }, new { @class = "btn btn-outline-primary" })
             </div>
-            <div class="col">
+            <div class="col-sm">
                 @Html.ActionLink("Ilmoittautumiset", "GetPostsByCriteria", "Search", new { button = "attendanceButton" }, new { @class = "btn btn-outline-primary" })
             </div>
         }
