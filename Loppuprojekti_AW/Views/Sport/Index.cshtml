@@ -5,22 +5,21 @@
     int i = 1;
 }
 
-<h2 class="display-5">Tervetuloa</h2>
-<h2 class="display-6">Lajit</h2>
+    <h2 class="display-4">Lajit</h2>
 
-@using Microsoft.AspNetCore.Http;
-@if (Context.Session.GetString("userrole") == "admin")
-{
-    <p>
-        <a asp-action="Create">Luo uusi laji</a>
-    </p>
-}
-else
-{
-    <p>
-        <a asp-action="SendFeedback" asp-controller="Home">Ehdota uutta lajia</a>
-    </p>
-}
+    @using Microsoft.AspNetCore.Http;
+    @if (Context.Session.GetString("userrole") == "admin")
+    {
+        <p>
+            <a asp-action="Create">Luo uusi laji</a>
+        </p>
+    }
+    else
+    {
+        <p>
+            <a asp-action="SendFeedback" asp-controller="Home">Ehdota uutta lajia</a>
+        </p>
+    }
 
 
 <div class="accordion" id="accordionSport">
