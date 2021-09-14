@@ -6,11 +6,10 @@ body {
 }
 
 #header-img {
-    background-image: url('../background.jpg');
-    background-repeat: no-repeat;
+    background-image: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1)), url('../tennis-bg.jpg');
     background-size: 100% auto;
     width: 100%;
-    height: 400px;
+    height: 450px;
     position: absolute;
     z-index: 0;
 }
@@ -47,7 +46,7 @@ main {
     position: relative;
     margin-top: 200px;
     z-index: 1;
-    background-color: rgba(255,255,255, 0.5) !important;
+    background-color: rgba(255,255,255, 0.6) !important;
     backdrop-filter: blur(20px) !important;
 }
 
@@ -73,24 +72,48 @@ ul.cloud {
     align-items: center;
     justify-content: center;
     line-height: 2.75rem;
-    width: 100%;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 40px;
     font-size: 1.5rem;
-    margin: 0 !important;
+    font-family: monospace;
+}
+
+ul.cloud li:nth-child(1n+1) a {
+     color: rgb(222, 49, 99);
+     font-size: 2.5rem;
+     --color: rgba(222, 49, 99, 0.2);
 }
 
 ul.cloud li:nth-child(2n+1) a {
-    color: #181;
-    font-size:3rem;
-    }
+     color: rgb(255, 191, 0);
+     font-size: 2.8rem;
+     --color: rgba(255, 191, 0, 0.2);
+}
 
 ul.cloud li:nth-child(3n+1) a {
-    color: #33a;
-    font-size: 2rem;
-    }
+    color: rgb(41, 128, 185);
+    font-size: 1.8rem;
+    --color: rgba(41, 128, 185, 0.2);
+}
 
 ul.cloud li:nth-child(4n+1) a {
-    color: #c38;
-    font-size: 2rem;
+    color: rgb(22, 160, 133);
+    font-size: 2.2rem;
+    --color: rgba(88, 214, 141, 0.2);
+}
+
+
+/* Sanapilvi animaatio*/
+
+ul.cloud a {
+    background-color: none;
+    transition: 0.28s;
+    padding-right: 10px;
+}
+
+ul.cloud a:hover {
+    background: var(--color);
     }
 
 /*NAVIGOINTIPALKKI*/
@@ -101,7 +124,7 @@ a.navbar-brand {
 }
 
 nav {
-    background-color: rgba(255,255,255, 0.5)!important;
+    background-color: rgba(255,255,255, 0.6)!important;
     backdrop-filter: blur(20px)!important;
     height: 100px;
 }
