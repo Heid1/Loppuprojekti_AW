@@ -107,6 +107,7 @@ namespace Loppuprojekti_AW.Controllers
             }
             BlobClient blob = container.GetBlobClient(photoname);
             blob.Upload(imageStream, true);
+            //function käynnistyy...
             container = service.GetBlobContainerClient(thumbnailPhotoBlob);
             blob = container.GetBlobClient(photoname);
             if (blob.Exists())
@@ -151,7 +152,10 @@ namespace Loppuprojekti_AW.Controllers
         {
             DataAccess da = new DataAccess(_context);
             enduser.Photo = AddPhotoInContainer(Photo, da.GetCurrentPhotoUrl(enduser.Userid));
-            enduser.Password = Hash(enduser.Password);
+            if (enduser.Password != null)
+            {
+                enduser.Password = Hash(enduser.Password);
+            }
             da.EditUser(enduser);
             return RedirectToAction("Profile", new { Id = enduser.Userid });
         }
