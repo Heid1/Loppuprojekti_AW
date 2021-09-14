@@ -14,7 +14,9 @@ function getMessagesApi() {
 }
 
 function getmessages(event) {
-
+    var otherPartyId = this.id;
+    var chatbox = document.getElementById("chatBox");
+    chatbox.innerHTML = "";
     // console.dir(this);
     // console.dir(event);
     //console.log("get messages!");
@@ -49,9 +51,9 @@ function getmessages(event) {
 }
 
 function updateMessages() {
-        var otherPartyId = this.id;
-        var chatbox = document.getElementById("chatBox");
-        chatbox.innerHTML = "";
+        //var otherPartyId = this.id;
+        //var chatbox = document.getElementById("chatBox");
+        //chatbox.innerHTML = "";
         getmessages();
     }
 
@@ -128,11 +130,6 @@ for (let i = 0; i < usersMessagedWith.length; i++) {
     //            console.error('Error:', error);
     //        });
     //    }
-
-
-
-        
-   
     //}
 
     var div1 = document.createElement('div');
