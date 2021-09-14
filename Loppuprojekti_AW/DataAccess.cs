@@ -403,6 +403,7 @@ namespace Loppuprojekti_AW
                                   Longitude = p.Longitude,
                                   Address = p.Place,
                                   Sport = p.Sportid
+                            
                               }).ToList();
 
             string objects = JsonConvert.SerializeObject(postobject);
