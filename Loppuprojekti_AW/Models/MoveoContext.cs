@@ -177,7 +177,9 @@ namespace Loppuprojekti_AW.Models
                     .IsUnicode(false)
                     .HasColumnName("postname");
 
-                entity.Property(e => e.Posttype).HasColumnName("posttype");
+                entity.Property(e => e.Posttype)
+                    .HasMaxLength(250)
+                    .HasColumnName("posttype");
 
                 entity.Property(e => e.Price)
                     .HasColumnType("decimal(18, 0)")
