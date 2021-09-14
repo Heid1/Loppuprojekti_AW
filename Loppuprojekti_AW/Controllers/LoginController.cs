@@ -25,7 +25,6 @@ namespace Loppuprojekti_AW.Controllers
         [HttpPost]
         public IActionResult Index(string Email, string Password)
         {
-            //Enduser Eu = _context.Endusers.Where(u => u.Email == Email && u.Password == Password).FirstOrDefault();
             Enduser enduser = _context.Endusers.Where(u => u.Email == Email).FirstOrDefault();
 
             if (enduser != null)
@@ -40,14 +39,12 @@ namespace Loppuprojekti_AW.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Password", "You entered a wrong password! Please try again.");
                     ViewBag.AuthOK = false;
                     return View();
                 }
             }
             else
             {
-                ModelState.AddModelError("Username", "There is no account assosiated with the given name. Please try again or create a new account!");
                 ViewBag.AuthOK = false;
                 return View();
             }
