@@ -32,7 +32,7 @@ footer {
     margin: 30px;
 }
 
-a h1 {
+a #otsikko {
     color: black;
 }
 
@@ -41,7 +41,7 @@ a h1 {
     font-family: otsikko;
 }
 
-h1 {
+#otsikko {
     font-family: otsikko;
     font-size: 300%;
     font-style: italic;
