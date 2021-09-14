@@ -9,9 +9,8 @@
 @if (ViewBag.Failed)
 {
     <div class="alert alert-danger d-flex align-items-center" role="alert">
-        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-        <use xlink:href="#exclamation-triangle-fill" /></svg>
-        <div>
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+        <div class="error">
             Sähköposti varattu, yritä uudelleen!
         </div>
     </div>
@@ -22,43 +21,43 @@
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label" ></label>
-                <input asp-for="Email" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <input asp-for="Password" type="password" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <input asp-for="Username" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Birthday" class="control-label"></label>
-                <input asp-for="Birthday" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <input asp-for="Birthday" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
                 <span asp-validation-for="Birthday" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="Userrole" class="control-label"></label>
-                <input asp-for="Userrole" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
-                <span asp-validation-for="Userrole" class="text-danger"></span>
-            </div>*@
+                    <label asp-for="Userrole" class="control-label"></label>
+                    <input asp-for="Userrole" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                    <span asp-validation-for="Userrole" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <input asp-for="Description" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" type="file" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <input asp-for="Photo" type="file" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
                 <span asp-validation-for="Photo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Club" class="control-label"></label>
-                <input asp-for="Club" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <input asp-for="Club" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
                 <span asp-validation-for="Club" class="text-danger"></span>
             </div>
 

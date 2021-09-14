@@ -64,6 +64,9 @@ main {
     /*height: auto;*/
 }
 
+.error {
+    padding-left: 20px;
+}
 textarea {
     width: 90%;
     height: 150px;
