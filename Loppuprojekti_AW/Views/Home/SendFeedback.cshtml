@@ -3,9 +3,9 @@
     ViewData["Title"] = "Lähetä palautetta";
 }
 
-<h3>Lähetä palautetta</h3>
-
-<hr />
+<div class="text-center">
+    <h2 class="display-4">Lähetä palautetta</h2>
+</div>
 @using (Html.BeginForm("CreateMessage", "Messages", FormMethod.Post))
 { <label for="Feedback" class="control-label" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">Palautteesi:</label><br />
     @Html.TextArea("Feedback")<br />

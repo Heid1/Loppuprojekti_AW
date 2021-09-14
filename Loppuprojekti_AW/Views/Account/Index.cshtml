@@ -6,6 +6,7 @@
 @{
     ViewData["Title"] = "Pääsivu";
 }
+
 <h3>Hei @ViewBag.Username!</h3>
 <p>Olet kirjautunut sisään.</p>
 <img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
@@ -18,6 +19,7 @@
         <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
     </div>
 } else {
+
     <div class="accordion" id="accordionPost">
         @foreach (var item in ViewBag.UserOwnPosts)
         {
