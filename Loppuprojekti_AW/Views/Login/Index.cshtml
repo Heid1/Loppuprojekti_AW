@@ -4,7 +4,9 @@
     ViewData["Title"] = "Kirjaudu";
 }
 
-<h3>Kirjaudu sisään</h3>
+
+    <h2 class="display-4">Kirjaudu sisään</h2>
+
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Index", "Login", FormMethod.Post))
@@ -15,28 +17,31 @@
                     <label asp-for="Email" class="control-label"></label>
                     <input asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
-                    <label asp-for="Password" class="control-label"></label>
+                    <label asp-for="Password" class="control-label">Salasana</label>
                     <input asp-for="Password" type="password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Kirjaudu" class="btn btn-outline-primary" />
+                    <button asp-controller="Account" asp-action="Create" class="btn btn-outline-primary">Rekisteröidy</button>
+                    <a asp-action="Index" class="btn btn-outline-primary">Takaisin</a>
                 </div>
             </form>
         }
 
-        @Html.ActionLink("Rekisteröidy", "Index", "Home", new { @class = "btn btn-outline-primary" })
+       
     </div>
     <div class="leipäteksti">
         @if (ViewBag.AuthOK == false)
         {
-            <p class="alert alert-danger" role="alert">Salasana tai käyttäjätunnus väärin<br />Yritä uudelleen</p>
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+                <div class="error">
+                    Salasana tai käyttäjätunnus väärin. Yritä uudelleen
+                </div>
+            </div>
         }
     </div>
-</div>
-
-<div>
-    <a asp-action="Index" class = "btn btn-outline-primary">Takaisin</a>
 </div>
 
 @section Scripts {

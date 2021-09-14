@@ -72,6 +72,10 @@ namespace Loppuprojekti_AW.Controllers
                 string photourl = AddPhotoInContainer(Photo);
                 enduser.Photo = photourl;
                 enduser.Password = Hash(enduser.Password);
+                if (enduser.Userrole == null)
+                {
+                    enduser.Userrole = "käyttäjä";
+                }
                 da.CreateUser(enduser);
                 return RedirectToAction("Index", "Home");
             }
