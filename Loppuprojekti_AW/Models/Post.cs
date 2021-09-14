@@ -17,11 +17,11 @@ namespace Loppuprojekti_AW.Models
         public int Sportid { get; set; }
         public string Description { get; set; }
         public int? Attendees { get; set; }
-        public int Posttype { get; set; }
+        public int? Posttype { get; set; }
         public string Place { get; set; }
         public DateTime Date { get; set; }
         public int Duration { get; set; }
-        public int Privacy { get; set; }
+        public int? Privacy { get; set; }
         public decimal? Price { get; set; }
         public decimal? Longitude { get; set; }
         public decimal? Latitude { get; set; }
