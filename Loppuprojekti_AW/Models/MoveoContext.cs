@@ -121,6 +121,8 @@ namespace Loppuprojekti_AW.Models
 
                 entity.Property(e => e.Senderid).HasColumnName("senderid");
 
+                entity.Property(e => e.Isread).HasColumnName("isread");
+
                 entity.Property(e => e.Sendtime)
                     .HasColumnType("datetime")
                     .HasColumnName("sendtime");
@@ -207,6 +209,11 @@ namespace Loppuprojekti_AW.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("sportname");
+
+                entity.Property(e => e.Category)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("category");
             });
 
             modelBuilder.Entity<UsersSport>(entity =>

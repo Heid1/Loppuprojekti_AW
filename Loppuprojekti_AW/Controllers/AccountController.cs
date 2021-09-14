@@ -110,7 +110,7 @@ namespace Loppuprojekti_AW.Controllers
             container = service.GetBlobContainerClient(thumbnailPhotoBlob);
             blob = container.GetBlobClient(photoname);
             if (blob.Exists())
-            { 
+            {
                 return blob.Uri.ToString();
             }
             container = service.GetBlobContainerClient(photoBlob);
