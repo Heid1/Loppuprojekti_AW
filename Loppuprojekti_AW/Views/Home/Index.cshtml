@@ -6,12 +6,13 @@
     <h2 class="display-4">Aloita tästä</h2>
 
     @if (ViewBag.CommonPosts != null)
-        {
-    <ul class="cloud" role="navigation" aria-label="linkkipilvi">
-        @foreach (var post in ViewBag.CommonPosts)
+    {
+        <ul class="cloud" role="navigation" aria-label="linkkipilvi">
+            @foreach (var post in ViewBag.CommonPosts)
             {
-        <li class="pilvilinkki"> @Html.ActionLink($"{post.Sportname}", "GetPostBySportId", "Search", new {id = post.Sportid })</li>
-    }
-    </ul>
+                <li class="pilvilinkki"> @Html.ActionLink($"{post.Sportname}", "GetPostBySportId", "Search", new { id = post.Sportid })</li>
+            }
+        </ul>
     }
 </div>
+<div id="map"></div>

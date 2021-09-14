@@ -6,7 +6,94 @@
     <title>@ViewData["Title"] Moveo++</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    @*<link rel="stylesheet" type="text/css" href="~/css/mobiili.css" media="only screen and (min-width: 0px) and (max-width: 480px)">*@
+
+    <style type="text/css">
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
+        }
+    </style>
+
+    <script>
+        var list = '@Html.Raw(ViewBag.Posts)'
+        var list2 = JSON.parse(list);
+
+        console.log(list2);
+    </script>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+
+            var paini = {
+                url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+            };
+
+            // The location of Kamppi
+            const kamppi = { lat: 60.167390, lng: 24.931080 };
+            // The map, centered at kamppi
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 11.5,
+                center: kamppi,
+            });
+
+            ///metodi ottaa aikaisemman listan ja luo markkerit+infoikkunan
+            function populate() {
+
+                for (var i = 0; i < list2.length; i++) {
+
+                    var location = {
+                        lat: list2[i].Latitude,
+                        lng: list2[i].Longitude
+                    }
+
+                    console.log(location);
+                    console.log(list2[i].Postname)
+                    console.log(list2[i].Description)
+                    console.log(list2[i].Address)
+                    console.log(list2[i].Duration)
+                    console.log(list2[i].Postname)
+                    console.log(list2[i].ImgUrl)
+
+                    if (location.lat == null || location.lng == null) {
+                        location.lat = 0;
+                        location.lng = 0;
+                    }
+
+                    const content = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        "</div>" +
+                        '<h1 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h1>' +
+                        '<div id="bodyContent">' +
+                        '<div width:20%;"><img src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' +
+                        "<p>" + list2[i].Description + "</p > " +
+                        "<p> Osoite :" + list2[i].Address + "</p > " +
+                        "<p> Kesto :" + list2[i].Duration.toString() + "</p > "
+                        +
+                        "</div>" +
+                        "</div>";
+
+                    const marker = new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        icon: paini
+                    });
+
+                    const infowindow = new google.maps.InfoWindow({
+                        content: content,
+                    });
+
+                    marker.addListener("click", () => {
+                        infowindow.open(marker.get("map"), marker);
+                    });
+                }
+            }
+            populate();
+        }
+    </script>
 </head>
 <body>
     <div id="header-img"></div>
@@ -83,20 +170,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw&callback=initMap&libraries=&v=weekly" async>
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
-
-<script>
-    function avaaMenu() {
-        document.getElementById("navigaatio").style.height = "100%";
-        document.getElementById("open").style.visibility = "hidden";
-        document.getElementById("close").style.visibility = "visible";
-    }
-
-    function suljeMenu() {
-        document.getElementById("navigaatio").style.height = "0";
-        document.getElementById("open").style.visibility = "visible";
-        document.getElementById("close").style.visibility = "hidden";
-    }
-</script>
 </body>
 </html>
