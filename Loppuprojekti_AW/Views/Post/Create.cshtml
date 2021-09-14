@@ -11,13 +11,13 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Postname" class="control-label"></label>
-                <input asp-for="Postname" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <label asp-for="Postname" class="control-label">Nimi</label>
+                <input asp-for="Postname" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Ilmoituksen lyhyt nimi"/>
                 <span asp-validation-for="Postname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Sportid" class="control-label">Laji</label>
-                <select asp-for="Sportid" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+                <select asp-for="Sportid" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Lajin valinta valikosta">
                     @foreach (var item in ViewBag.Sports)
                     {
                     <option value="@item.Sportid">@item.Sportname</option>
@@ -26,53 +26,33 @@
                 <span asp-validation-for="Sportid" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <label asp-for="Description" class="control-label">Kuvaus</label>
+                <input asp-for="Description" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Kuvailu vapaasti"/>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Attendees" class="control-label"></label>
-                <input asp-for="Attendees" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <label asp-for="Attendees" class="control-label">Osallistujien määrä</label>
+                <input asp-for="Attendees" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Lukumäärä kokonaislukuna"/>
                 <span asp-validation-for="Attendees" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Posttype" class="control-label"></label>
-                <input asp-for="Posttype" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
-                <span asp-validation-for="Posttype" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Place" class="control-label"></label>
-                <input asp-for="Place" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <label asp-for="Place" class="control-label">Sijainti</label>
+                <input asp-for="Place" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Katuosoite, kaupunginosa tai kaupunki"/>
                 <span asp-validation-for="Place" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="Latitude" class="control-label"></label>
-                <input asp-for="Latitude" class="form-control" />
-                <span asp-validation-for="Latitude" class="text-danger"></span>
-            </div>
             <div class="form-group">
-                <label asp-for="Longitude" class="control-label"></label>
-                <input asp-for="Longitude" class="form-control" />
-                <span asp-validation-for="Longitude" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <label asp-for="Date" class="control-label">Ajankohta</label>
+                <input asp-for="Date" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Ajankohta"/>
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
-                <input asp-for="Duration" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <label asp-for="Duration" class="control-label">Kesto</label>
+                <input asp-for="Duration" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Kesto"/>
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Privacy" class="control-label"></label>
-                <input asp-for="Privacy" class="form-control" required data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
-                <span asp-validation-for="Privacy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
+                <label asp-for="Price" class="control-label">Hinta</label>
+                <input asp-for="Price" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Hinta"/>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
