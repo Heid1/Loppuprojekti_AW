@@ -1,39 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model Loppuprojekti_AW.Models.Post;
+﻿@model IEnumerable<Loppuprojekti_AW.Models.Post>
 @{
     ViewData["Title"] = "Hae ilmoituksia";
+    int i = 1;
 }
 
-<h3>Hae ilmoituksia</h3>
+
+    <h2 class="display-4">Hae ilmoituksia</h2>
+
 <div class="container">
     <div class="row">
         <div class="col-sm">
             <form action="GetPostsByCriteria" method="post">
-                <input type="text" name="criteria" value="" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"/>
-                <input type="submit" value="Hae" class = "btn btn-outline-primary"/>
+                <input type="text" name="criteria" value="" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
+                <input type="submit" value="Hae" class="btn btn-outline-primary" />
             </form>
         </div>
         @if (ViewBag.Userid != null)
         {
             <div class="col-sm">
                 @Html.ActionLink("Suosikkilajit", "GetPostsByCriteria", "Search", new { button = "favouriteSportsButton" }, new { @class = "btn btn-outline-primary" })
-            @*<div class="col-sm">*@
+                @*<div class="col-sm">*@
                 @Html.ActionLink("Omat ilmoitukset", "GetPostsByCriteria", "Search", new { button = "ownPostsButton" }, new { @class = "btn btn-outline-primary" })
-            @*<div class="col-sm">*@
+                @*<div class="col-sm">*@
                 @Html.ActionLink("Ilmoittautumiset", "GetPostsByCriteria", "Search", new { button = "attendanceButton" }, new { @class = "btn btn-outline-primary" })
             </div>
         }
     </div>
 </div>
-@if (ViewBag.Posts != null)
+@if (Model != null)
 {
     <div class="accordion" id="accordionPost">
 
-        @foreach (var item in ViewBag.Posts)
+        @foreach (var item in Model)
         {
-            var iditem = String.Join("", item.Postname.Split(' '));
+            string iditem = "posthtmlid" + i;
+            i++;
             <div class="card">
                 <div class="card-header" id="headingPost">
                     <h2 class="mb-0">
@@ -44,9 +45,16 @@
                 </div>
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
-                        <p>@item.Postid | @item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
-                        @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
-                        @Html.ActionLink("Peru ilmoittautuminen", "Cancel", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Are sure wants to delete?');" })
+                        <p>@item.Description</p>
+                        <p>@item.Sport.Sportname | @item.Place | @item.Date | @item.Duration min | @item.AttendeesNavigation.Count() / @item.Attendees | @item.Price €</p>
+                        @if (ViewBag.Userid != null)
+                        {
+                            if (item.Attendees != 0 && item.AttendeesNavigation.Count() < item.Attendees)
+                            {
+                                @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                            }
+                            @Html.ActionLink("Peru ilmoittautuminen", "Cancel", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Are sure wants to delete?');" })
+                        }
                     </div>
                 </div>
             </div>
