@@ -42,6 +42,7 @@ namespace Loppuprojekti_AW.Controllers
         // GET: SportController/Create
         public IActionResult Create()
         {
+            ViewBag.Categories = _data.GetAllSports().Select(s => s.Category).ToList();
             return View();
         }
 
