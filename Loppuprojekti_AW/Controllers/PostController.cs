@@ -53,7 +53,7 @@ namespace Loppuprojekti_AW.Controllers
             post.Latitude = _data.ReturnCoordinates(post.Place, true);
             post.Longitude = _data.ReturnCoordinates(post.Place, false);
             _data.CreatePost((int)userid, post);
-            return RedirectToAction("Index", "Post");
+            return RedirectToAction("GetPostsByCriteria", "Search");
         }
 
         [HttpGet]
@@ -68,18 +68,19 @@ namespace Loppuprojekti_AW.Controllers
             ViewBag.Attending = attending;
             return View(attending);
         }
+
         public ActionResult Attend(int postid)
         {
             var userid = (int)HttpContext.Session.GetInt32("userid");
             _data.AttendPost(userid, postid);
-            return RedirectToAction("Index", "Post");
+            return RedirectToAction("GetPostsByCriteria", "Search");
         }
 
         public ActionResult Cancel(int postid)
         {
             var userid = (int)HttpContext.Session.GetInt32("userid");
             _data.CancelAttendance(userid, postid);
-            return RedirectToAction("Index", "Post");
+            return RedirectToAction("GetPostsByCriteria", "Search");
         }
 
         // GET: PostController/Edit/5
@@ -97,7 +98,7 @@ namespace Loppuprojekti_AW.Controllers
             try
             {
                 _data.EditPost(post);
-                return RedirectToAction("Index", "Post");
+                return RedirectToAction("GetPostsByCriteria", "Search");
             }
             catch
             {
@@ -109,7 +110,7 @@ namespace Loppuprojekti_AW.Controllers
         public ActionResult Delete(int postid)
         {
             _data.DeletePost(postid);
-            return RedirectToAction("Index", "Post");
+            return RedirectToAction("GetPostsByCriteria", "Search");
         }
     }
 }
