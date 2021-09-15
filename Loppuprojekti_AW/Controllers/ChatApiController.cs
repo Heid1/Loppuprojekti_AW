@@ -37,7 +37,5 @@ namespace Loppuprojekti_AW.Controllers
         {
             return _context.Messages.Where(m => (m.Senderid == id1 && m.Receiverid == id2) || (m.Senderid == id2 && m.Receiverid == id1)).OrderBy(m => m.Sendtime).ToList();
         }
-
-     
     }
 }

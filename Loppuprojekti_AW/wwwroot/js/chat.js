@@ -1,7 +1,6 @@
 ﻿"use strict";
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
-
 var currentUserId = document.getElementById("userId").innerText;
 var usersMessagedWith = document.getElementsByClassName("enduserName");
 var usersMessagedWithIds = document.getElementsByClassName("enduserId");
@@ -12,21 +11,18 @@ var usersMessagedWithIds = document.getElementsByClassName("enduserId");
 document.getElementById("sendButton").disabled = true;
 
 
-function getMessagesApi() {
-    return fetch(`/api/ChatApi/87/88`)
-        .then(res => res.json())
-              /*return fetch(`/api/ChatApi/${currentUserId}/${otherPartyId}`)*/
-                
-}
+//function getMessagesApi() {
+//    return fetch(`/api/ChatApi/87/88`)
+//        .then(res => res.json())
+//              /*return fetch(`/api/ChatApi/${currentUserId}/${otherPartyId}`)*/             
+//}
 
 function getmessages(otherPartyId) {
-  
     var chatbox = document.getElementById("chatBox");
     console.log("get messages");
     chatbox.innerHTML = "";
     // console.dir(this);
     // console.dir(event);
-    //console.log("get messages!");
     //getMessagesApi()
     fetch(`/api/ChatApi/${currentUserId}/${otherPartyId}`)
         .then(res => res.json())
@@ -34,7 +30,6 @@ function getmessages(otherPartyId) {
         console.dir(messages);
         let tempstring = "";
         for (let m of messages) {
-            //var receiverUserName = m.r
             var div1ClassName;
             var div2ClassName;
             var div3ClassName;
@@ -51,8 +46,7 @@ function getmessages(otherPartyId) {
                 //</div>
                                   
             // shows messages differently depending on who has sent the message
-
-            if (m.senderName != otherPartyId) {
+            if (m.senderid == currentUserId) {
                 div1ClassName = "media w-50 ml-auto mb-3";
                 div2ClassName = "media-body";
                 div3ClassName = "bg-primary rounded py-2 px-3 mb-2";
@@ -63,8 +57,9 @@ function getmessages(otherPartyId) {
                 div3ClassName = "bg-light rounded py-2 px-3 mb-2";
                 text = "text-small mb-0 text-muted";
             }
-
-            tempstring += `<div class=${div1ClassName}><div class=${div2ClassName}><div class=${div3ClassName}><p class=${text}>${m.messagebody}</p></div><p class="small text-muted">${m.sendtime.toString('t')} | ${ m.sendtime.toString('dd.MM.yyy')}</p></div></div>`;
+            const date = new Date(m.sendtime);
+            
+            tempstring += `<div class="${div1ClassName}"><div class="${div2ClassName}"><div class="${div3ClassName}"><p class="${text}">${m.messagebody}</p></div><p class="small text-muted">${date.toLocaleTimeString("fi-FI", {timeStyle: "short"})} | ${date.toLocaleDateString("fi-FI")}</p></div></div>`;
         }
         chatbox.innerHTML = tempstring;
     }).catch((error) => {
@@ -73,11 +68,11 @@ function getmessages(otherPartyId) {
 }
 
 function updateMessages() {
-        var otherPartyId = this.id;
-        //var chatbox = document.getElementById("chatBox");
-        //chatbox.innerHTML = "";
+    var otherPartyId = this.id;
+    //var chatbox = document.getElementById("chatBox");
+    //chatbox.innerHTML = "";
     getmessages(otherPartyId);
-    }
+}
 
 
 // CREATING ELEMENTS OF EXISTING CHATS
@@ -87,7 +82,6 @@ for (let i = 0; i < usersMessagedWith.length; i++) {
     aElement.className = "list-group-item list-group-item-action active text-white rounded-0";
     aElement.id = usersMessagedWithIds[i].innerHTML;
 
-   
     // function update chat window on when chat with different user is opened
     aElement.addEventListener("click", updateMessages);
     
