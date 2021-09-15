@@ -17,55 +17,43 @@ document.getElementById("sendButton").disabled = true;
 //              /*return fetch(`/api/ChatApi/${currentUserId}/${otherPartyId}`)*/             
 //}
 
-function getUser(id, m, chatbox) {
-    fetch(`/api/ChatApi/user/${id}`)
-        .then(res => { return res.json() })
-        .then(user => {
-            //var div1ClassName;
-            //var div2ClassName;
-            //var div3ClassName;
-            //var text;
+//function updateUser(id) {
+//    fetch(`/api/ChatApi/user/${id}`)
+//        .then(res => {res.json()})
+//        .then(user => {
+//            var userName = user.username;
+//            document.getElementById("currentChatUser").innerText = userName;
+//        }).catch((error) => {
+//            console.error('Error:', error);
+//        });
+//}
 
-            //// < !--Sender Message-- >
-            ////< div class="media w-50 mb-3" >
-            ////   <div class="media-body ml-3">
-            ////       <p class="small text-muted">Sender.Username</p>
-            ////       <div class="bg-light rounded py-2 px-3 mb-2">
-            ////        <p class="text-small mb-0 text-muted">Hello there!</p>
-            ////       </div>
-            ////       <p class="small text-muted">12:00 | Syyskuu 10</p>
-            ////   </div>
-            ////</div>
+//function getUser(id) {
+//    const userName = fetch(`/api/ChatApi/user/${id}`)
+//        .then((response) => response.json())
+//        .then((user) => {
+//            return user.username;
+//        });
+//}
 
-            //// shows messages differently depending on who has sent the message
-            //if (m.senderid == currentUserId) {
-            //    div1ClassName = "media w-50 ml-auto mb-3";
-            //    div2ClassName = "media-body";
-            //    div3ClassName = "bg-primary rounded py-2 px-3 mb-2";
-            //    text = "text-small mb-0 text-white";
-            //} else {
-            //    div1ClassName = "media w-50 mb-3";
-            //    div2ClassName = "media-body ml-3";
-            //    div3ClassName = "bg-light rounded py-2 px-3 mb-2";
-            //    text = "text-small mb-0 text-muted";
-            //}
+//const printAddress = async () => {
+//    const a = await address;
+//    console.log(a);
+//};
 
-            ////var userName = getUser(m.senderid);
-            //var userName = user.username;
-            //const date = new Date(m.sendtime);
-            //let tempstring = `<div class="${div1ClassName}"><div class="${div2ClassName}"><p class="small text-muted">${userName}</p><div class="${div3ClassName}"><p class="${text}">${m.messagebody}</p></div><p class="small text-muted">${date.toLocaleTimeString("fi-FI", { timeStyle: "short" })} | ${date.toLocaleDateString("fi-FI")}</p></div></div>`;
-            var userName = user.username;
-            return userName;
-            //chatbox.innerHTML += tempstring;
-        }).catch((error) => {
-            console.error('Error:', error);
-        });
-}
+//async function getUser(id) {
+//    try {
+//        const response = await fetch(`/api/ChatApi/user/${id}`)
+//        const data = await response.json()
+//        return data;
+//    } catch (err) {
+//        console.log(err)
+//    }
+//}
 
 
 
-
-function getmessages(otherPartyId) {
+async function getmessages(otherPartyId) {
     var chatbox = document.getElementById("chatBox");
     console.log("get messages");
     chatbox.innerHTML = "";
@@ -105,11 +93,9 @@ function getmessages(otherPartyId) {
                 div3ClassName = "bg-light rounded py-2 px-3 mb-2";
                 text = "text-small mb-0 text-muted";
             }
-            
-            var userName = getUser(m.senderid);
-         
+
             const date = new Date(m.sendtime);
-            getUser(m.senderid, m, chatbox);
+            //tempstring += `<div class="${div1ClassName}"><div class="${div2ClassName}"><p class="small text-muted">${userName}</p><div class="${div3ClassName}"><p class="${text}">${m.messagebody}</p></div><p class="small text-muted">${date.toLocaleTimeString("fi-FI", { timeStyle: "short" })} | ${date.toLocaleDateString("fi-FI")}</p></div></div>`;
             tempstring += `<div class="${div1ClassName}"><div class="${div2ClassName}"><div class="${div3ClassName}"><p class="${text}">${m.messagebody}</p></div><p class="small text-muted">${date.toLocaleTimeString("fi-FI", {timeStyle: "short"})} | ${date.toLocaleDateString("fi-FI")}</p></div></div>`;
         }
         chatbox.innerHTML = tempstring;
@@ -120,8 +106,7 @@ function getmessages(otherPartyId) {
 
 function updateMessages() {
     var otherPartyId = this.id;
-    //var chatbox = document.getElementById("chatBox");
-    //chatbox.innerHTML = "";
+    /*updateUser(otherPartyId);*/
     getmessages(otherPartyId);
 }
 
