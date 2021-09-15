@@ -8,19 +8,15 @@
     int i = 1;
 }
 
-<h1 class="display-6">Hei @ViewBag.Username!</h1>
+<h1 class="display-4">Hei @ViewBag.Username!</h1>
 <p>Olet kirjautunut sisään.</p>
 @if (ViewBag.Avatar != null)
 {
     <img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
 }
-<h4>Tänään on @DateTime.Today.ToString("d.M.y")</h4>
-
-<img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
-
+<p>Tänään on @DateTime.Today.ToString("d.M.y")</p>
 <a asp-action="Create" asp-controller="Post" class="btn btn-outline-success">Luo ilmoitus</a>
 
-<h4>Tänään on @DateTime.Today.ToString("d")</h4>
 <h5>Sinun ilmoitukset tälle päivälle</h5>
 @if (ViewBag.UserOwnPosts == null)
 {
