@@ -83,10 +83,10 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: PostController/Edit/5
-        public ActionResult Edit(int postid)
+        public ActionResult Edit(int Postid)
         {
             ViewBag.Sports = _data.GetAllSports();
-            return View(_data.GetPostById(postid));
+            return View(_data.GetPostById(Postid));
         }
 
         // POST: PostController/Edit/5
@@ -94,15 +94,15 @@ namespace Loppuprojekti_AW.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Post post)
         {
-            try
-            {
+            //try
+            //{
                 _data.EditPost(post);
                 return RedirectToAction("Index", "Post");
-            }
-            catch
-            {
-                return View();
-            }
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
         }
 
         // GET: PostController/Delete/5
