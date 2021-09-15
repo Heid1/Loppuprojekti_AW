@@ -35,8 +35,6 @@ namespace Loppuprojekti_AW.Controllers
         public IActionResult Index2()
         {
             DataAccess da = new DataAccess(_context);
-
-            
             ViewBag.Posts = da.ReturnPostObjects();
 
             return View();

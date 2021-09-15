@@ -114,13 +114,13 @@ namespace Loppuprojekti_AW.Controllers
             //function käynnistyy...
             container = service.GetBlobContainerClient(thumbnailPhotoBlob);
             blob = container.GetBlobClient(photoname);
-            if (blob.Exists())
-            {
+            //if (blob.Exists())
+            //{
                 return blob.Uri.ToString();
-            }
-            container = service.GetBlobContainerClient(photoBlob);
-            blob = container.GetBlobClient(photoname);
-            return blob.Uri.ToString();
+            //}
+            //container = service.GetBlobContainerClient(photoBlob);
+            //blob = container.GetBlobClient(photoname);
+            //return blob.Uri.ToString();
         }
 
         [HttpGet]
