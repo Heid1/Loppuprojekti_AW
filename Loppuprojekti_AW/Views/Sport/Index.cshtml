@@ -43,10 +43,10 @@
                     }
                      else if (ViewBag.IsChosen != null && ViewBag.IsChosen.Contains(item.Sportid))
                     {
-                        @Html.ActionLink("Poista suosikeita", "RemoveSportFromFavourites", new { sportid = item.Sportid })<br />
-                    }
+                        @Html.ActionLink("Poista suosikeista", "RemoveSportFromFavourites", new { sportid = item.Sportid }, new { @class = "btn btn-outline-danger", onclick = "alertDelete()" })<br />
+                   }
                     else {
-                        @Html.ActionLink("Valitse suosikkeihin", "AddSportToFavourites", "Sport", new { sportid = item.Sportid })<br />
+                        @Html.ActionLink("Valitse suosikkeihin", "AddSportToFavourites", "Sport", new { sportid = item.Sportid }, new { @class = "btn btn-outline-primary" })<br />
                     }
                     @item.Description
                 </div>
@@ -54,4 +54,10 @@
         </div>
     }
 </div>
+
+<script>
+    function alertDelete() {
+        alert("Haluatko varmasti poistaa kohteen suosikeista?");
+    }
+</script>
 
