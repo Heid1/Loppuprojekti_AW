@@ -84,6 +84,7 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: PostController/Edit/5
+        [HttpGet]
         public ActionResult Edit(int postid)
         {
             ViewBag.Sports = _data.GetAllSports();
@@ -104,6 +105,7 @@ namespace Loppuprojekti_AW.Controllers
             {
                 return View();
             }
+            
         }
 
         // GET: PostController/Delete/5
