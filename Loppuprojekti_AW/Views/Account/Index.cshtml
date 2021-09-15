@@ -34,7 +34,7 @@
                 </div>
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
-                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport</p>
+                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
                         <p>
                             <a asp-action="Edit" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Muokkaa ilmoitusta</a>
                             <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>
