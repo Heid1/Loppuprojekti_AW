@@ -34,7 +34,7 @@ namespace Loppuprojekti_AW.Controllers
             blobServiceEndpoint = configuration["StorageEndPoint"];
         }
 
-        public async Task <IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             DataAccess da = new DataAccess(_context);
             var userid = HttpContext.Session.GetInt32("userid");
@@ -98,7 +98,7 @@ namespace Loppuprojekti_AW.Controllers
         {
             if (Photo == null)
             {
-                return null;
+                return photoUrl;
             }
             using Stream imageStream = Photo.OpenReadStream();
             StorageSharedKeyCredential accountCredentials = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
@@ -114,13 +114,13 @@ namespace Loppuprojekti_AW.Controllers
             //function käynnistyy...
             container = service.GetBlobContainerClient(thumbnailPhotoBlob);
             blob = container.GetBlobClient(photoname);
-            if (blob.Exists())
-            {
-                return blob.Uri.ToString();
-            }
-            container = service.GetBlobContainerClient(photoBlob);
-            blob = container.GetBlobClient(photoname);
+            //if (blob.Exists())
+            //{
             return blob.Uri.ToString();
+            //}
+            //container = service.GetBlobContainerClient(photoBlob);
+            //blob = container.GetBlobClient(photoname);
+            //return blob.Uri.ToString();
         }
 
         [HttpGet]

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Profiili";
 }
 
-<h2>Sinun profiili</h2>
+<h2>@Model.Username</h2>
 
 <div>
     <hr />
@@ -12,12 +12,6 @@
         <img src="@(Model.Photo)" alt="photo" class="rounded-circle float-right" title="Kuva" />
     }
     <dl class="row">
-        <dt class="col-sm-2">
-            Käyttäjänimi
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Username)
-        </dd>
         <dt class="col-sm-2">
             Syntymäpäivä
         </dt>

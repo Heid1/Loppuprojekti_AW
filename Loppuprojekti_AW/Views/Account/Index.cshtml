@@ -5,10 +5,17 @@
 
 @{
     ViewData["Title"] = "Pääsivu";
+    int i = 1;
 }
 
 <h1 class="display-6">Hei @ViewBag.Username!</h1>
 <p>Olet kirjautunut sisään.</p>
+@if (ViewBag.Avatar != null)
+{
+    <img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
+}
+<h4>Tänään on @DateTime.Today.ToString("d.M.y")</h4>
+
 <img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
 
 <a asp-action="Create" asp-controller="Post" class="btn btn-outline-success">Luo ilmoitus</a>
@@ -20,12 +27,14 @@
     <div class="alert alert-info" role="alert">
         <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
     </div>
-} else {
+}
+else
+{
 
     <div class="accordion" id="accordionPost">
         @foreach (var item in ViewBag.UserOwnPosts)
         {
-            var iditem = String.Join("", item.Postname.Split(' '));
+            string iditem = "ownposthtml" + i;
             <div class="card">
                 <div class="card-header" id="headingPost">
                     <h2 class="mb-0">
@@ -55,11 +64,13 @@
     <div class="alert alert-info" role="alert">
         <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
     </div>
-} else {
+}
+else
+{
     <div class="accordion" id="accordionPost">
         @foreach (var item in ViewBag.UserAttendenceToday)
         {
-            var iditem = String.Join("", item.Postname.Split(' '));
+            string iditem = "attendingtodayhtmlid" + i;
             <div class="card">
                 <div class="card-header" id="headingPost">
                     <h2 class="mb-0">

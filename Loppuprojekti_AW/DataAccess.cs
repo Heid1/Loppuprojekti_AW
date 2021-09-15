@@ -30,9 +30,9 @@ namespace Loppuprojekti_AW
             return false;
         }
 
-        public void CreateUser(Enduser Eu)
+        public void CreateUser(Enduser enduser)
         {
-            db.Endusers.Add(Eu);
+            db.Endusers.Add(enduser);
             db.SaveChanges();
         }
 
@@ -51,23 +51,23 @@ namespace Loppuprojekti_AW
             return Enduser;
         }
 
-        public void EditUser(Enduser Eu)
+        public void EditUser(Enduser enduser)
         {
-            var edit = db.Endusers.Find(Eu.Userid);
-            edit.Userid = Eu.Userid;
-            edit.Username = Eu.Username;
-            edit.Birthday = Eu.Birthday;
-            edit.Userrole = Eu.Userrole;
-            edit.Description = Eu.Description;
-            edit.UsersSports = Eu.UsersSports;
-            edit.Club = Eu.Club;
-            edit.Photo = Eu.Photo;
+            var edit = db.Endusers.Find(enduser.Userid);
+            edit.Userid = enduser.Userid;
+            edit.Username = enduser.Username;
+            edit.Birthday = enduser.Birthday;
+            //edit.Userrole = Eu.Userrole;
+            edit.Description = enduser.Description;
+            edit.UsersSports = enduser.UsersSports;
+            edit.Club = enduser.Club;
+            edit.Photo = enduser.Photo;
             db.SaveChanges();
         }
 
-        public void DeleteUser(Enduser Eu)
+        public void DeleteUser(Enduser enduser)
         {
-            var Userdelete = db.Endusers.Find(Eu.Userid);
+            var Userdelete = db.Endusers.Find(enduser.Userid);
             db.Remove(Userdelete);
             db.SaveChanges();
         }
@@ -78,6 +78,11 @@ namespace Loppuprojekti_AW
         }
 
         // ----------------------- POSTS ----------------------------------------------
+
+        public List<Post> GetAllPosts()
+        {
+            return db.Posts.Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
+        }
 
         //hae yleisimmät lajit post määrän mukaisesti (tämä on sanapilveä varten)
         //public List<Sport> GetSportsByPrevalence()
@@ -112,18 +117,31 @@ namespace Loppuprojekti_AW
                            join s in db.Sports on p.Sportid equals s.Sportid
                            join us in db.UsersSports on s.Sportid equals us.Sportid
                            where us.Userid == userid
-                           select p).Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
+                           select p)
+                           .Include(s => s.Sport)
+                           .Include(a => a.AttendeesNavigation)
+                           .ToList();
                 return postlist;
+        }
+
+        /// <summary>
+        /// Hakee kaikki ilmoitukset, jotka käyttäjä on luonut tai liittynyt parametrien arvojen mukaan.
+        /// </summary>
+        /// <param name="userid">käyttäjä</param>
+        /// <param name="organiser">järjestäjä=true, ilmoittautunut=false</param>
+        /// <returns>Lista ilmoituksista</returns>
+        public List<Post> GetPostsByAttendance(int userid, bool organiser)
+        {
+            var posts = (from p in db.Posts
+                         join a in db.Attendees on p.Postid equals a.Postid
+                         where a.Userid == userid && a.Organiser == organiser
+                         select p).Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
+            return posts;
         }
 
         public Post GetPostById(int postid)
         {
             return db.Posts.Find(postid);
-        }
-
-        public List<Post> GetAllPosts()
-        {
-            return db.Posts.Include(s => s.Sport).Include(a=>a.AttendeesNavigation).ToList();
         }
 
         public List<Post> GetUserPosts(int? userid)
@@ -154,27 +172,6 @@ namespace Loppuprojekti_AW
             return attendingtoday;
         }
 
-        /// <summary>
-        /// Hakee kaikki ilmoitukset, jotka käyttäjä on luonut tai liittynyt parametrien arvojen mukaan.
-        /// </summary>
-        /// <param name="userid">käyttäjä</param>
-        /// <param name="organiser">järjestäjä=true, ilmoittautunut=false</param>
-        /// <returns>Lista ilmoituksista</returns>
-        public List<Post> GetPostsByAttendance(int userid, bool organiser)
-        {
-            var posts = (from p in db.Posts
-                         join a in db.Attendees on p.Postid equals a.Postid
-                         where a.Userid == userid && a.Organiser == organiser
-                         select p).Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
-            return posts;
-        }
-
-        /// <summary>
-        /// Luo ilmoituksen ja sen jälkeen Attendee-olion, joka yhdistää ilmoituksen ja ilmoituksen luoja
-        /// ja määrittää käyttäjän sen järjestäjäksi.
-        /// </summary>
-        /// <param name="userid"></param>
-        /// <param name="post"></param>
         public void CreatePost(int userid, Post post)
         {
             db.Posts.Add(post);
@@ -191,22 +188,17 @@ namespace Loppuprojekti_AW
             db.Posts.Find(postid).Sportid = post.Sportid;
             db.Posts.Find(postid).Description = post.Description;
             db.Posts.Find(postid).Attendees = post.Attendees;
-            db.Posts.Find(postid).Posttype = post.Posttype;
+            //db.Posts.Find(postid).Posttype = post.Posttype;
             db.Posts.Find(postid).Place = post.Place;
             db.Posts.Find(postid).Date = post.Date;
             db.Posts.Find(postid).Duration = post.Duration;
-            db.Posts.Find(postid).Privacy = post.Privacy;
+            //db.Posts.Find(postid).Privacy = post.Privacy;
             db.Posts.Find(postid).Price = post.Price;
             db.Posts.Find(postid).Latitude = ReturnCoordinates(db.Posts.Find(postid).Place, true);
             db.Posts.Find(postid).Longitude = ReturnCoordinates(db.Posts.Find(postid).Place, false);
             db.SaveChanges();
         }
 
-        /// <summary>
-        /// Poistaa sekä ilmoituksen tekijän että osallistujat Attendeesta 
-        /// ja sen jälkeen itse ilmoituksen.
-        /// </summary>
-        /// <param name="postid"></param>
         public void DeletePost(int postid)
         {
             foreach (var a in db.Attendees.Where(p => p.Postid == postid))
@@ -217,6 +209,8 @@ namespace Loppuprojekti_AW
             db.Posts.Remove(post);
             db.SaveChanges();
         }
+
+        // ----------------------- ATTENDING ----------------------------------------------
 
         public void AttendPost(int userid, int postid)
         {
@@ -298,7 +292,6 @@ namespace Loppuprojekti_AW
             return db.UsersSports.Where(s => s.Userid == userid).ToList();
         }
 
-
         // ----------------------- MESSAGES ----------------------------------------------
 
         /// <summary>
@@ -340,7 +333,6 @@ namespace Loppuprojekti_AW
             return messages;
         }
 
-
         /// <summary>
         /// Returns a list of enduser objects the user specified by the userid has messaged with
         /// </summary>
@@ -363,9 +355,10 @@ namespace Loppuprojekti_AW
             return messagesWithUsers;
         }
 
+        // ----------------------- MAP ----------------------------------------------
+
         public decimal ReturnCoordinates(string address, bool lat)
         {
-
             var request = new GeocodingRequest();
             request.Address = address;
             var response = new GeocodingService().GetResponse(request);
@@ -373,7 +366,6 @@ namespace Loppuprojekti_AW
             if (response.Status == ServiceResponseStatus.Ok && response.Results.Count() > 0)
             {
                 var result = response.Results.First();
-
                 decimal latitude = (decimal)result.Geometry.Location.Latitude;
                 decimal longitude = (decimal)result.Geometry.Location.Longitude;
                 if (lat == true)
@@ -384,15 +376,9 @@ namespace Loppuprojekti_AW
                 {
                     return longitude;
                 }
-
-                Console.WriteLine("Full Address: " + result.FormattedAddress);         // "1600 Pennsylvania Ave NW, Washington, DC 20500, USA"
-                Console.WriteLine("Latitude: " + result.Geometry.Location.Latitude);   // 38.8976633
-                Console.WriteLine("Longitude: " + result.Geometry.Location.Longitude); // -77.0365739
-                Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("Unable to geocode.  Status={0} and ErrorMessage={1}", response.Status, response.ErrorMessage);
                 return 0;
             }
         }
