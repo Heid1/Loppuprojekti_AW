@@ -49,6 +49,11 @@ namespace Loppuprojekti_AW.Controllers
                 return View();
             }
         }
+        /// <summary>
+        /// Muokkaa salasanan eri muotoon, jottei näy suoraan tietokannassa.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string Hash(string value)
         {
             var valueBytes = KeyDerivation.Pbkdf2(
@@ -60,7 +65,6 @@ namespace Loppuprojekti_AW.Controllers
 
             return Convert.ToBase64String(valueBytes);
         }
-
         public static bool Validate(string value, string hash)
             => Hash(value) == hash;
     }

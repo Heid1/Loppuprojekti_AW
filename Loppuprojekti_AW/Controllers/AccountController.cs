@@ -34,7 +34,7 @@ namespace Loppuprojekti_AW.Controllers
             blobServiceEndpoint = configuration["StorageEndPoint"];
         }
 
-        public async Task <IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             DataAccess da = new DataAccess(_context);
             var userid = HttpContext.Session.GetInt32("userid");
@@ -86,43 +86,6 @@ namespace Loppuprojekti_AW.Controllers
             }
         }
 
-        /// <summary>
-        /// Lisää Blobiin uuden kuvan ja poistaa samalla vanhan, jos sellainen on olemassa.
-        /// Myös vanhan kuvan thumbnailversio poistetaan.
-        /// </summary>
-        /// <param name="Photo">Uusi kuva</param>
-        /// <param name="photoUrl">Alkuperäisen thumbnailkuvan URL</param>
-        /// <returns></returns>
-        [HttpPost]
-        private string AddPhotoInContainer(IFormFile Photo, string photoUrl = null)
-        {
-            if (Photo == null)
-            {
-                return null;
-            }
-            using Stream imageStream = Photo.OpenReadStream();
-            StorageSharedKeyCredential accountCredentials = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
-            BlobServiceClient service = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
-            BlobContainerClient container = service.GetBlobContainerClient(photoBlob);
-            string photoname = Guid.NewGuid().ToString();
-            if (photoUrl != null)
-            {
-                photoname = photoUrl.Substring(photoUrl.LastIndexOf('/') + 1);
-            }
-            BlobClient blob = container.GetBlobClient(photoname);
-            blob.Upload(imageStream, true);
-            //function käynnistyy...
-            container = service.GetBlobContainerClient(thumbnailPhotoBlob);
-            blob = container.GetBlobClient(photoname);
-            //if (blob.Exists())
-            //{
-                return blob.Uri.ToString();
-            //}
-            //container = service.GetBlobContainerClient(photoBlob);
-            //blob = container.GetBlobClient(photoname);
-            //return blob.Uri.ToString();
-        }
-
         [HttpGet]
         public IActionResult Profile()
         {
@@ -139,7 +102,7 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit()//siirrytään tiettyyn palveluun uniikin palveluid perusteella, uusi muokkausnäkymä
+        public IActionResult Edit()
         {
             var userid = HttpContext.Session.GetInt32("userid");
             var enduser = new DataAccess(_context).GetUserById(userid);
@@ -151,7 +114,7 @@ namespace Loppuprojekti_AW.Controllers
         }
 
 
-        [HttpPost] //editoidaan henkilöä ja lähetetaan se
+        [HttpPost]
         public IActionResult Edit(Enduser enduser, IFormFile Photo)
         {
             DataAccess da = new DataAccess(_context);
@@ -180,6 +143,44 @@ namespace Loppuprojekti_AW.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+        /// <summary>
+        /// Lisää Blobiin uuden kuvan ja poistaa samalla vanhan, jos sellainen on olemassa.
+        /// Myös vanhan kuvan thumbnailversio poistetaan.
+        /// </summary>
+        /// <param name="Photo">Uusi kuva</param>
+        /// <param name="photoUrl">Alkuperäisen thumbnailkuvan URL</param>
+        /// <returns></returns>
+        [HttpPost]
+        private string AddPhotoInContainer(IFormFile Photo, string photoUrl = null)
+        {
+            if (Photo == null)
+            {
+                return photoUrl;
+            }
+            using Stream imageStream = Photo.OpenReadStream();
+            StorageSharedKeyCredential accountCredentials = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+            BlobServiceClient service = new BlobServiceClient(new Uri(blobServiceEndpoint), accountCredentials);
+            BlobContainerClient container = service.GetBlobContainerClient(photoBlob);
+            string photoname = Guid.NewGuid().ToString();
+            if (photoUrl != null)
+            {
+                photoname = photoUrl.Substring(photoUrl.LastIndexOf('/') + 1);
+            }
+            BlobClient blob = container.GetBlobClient(photoname);
+            blob.Upload(imageStream, true);
+            //function käynnistyy...
+            container = service.GetBlobContainerClient(thumbnailPhotoBlob);
+            blob = container.GetBlobClient(photoname);
+            //if (blob.Exists())
+            //{
+            return blob.Uri.ToString();
+            //}
+            //container = service.GetBlobContainerClient(photoBlob);
+            //blob = container.GetBlobClient(photoname);
+            //return blob.Uri.ToString();
+        }
+
         /// <summary>
         /// Muokkaa salasanan eri muotoon, jottei näy suoraan tietokannassa.
         /// </summary>

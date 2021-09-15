@@ -5,24 +5,25 @@
 }
 
 
-    <h2 class="display-4">Hae ilmoituksia</h2>
+<h2 class="display-4">Ilmoitukset</h2>
 
 <div class="container">
     <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-4">
             <form action="GetPostsByCriteria" method="post">
-                <input type="text" name="criteria" value="" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top" />
+                <input type="text" name="criteria" value="" data-bs-toggle="tooltip" data-bs-placement="top" title="vapaa haku" />
                 <input type="submit" value="Hae" class="btn btn-outline-primary" />
             </form>
         </div>
         @if (ViewBag.Userid != null)
         {
-            <div class="col-sm">
+            <div class="col-sm-8">
                 @Html.ActionLink("Suosikkilajit", "GetPostsByCriteria", "Search", new { button = "favouriteSportsButton" }, new { @class = "btn btn-outline-primary" })
                 @*<div class="col-sm">*@
                 @Html.ActionLink("Omat ilmoitukset", "GetPostsByCriteria", "Search", new { button = "ownPostsButton" }, new { @class = "btn btn-outline-primary" })
                 @*<div class="col-sm">*@
                 @Html.ActionLink("Ilmoittautumiset", "GetPostsByCriteria", "Search", new { button = "attendanceButton" }, new { @class = "btn btn-outline-primary" })
+                <a asp-action="Create" asp-controller="Post" class="btn btn-outline-success">Luo uusi ilmoitus</a>
             </div>
         }
     </div>
@@ -45,15 +46,30 @@
                 </div>
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
-                        <p>@item.Description</p>
-                        <p>@item.Sport.Sportname | @item.Place | @item.Date | @item.Duration min | @item.AttendeesNavigation.Count() / @item.Attendees | @item.Price €</p>
+                        <p><strong>@item.Date.ToString("d.M.yyyy hh:mm") - @item.Duration min</strong></p>
+                        <p> @item.Description</p>
+                        <p><strong>@item.Sport.Sportname</strong> - @item.Place - @item.AttendeesNavigation.Count() / @item.Attendees - @item.Price €</p>
                         @if (ViewBag.Userid != null)
                         {
-                            if (item.Attendees != 0 && item.AttendeesNavigation.Count() < item.Attendees)
+                            if (item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == true).FirstOrDefault() != null)
                             {
-                                @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                                @Html.ActionLink("Muokkaa", "Edit", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                                @: |
+                                @Html.ActionLink("Poista", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger" })
+
                             }
-                            @Html.ActionLink("Peru ilmoittautuminen", "Cancel", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Are sure wants to delete?');" })
+                            else
+                            {
+                                if ((item.Attendees == null || item.AttendeesNavigation.Count() < item.Attendees)
+                                    && item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == false).FirstOrDefault() == null)
+                                {
+                                    @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                                }
+                                else if (item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == false).FirstOrDefault() != null)
+                                {
+                                    @Html.ActionLink("Peru ilmoittautuminen", "Cancel", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Haluatko varmasti perua ilmoittautumisesi?');" })
+                                }
+                            }
                         }
                     </div>
                 </div>

@@ -5,12 +5,17 @@
 
 @{
     ViewData["Title"] = "Pääsivu";
+    int i = 1;
 }
 
-<h3>Hei @ViewBag.Username!</h3>
+<h1 class="display-4">Hei @ViewBag.Username!</h1>
 <p>Olet kirjautunut sisään.</p>
-<img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
-<h4>Tänään on @DateTime.Today.ToString("d")</h4>
+@if (ViewBag.Avatar != null)
+{
+    <img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
+}
+<p>Tänään on @DateTime.Today.ToString("d.M.y")</p>
+<a asp-action="Create" asp-controller="Post" class="btn btn-outline-success">Luo ilmoitus</a>
 
 <h5>Sinun ilmoitukset tälle päivälle</h5>
 @if (ViewBag.UserOwnPosts == null)
@@ -18,12 +23,14 @@
     <div class="alert alert-info" role="alert">
         <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
     </div>
-} else {
+}
+else
+{
 
     <div class="accordion" id="accordionPost">
         @foreach (var item in ViewBag.UserOwnPosts)
         {
-            var iditem = String.Join("", item.Postname.Split(' '));
+            string iditem = "ownposthtml" + i;
             <div class="card">
                 <div class="card-header" id="headingPost">
                     <h2 class="mb-0">
@@ -34,10 +41,12 @@
                 </div>
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
-                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport</p>
+                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
                         <p>
-                            <a asp-action="Edit" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Muokkaa ilmoitusta</a>
-                            <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>
+                            @Html.ActionLink("Muokka ilmoitusta", "Edit", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                            @Html.ActionLink("Poista ilmoitus", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "alertDelete()"})
+                            @*<a asp-action="Edit" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Muokkaa ilmoitusta</a>
+                            <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>*@
                         </p>
                     </div>
                 </div>
@@ -53,11 +62,13 @@
     <div class="alert alert-info" role="alert">
         <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
     </div>
-} else {
+}
+else
+{
     <div class="accordion" id="accordionPost">
         @foreach (var item in ViewBag.UserAttendenceToday)
         {
-            var iditem = String.Join("", item.Postname.Split(' '));
+            string iditem = "attendingtodayhtmlid" + i;
             <div class="card">
                 <div class="card-header" id="headingPost">
                     <h2 class="mb-0">
@@ -69,7 +80,7 @@
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
                         <p>
-                            @*@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname*@
+                            @item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname
                         </p>
                         <p>
                             <a asp-action="Attend" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Ilmoittaudu</a>
