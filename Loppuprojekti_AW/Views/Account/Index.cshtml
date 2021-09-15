@@ -8,13 +8,14 @@
     int i = 1;
 }
 
-<h3>Hei @ViewBag.Username!</h3>
+<h1 class="display-4">Hei @ViewBag.Username!</h1>
 <p>Olet kirjautunut sisään.</p>
 @if (ViewBag.Avatar != null)
 {
     <img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
 }
-<h4>Tänään on @DateTime.Today.ToString("d.M.y")</h4>
+<p>Tänään on @DateTime.Today.ToString("d.M.y")</p>
+<a asp-action="Create" asp-controller="Post" class="btn btn-outline-success">Luo ilmoitus</a>
 
 <h5>Sinun ilmoitukset tälle päivälle</h5>
 @if (ViewBag.UserOwnPosts == null)
@@ -42,8 +43,10 @@ else
                     <div class="card-body">
                         <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
                         <p>
-                            <a asp-action="Edit" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Muokkaa ilmoitusta</a>
-                            <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>
+                            @Html.ActionLink("Muokka ilmoitusta", "Edit", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                            @Html.ActionLink("Poista ilmoitus", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "alertDelete()"})
+                            @*<a asp-action="Edit" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Muokkaa ilmoitusta</a>
+                            <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>*@
                         </p>
                     </div>
                 </div>
