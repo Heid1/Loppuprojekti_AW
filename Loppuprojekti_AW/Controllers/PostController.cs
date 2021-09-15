@@ -83,10 +83,11 @@ namespace Loppuprojekti_AW.Controllers
         }
 
         // GET: PostController/Edit/5
-        public ActionResult Edit(int Postid)
+        [HttpGet]
+        public ActionResult Edit(int postid)
         {
             ViewBag.Sports = _data.GetAllSports();
-            return View(_data.GetPostById(Postid));
+            return View(_data.GetPostById(postid));
         }
 
         // POST: PostController/Edit/5
