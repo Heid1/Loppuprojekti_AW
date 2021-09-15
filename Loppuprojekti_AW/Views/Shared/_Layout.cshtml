@@ -20,17 +20,29 @@
     <script>
         var list = '@Html.Raw(ViewBag.Posts)'
         var list2 = JSON.parse(list);
-
         console.log(list2);
     </script>
+
     <script>
         // Initialize and add the map
         function initMap() {
 
-            var paini = {
+            var wrestling = {
                 url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
             };
+
+            var Padel = {
+                url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Emojione_BW_1F3BE.svg", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+            };
+
+            var dance = {
+                url: "https://cdn3.iconfinder.com/data/icons/dancing-dancer/214/dance-dancing-010-512.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+            };
+
+            var ikonit = [dance, wrestling, Padel];
 
             // The location of Kamppi
             const kamppi = { lat: 60.167390, lng: 24.931080 };
@@ -50,18 +62,13 @@
                         lng: list2[i].Longitude
                     }
 
-                    console.log(location);
-                    console.log(list2[i].Postname)
-                    console.log(list2[i].Description)
-                    console.log(list2[i].Address)
-                    console.log(list2[i].Duration)
-                    console.log(list2[i].Postname)
-                    console.log(list2[i].ImgUrl)
+                    var icon = i < 3 ? icon = ikonit[i] : icon = ikonit[1];
 
                     if (location.lat == null || location.lng == null) {
                         location.lat = 0;
                         location.lng = 0;
                     }
+
 
                     const content = '<div id="content">' +
                         '<div id="siteNotice">' +
@@ -79,7 +86,7 @@
                     const marker = new google.maps.Marker({
                         position: location,
                         map: map,
-                        icon: paini
+                        icon: icon
                     });
 
                     const infowindow = new google.maps.InfoWindow({
@@ -91,6 +98,10 @@
                     });
                 }
             }
+            //marker.addListener("click", () => {
+            //    map.setZoom(15);
+            //    map.setCenter(marker.getPosition());
+            //});
             populate();
         }
     </script>
