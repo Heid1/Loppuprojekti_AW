@@ -15,14 +15,15 @@
     <script>
         var list = '@Html.Raw(ViewBag.Posts)'
         var list2 = JSON.parse(list);
-
         console.log(list2);
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
     <script>
         // Initialize and add the map
         function initMap() {
 
-           
+            
+
             var wrestling = {
                 url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
@@ -51,10 +52,17 @@
                 center: kamppi,
             });
 
+            var oms = new OverlappingMarkerSpiderfier(map, {
+                markersWontMove: true,
+                markersWontHide: true,
+                basicFormatEvents: true
+            });
+
 
             ///metodi ottaa aikaisemman listan ja luo markkerit+infoikkunan
             function populate() {
 
+                
 
                 for (var i = 0; i < list2.length; i++) {
 
@@ -70,7 +78,7 @@
                         location.lng = 0;
                     }
 
-                    
+
                     const content = '<div id="content">' +
                         '<div id="siteNotice">' +
                         "</div>" +
@@ -81,7 +89,7 @@
                         "<p>" + list2[i].Description + "</p > " +
                         "<p> Osoite :" + list2[i].Address + "</p > " +
                         "<p> Kesto :" + list2[i].Duration.toString() + "</p > "
-                         +
+                        +
                         "</div>" +
                         "</div>";
 
@@ -91,37 +99,48 @@
                         icon: icon
                     });
 
-                    const infowindow = new google.maps.InfoWindow({
+                    const iw = new google.maps.InfoWindow({
                         content: content,
                     });
 
                     marker.addListener("click", () => {
-                     infowindow.open(marker.get("map"), marker);
-                     });
+                        infowindow.open(marker.get("map"), marker);
+                    });
 
-                   
+                    google.maps.event.addListener(marker, 'spider_click', function (e) {  // 'spider_click', not plain 'click'
+                        iw.setContent(content);
+                        iw.open(map, marker);
+                    });
+                    oms.addMarker(marker);
+
+
+
                 }
-                
+
+
+
             }
 
-            
+
             //marker.addListener("click", () => {
             //    map.setZoom(15);
             //    map.setCenter(marker.getPosition());
             //});
-            
-
             populate();
+
+
+
         }
     </script>
 </head>
 <body>
-    <h3>ilmoitukset</h3>
+    <h3>Ilmoitukset</h3>
     <!--The div element for the map -->
     <div id="map"></div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw&callback=initMap&libraries=&v=weekly"
-            async></script>
+            async=""></script>
+    
 </body>
 </html>
