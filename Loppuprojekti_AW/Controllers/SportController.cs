@@ -23,6 +23,7 @@ namespace Loppuprojekti_AW.Controllers
         {
             var userid = HttpContext.Session.GetInt32("userid");
             ViewBag.Userid = userid;
+            ViewBag.Userrole = HttpContext.Session.GetString("userrole");
             List<int> userssports = null;
             if (userid != null)
             {
