@@ -37,5 +37,17 @@ namespace Loppuprojekti_AW.Controllers
         {
             return _context.Messages.Where(m => (m.Senderid == id1 && m.Receiverid == id2) || (m.Senderid == id2 && m.Receiverid == id1)).OrderBy(m => m.Sendtime).ToList();
         }
+
+        [HttpGet("username/{id}")]
+        public string GetUserName(int id)
+        {
+            return _context.Endusers.Where(u => u.Userid == id).Select(u => u.Username).FirstOrDefault();
+        }
+
+        [HttpGet("user/{id}")]
+        public Enduser GetUser(int id)
+        {
+            return _context.Endusers.Where(u => u.Userid == id).FirstOrDefault();
+        }
     }
 }

@@ -17,6 +17,52 @@ document.getElementById("sendButton").disabled = true;
 //              /*return fetch(`/api/ChatApi/${currentUserId}/${otherPartyId}`)*/             
 //}
 
+function getUser(id, m, chatbox) {
+    fetch(`/api/ChatApi/user/${id}`)
+        .then(res => { return res.json() })
+        .then(user => {
+            var div1ClassName;
+            var div2ClassName;
+            var div3ClassName;
+            var text;
+
+            // < !--Sender Message-- >
+            //< div class="media w-50 mb-3" >
+            //   <div class="media-body ml-3">
+            //       <div class="bg-light rounded py-2 px-3 mb-2">
+            //        <p class="text-small mb-0 text-muted">Hello there!</p>
+            //       </div>
+            //       <p class="small text-muted">12:00 | Syyskuu 10</p>
+            //   </div>
+            //</div>
+
+            // shows messages differently depending on who has sent the message
+            if (m.senderid == currentUserId) {
+                div1ClassName = "media w-50 ml-auto mb-3";
+                div2ClassName = "media-body";
+                div3ClassName = "bg-primary rounded py-2 px-3 mb-2";
+                text = "text-small mb-0 text-white";
+            } else {
+                div1ClassName = "media w-50 mb-3";
+                div2ClassName = "media-body ml-3";
+                div3ClassName = "bg-light rounded py-2 px-3 mb-2";
+                text = "text-small mb-0 text-muted";
+            }
+
+            //var userName = getUser(m.senderid);
+            var userName = user.username;
+            const date = new Date(m.sendtime);
+            let tempstring = `<div class="${div1ClassName}"><div class="${div2ClassName}"><div class="${div3ClassName}"><p class="${text}">${m.messagebody}</p></div><p class="small text-muted">${date.toLocaleTimeString("fi-FI", { timeStyle: "short" })} | ${date.toLocaleDateString("fi-FI")}</p></div></div>`;
+            
+            chatbox.innerHTML += tempstring;
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+
+
+
 function getmessages(otherPartyId) {
     var chatbox = document.getElementById("chatBox");
     console.log("get messages");
@@ -30,38 +76,41 @@ function getmessages(otherPartyId) {
         console.dir(messages);
         let tempstring = "";
         for (let m of messages) {
-            var div1ClassName;
-            var div2ClassName;
-            var div3ClassName;
-            var text;
+            //var div1ClassName;
+            //var div2ClassName;
+            //var div3ClassName;
+            //var text;
 
-                // < !--Sender Message-- >
-                //< div class="media w-50 mb-3" >
-                //   <div class="media-body ml-3">
-                //       <div class="bg-light rounded py-2 px-3 mb-2">
-                //        <p class="text-small mb-0 text-muted">Hello there!</p>
-                //       </div>
-                //       <p class="small text-muted">12:00 | Syyskuu 10</p>
-                //   </div>
-                //</div>
+            //    // < !--Sender Message-- >
+            //    //< div class="media w-50 mb-3" >
+            //    //   <div class="media-body ml-3">
+            //    //       <div class="bg-light rounded py-2 px-3 mb-2">
+            //    //        <p class="text-small mb-0 text-muted">Hello there!</p>
+            //    //       </div>
+            //    //       <p class="small text-muted">12:00 | Syyskuu 10</p>
+            //    //   </div>
+            //    //</div>
                                   
-            // shows messages differently depending on who has sent the message
-            if (m.senderid == currentUserId) {
-                div1ClassName = "media w-50 ml-auto mb-3";
-                div2ClassName = "media-body";
-                div3ClassName = "bg-primary rounded py-2 px-3 mb-2";
-                text = "text-small mb-0 text-white";
-            } else {
-                div1ClassName = "media w-50 mb-3";
-                div2ClassName = "media-body ml-3";
-                div3ClassName = "bg-light rounded py-2 px-3 mb-2";
-                text = "text-small mb-0 text-muted";
-            }
-            const date = new Date(m.sendtime);
+            //// shows messages differently depending on who has sent the message
+            //if (m.senderid == currentUserId) {
+            //    div1ClassName = "media w-50 ml-auto mb-3";
+            //    div2ClassName = "media-body";
+            //    div3ClassName = "bg-primary rounded py-2 px-3 mb-2";
+            //    text = "text-small mb-0 text-white";
+            //} else {
+            //    div1ClassName = "media w-50 mb-3";
+            //    div2ClassName = "media-body ml-3";
+            //    div3ClassName = "bg-light rounded py-2 px-3 mb-2";
+            //    text = "text-small mb-0 text-muted";
+            //}
             
-            tempstring += `<div class="${div1ClassName}"><div class="${div2ClassName}"><div class="${div3ClassName}"><p class="${text}">${m.messagebody}</p></div><p class="small text-muted">${date.toLocaleTimeString("fi-FI", {timeStyle: "short"})} | ${date.toLocaleDateString("fi-FI")}</p></div></div>`;
+            ////var userName = getUser(m.senderid);
+         
+            //const date = new Date(m.sendtime);
+            getUser(m.senderid, m, chatbox);
+            /*tempstring += `<div class="${div1ClassName}"><div class="${div2ClassName}"><div class="${div3ClassName}"><p class="${text}">${m.messagebody}</p></div><p class="small text-muted">${date.toLocaleTimeString("fi-FI", {timeStyle: "short"})} | ${date.toLocaleDateString("fi-FI")}</p></div></div>`;*/
         }
-        chatbox.innerHTML = tempstring;
+        //chatbox.innerHTML = tempstring;
     }).catch((error) => {
         console.error('Error:', error);
     });
