@@ -19,9 +19,7 @@
         {
             <div class="col-sm-8">
                 @Html.ActionLink("Suosikkilajit", "GetPostsByCriteria", "Search", new { button = "favouriteSportsButton" }, new { @class = "btn btn-outline-primary" })
-                @*<div class="col-sm">*@
                 @Html.ActionLink("Omat ilmoitukset", "GetPostsByCriteria", "Search", new { button = "ownPostsButton" }, new { @class = "btn btn-outline-primary" })
-                @*<div class="col-sm">*@
                 @Html.ActionLink("Ilmoittautumiset", "GetPostsByCriteria", "Search", new { button = "attendanceButton" }, new { @class = "btn btn-outline-primary" })
                 <a asp-action="Create" asp-controller="Post" class="btn btn-outline-success">Luo uusi ilmoitus</a>
             </div>
