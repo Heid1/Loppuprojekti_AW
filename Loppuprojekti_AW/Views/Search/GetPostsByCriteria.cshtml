@@ -46,14 +46,28 @@
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
                         <p>@item.Description</p>
-                        <p>@item.Sport.Sportname | @item.Place | @item.Date | @item.Duration min | @item.AttendeesNavigation.Count() / @item.Attendees | @item.Price €</p>
+                        <p>@item.Sport.Sportname | @item.Place | @item.Date.ToString("d.M.yyyy hh:mm") | @item.Duration min | @item.AttendeesNavigation.Count() / @item.Attendees | @item.Price €</p>
                         @if (ViewBag.Userid != null)
                         {
-                            if (item.Attendees != 0 && item.AttendeesNavigation.Count() < item.Attendees)
+                            if (item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == true).FirstOrDefault() != null)
                             {
-                                @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                                @Html.ActionLink("Muokkaa", "Edit", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                                @: |
+                                @Html.ActionLink("Poista", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger" })
+
                             }
-                            @Html.ActionLink("Peru ilmoittautuminen", "Cancel", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Are sure wants to delete?');" })
+                            else
+                            {
+                                if ((item.Attendees == null || item.AttendeesNavigation.Count() < item.Attendees)
+                                    && item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == false).FirstOrDefault() == null)
+                                {
+                                    @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                                }
+                                else if (item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == false).FirstOrDefault() != null)
+                                {
+                                    @Html.ActionLink("Peru ilmoittautuminen", "Cancel", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Haluatko varmasti perua ilmoittautumisesi?');" })
+                                }
+                            }
                         }
                     </div>
                 </div>
