@@ -16,7 +16,7 @@
 else
 {
     <p>
-        <a asp-action="SendFeedback" asp-controller="Home">Ehdota uutta lajia</a>
+        <a asp-action="SendFeedback" asp-controller="Home" class="btn btn-outline-primary">Ehdota uutta lajia</a>
     </p>
 }
 
@@ -56,11 +56,11 @@ else
                     }
                     else if (ViewBag.IsChosen != null && ViewBag.IsChosen.Contains(item.Sportid))
                     {
-                        @Html.ActionLink("Poista suosikeita", "RemoveSportFromFavourites", new { sportid = item.Sportid })<br />
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Valitse suosikkeihin", "AddSportToFavourites", "Sport", new { sportid = item.Sportid })<br />
+                        @Html.ActionLink("Poista suosikeista", "RemoveSportFromFavourites", new { sportid = item.Sportid }, new { @class = "btn btn-outline-danger", onclick = "alertDelete()" })<br />
+                   }
+                    else {
+                        @Html.ActionLink("Valitse suosikkeihin", "AddSportToFavourites", "Sport", new { sportid = item.Sportid }, new { @class = "btn btn-outline-primary" })<br />
+
                     }
                     <strong>@item.Category</strong>  -  @item.Description
                 </div>
@@ -68,4 +68,10 @@ else
         </div>
     }
 </div>
+
+<script>
+    function alertDelete() {
+        alert("Haluatko varmasti poistaa kohteen suosikeista?");
+    }
+</script>
 
