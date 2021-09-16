@@ -20,8 +20,12 @@
 <h5>Sinun ilmoitukset tälle päivälle</h5>
 @if (ViewBag.UserOwnPosts.Count == 0)
 {
-    <div class="alert alert-info" role="alert">
-        <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
+
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+        <div class="error">
+            Sinulla ei ole omia tapahtumia 24h sisällä        
+        </div>
     </div>
 }
 else
@@ -44,9 +48,9 @@ else
                         <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
                         <p>
                             @Html.ActionLink("Muokka ilmoitusta", "Edit", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
-                            @Html.ActionLink("Poista ilmoitus", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "alertDelete()"})
+                            @Html.ActionLink("Poista ilmoitus", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "alertDelete()" })
                             @*<a asp-action="Edit" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Muokkaa ilmoitusta</a>
-                            <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>*@
+                                <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>*@
                         </p>
                     </div>
                 </div>
@@ -59,9 +63,12 @@ else
 <h5>Sinun ilmoittautumiset tälle päivälle</h5>
 @if (ViewBag.UserAttendenceToday.Count == 0)
 {
-    <div class="alert alert-info" role="alert">
-        <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+    <div class="error">
+        Sinulla ei ole omia tapahtumia 24h sisällä
     </div>
+</div>
 }
 else
 {
