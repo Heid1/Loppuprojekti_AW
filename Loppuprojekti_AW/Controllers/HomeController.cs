@@ -33,15 +33,11 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
-        public IActionResult Index2()
+        public IActionResult Index2(string FilterWord)
         {
             DataAccess da = new DataAccess(_context);
             ViewBag.Posts = da.ReturnPostObjects();
-            return View();
-        }
-
-        public IActionResult Azuremap()
-        {
+            ViewBag.FilterWord = FilterWord;
             return View();
         }
 
