@@ -105,7 +105,6 @@ namespace Loppuprojekti_AW.Controllers
             {
                 return View();
             }
-            
         }
 
         // GET: PostController/Delete/5

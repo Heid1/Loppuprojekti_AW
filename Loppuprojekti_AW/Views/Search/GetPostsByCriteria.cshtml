@@ -52,7 +52,7 @@
                             if (item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == true).FirstOrDefault() != null)
                             {
                                 @Html.ActionLink("Muokkaa", "Edit", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
-                                @: |
+                                @: 
                                 @Html.ActionLink("Poista", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger" })
 
                             }

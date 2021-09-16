@@ -4,9 +4,7 @@
     ViewData["Title"] = "Lajin valinta";
 }
 
-
-    <h2 class="display-4">Oman lajin valinta</h2>
-
+ <h2 class="display-4">Oman lajin valinta</h2>
 
 <hr />
 <div class="row">
@@ -16,18 +14,18 @@
             <input type="hidden" asp-for="Userid" value="@ViewBag.Userid" />
             <input type="hidden" asp-for="Sportid" value="@ViewBag.Sportid" />
             <div class="form-group">
-                <label asp-for="Experience" class="control-label">Kokemus vuosina</label>
-                <input asp-for="Experience" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="kokonaislukuna"/>
+                <label asp-for="Experience" class="control-label">Kokemus</label>
+                <input asp-for="Experience" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Kokemus vuosina, kokonaisluku"/>
                 <span asp-validation-for="Experience" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Level" class="control-label">Taitotaso</label>
-                <input asp-for="Level" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="vapaa kuvaus"/>
+                <input asp-for="Level" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Käytä lajin sisäisiä tasoja, tai harrastaja/opettaja/ammattilainen"/>
                 <span asp-validation-for="Level" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Accredit" class="control-label">Akkreditaatio</label>
-                <input asp-for="Accredit" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="vapaa kuvaus / linkki"/>
+                <input asp-for="Accredit" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Vapaa kuvaus / linkki"/>
                 <span asp-validation-for="Accredit" class="text-danger"></span>
             </div>
             <div class="form-group">
