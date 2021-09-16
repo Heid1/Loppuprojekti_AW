@@ -430,7 +430,8 @@ namespace Loppuprojekti_AW
                                   Address = p.Place,
                                   Sport = s.Sportname,
                                   Organiser = u.Username,
-                                  Date = p.Date
+                                  Date = p.Date,
+                                  Category = s.Category
                             
                               }).ToList();
 
