@@ -1,24 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model Loppuprojekti_AW.Models.Post;
+﻿@model IEnumerable<Loppuprojekti_AW.Models.Post>
 @{
     ViewData["Title"] = "Hae ilmoituksia";
+    int i = 1;
+    @using System.Globalization;
 }
 
-<h3>Hae ilmoituksia</h3>
-<form action="GetPostsByCriteria" method="post">
-    <input type="text" name="criteria" value="" />
-    <input type="submit" value="Hae" />
-</form>
 
-@if (ViewBag.Posts != null)
+<h2 class="display-4">Ilmoitukset</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <form action="GetPostsByCriteria" method="post">
+                <input type="text" name="criteria" value="" data-bs-toggle="tooltip" data-bs-placement="top" title="vapaa haku" />
+                <input type="submit" value="Hae" class="btn btn-outline-primary" />
+            </form>
+        </div>
+        @if (ViewBag.Userid != null)
+        {
+            <div class="col-sm-8">
+                @Html.ActionLink("Suosikkilajit", "GetPostsByCriteria", "Search", new { button = "favouriteSportsButton" }, new { @class = "btn btn-outline-primary" })
+                @Html.ActionLink("Omat ilmoitukset", "GetPostsByCriteria", "Search", new { button = "ownPostsButton" }, new { @class = "btn btn-outline-primary" })
+                @Html.ActionLink("Ilmoittautumiset", "GetPostsByCriteria", "Search", new { button = "attendanceButton" }, new { @class = "btn btn-outline-primary" })
+                <a asp-action="Create" asp-controller="Post" class="btn btn-outline-success">Luo uusi ilmoitus</a>
+            </div>
+        }
+    </div>
+</div>
+@if (Model != null)
 {
     <div class="accordion" id="accordionPost">
 
-        @foreach (var item in ViewBag.Posts)
+        @foreach (var item in Model)
         {
-            var iditem = String.Join("", item.Postname.Split(' '));
+            string iditem = "posthtmlid" + i;
+            i++;
             <div class="card">
                 <div class="card-header" id="headingPost">
                     <h2 class="mb-0">
@@ -29,7 +45,31 @@
                 </div>
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
-                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
+                        <p><strong>@item.Date.ToString("g", new CultureInfo("fi-FI")) - @item.Duration min</strong></p>
+                        <p> @item.Description</p>
+                        <p><strong>@item.Sport.Sportname</strong> - @item.Place - @item.AttendeesNavigation.Count() / @item.Attendees - @item.Price €</p>
+                        @if (ViewBag.Userid != null)
+                        {
+                            if (item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == true).FirstOrDefault() != null)
+                            {
+                                @Html.ActionLink("Muokkaa", "Edit", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                                @: 
+                                @Html.ActionLink("Poista", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger" })
+
+                            }
+                            else
+                            {
+                                if ((item.Attendees == null || item.AttendeesNavigation.Count() < item.Attendees)
+                                    && item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == false).FirstOrDefault() == null)
+                                {
+                                    @Html.ActionLink("Ilmoittaudu", "Attend", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
+                                }
+                                else if (item.AttendeesNavigation.Where(u => u.Userid == ViewBag.Userid && u.Organiser == false).FirstOrDefault() != null)
+                                {
+                                    @Html.ActionLink("Peru ilmoittautuminen", "Cancel", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Haluatko varmasti perua ilmoittautumisesi?');" })
+                                }
+                            }
+                        }
                     </div>
                 </div>
             </div>
@@ -38,6 +78,6 @@
 }
 else
 {
-    @*@ViewBag.Alert;*@
+    <p>Hae uudestaan sanalla</p>
 }
 

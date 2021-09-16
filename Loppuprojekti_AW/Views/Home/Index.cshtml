@@ -3,15 +3,17 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h2 class="display-4">Aloita tästä</h2>
 
     @if (ViewBag.CommonPosts != null)
-        {
-    <ul class="cloud" role="navigation" aria-label="Webdev tag cloud">
-        @foreach (var post in ViewBag.CommonPosts)
+    {
+        <ul class="cloud" role="navigation" aria-label="linkkipilvi">
+            @foreach (var post in ViewBag.CommonPosts)
             {
-        <li class="pilvilinkki"> @Html.ActionLink($"{post.Sportname}", "GetPostBySportId", "Search", new {id = post.Sportid })</li>
-    }
-    </ul>
+                <li class="pilvilinkki"> @Html.ActionLink($"{post.Sportname}", "Index2", "Home", new { name = post.Sportname })</li>
+            }
+        </ul>
     }
 </div>
+
+<div id="map"></div>

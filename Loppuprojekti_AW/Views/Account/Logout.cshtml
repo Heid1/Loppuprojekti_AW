@@ -4,10 +4,13 @@
 @{
     ViewData["Title"] = "Uloskirjaus";
 }
-
 <div class="text-center">
-
-    <h3 class="display-4"> Mukava kun kävit! Sinut on nyt uloskirjattu palvelusta.</h3>
-    <button class="btn btn-outline-secondary"> @Html.ActionLink("Palaa etusivulle", "Index", "Home")</button>
-
+    <h4 class="display-4">Uloskirjaus</h4>
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+        <div class="error">
+            Sinut on nyt uloskirjattu palvelusta.
+        </div>
+    </div>
+    <button class="btn btn-outline-primary"> @Html.ActionLink("Palaa etusivulle", "Index", "Home", new { @class = "btn btn-outline-primary" })</button>
 </div>

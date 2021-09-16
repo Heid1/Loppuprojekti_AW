@@ -4,38 +4,34 @@
     ViewData["Title"] = "Profiili";
 }
 
-<h2>Sinun profiili</h2>
+<h2>@Model.Username</h2>
 
 <div>
     <hr />
-    <img src="@(Model.Photo)" alt="photo" class="resizePhoto" title="Kuva" />
+    @if (Model.Photo != null) {
+        <img src="@(Model.Photo)" alt="photo" class="rounded-circle float-right" title="Kuva" />
+    }
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Username)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Username)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Birthday)
+            Syntymäpäivä
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Birthday)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Userrole)
+            Rooli
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Userrole)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+           Kuvaus
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Club)
+            Seura
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Club)
@@ -44,7 +40,7 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Userid" class="btn btn-outline-success">Muokkaa tietojasi</a>
-    <a asp-action="Delete" asp-route-id="@Model.Userid" class="btn btn-outline-danger">Poista tunnuksesi</a>
-
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Delete" asp-route-id="@Model.Userid" class="btn btn-outline-danger" onclick="return confirm('Haluatko varmasti poistaa profiilisi?');">Poista tunnuksesi</a>
+    <a asp-controller="Sport" asp-action="Index" asp-route-id="@Model.Userid" class="btn btn-outline-primary">Suosikkilajit</a>
+    <a asp-action="Index" class="btn btn-outline-primary">Takaisin</a>
 </div>

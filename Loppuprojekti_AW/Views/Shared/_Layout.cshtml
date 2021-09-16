@@ -6,24 +6,130 @@
     <title>@ViewData["Title"] Moveo++</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <style>
-        .resizePhoto {
-            width: 200px;
-            height: auto;
+
+    <style type="text/css">
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 100%;
+            /* The width is the width of the web page */
         }
     </style>
+
+    <script>
+        var list = '@Html.Raw(ViewBag.Posts)'
+        var list2 = JSON.parse(list);
+        console.log(list2);
+    </script>
+
+    <script>
+        // Initialize and add the map
+        function initMap() {
+
+            var wrestling = {
+                url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+            };
+
+            var Padel = {
+                url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Emojione_BW_1F3BE.svg", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+            };
+
+            var dance = {
+                url: "https://cdn3.iconfinder.com/data/icons/dancing-dancer/214/dance-dancing-010-512.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+            };
+
+            var ikonit = [dance, wrestling, Padel];
+
+            // The location of Kamppi
+            const kamppi = { lat: 60.167390, lng: 24.931080 };
+            // The map, centered at kamppi
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 11.5,
+                center: kamppi,
+            });
+
+            ///metodi ottaa aikaisemman listan ja luo markkerit+infoikkunan
+            function populate() {
+
+                for (var i = 0; i < list2.length; i++) {
+
+                    var location = {
+                        lat: list2[i].Latitude,
+                        lng: list2[i].Longitude
+                    }
+
+                    var icon = i < 3 ? icon = ikonit[i] : icon = ikonit[1];
+
+                    if (location.lat == null || location.lng == null) {
+                        location.lat = 0;
+                        location.lng = 0;
+                    }
+
+
+                    const content = '<div id="content">' +
+                        '<div id="siteNotice">' +
+                        "</div>" +
+                        '<h1 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h1>' +
+                        '<div id="bodyContent">' +
+                        '<div width:20%;"><img src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' +
+                        "<p>" + list2[i].Description + "</p > " +
+                        "<p> Osoite :" + list2[i].Address + "</p > " +
+                        "<p> Kesto :" + list2[i].Duration.toString() + "</p > "
+                        +
+                        "</div>" +
+                        "</div>";
+
+                    const marker = new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        icon: icon
+                    });
+
+                    const infowindow = new google.maps.InfoWindow({
+                        content: content,
+                    });
+
+                    marker.addListener("click", () => {
+                        infowindow.open(marker.get("map"), marker);
+                    });
+                }
+            }
+            //marker.addListener("click", () => {
+            //    map.setZoom(15);
+            //    map.setCenter(marker.getPosition());
+            //});
+            populate();
+        }
+    </script>
 </head>
 <body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </symbol>
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+        </symbol>
+        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </symbol>
+    </svg>
+    <div id="header-img"></div>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Moveo++</a>
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand mb-0 h1"><h1 id="otsikko">Moveo</h1></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
                         @using Microsoft.AspNetCore.Http;
                         @{var userid = Context.Session.GetInt32("userid");}
                         @if (userid != null)
@@ -32,27 +138,21 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Pääsivu</a>
                             </li>
                         }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Etusivu</a>
-                            </li>
-                        }
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="GetPostsByCriteria">Hae</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="GetPostsByCriteria">Ilmoitukset</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="Index">Lajit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index2">Kartta</a>
                         </li>
 
                         @if (userid != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Index">Omat Ilmoitukset</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Message" asp-action="Index">Viestit</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Profile">Profiili</a>
@@ -66,7 +166,13 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Kirjaudu sisään</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Create">Rekisteröidy</a>
+                            </li>
                         }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SendFeedback">Palaute</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -80,12 +186,15 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - Moveo++ - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            Moveo &copy; 2021@*<a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw&callback=initMap&libraries=&v=weekly" async>
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

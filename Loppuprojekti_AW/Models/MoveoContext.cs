@@ -121,6 +121,8 @@ namespace Loppuprojekti_AW.Models
 
                 entity.Property(e => e.Senderid).HasColumnName("senderid");
 
+                entity.Property(e => e.Isread).HasColumnName("isread");
+
                 entity.Property(e => e.Sendtime)
                     .HasColumnType("datetime")
                     .HasColumnName("sendtime");
@@ -175,7 +177,9 @@ namespace Loppuprojekti_AW.Models
                     .IsUnicode(false)
                     .HasColumnName("postname");
 
-                entity.Property(e => e.Posttype).HasColumnName("posttype");
+                entity.Property(e => e.Posttype)
+                    .HasMaxLength(250)
+                    .HasColumnName("posttype");
 
                 entity.Property(e => e.Price)
                     .HasColumnType("decimal(18, 0)")
@@ -207,6 +211,11 @@ namespace Loppuprojekti_AW.Models
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("sportname");
+
+                entity.Property(e => e.Category)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("category");
             });
 
             modelBuilder.Entity<UsersSport>(entity =>

@@ -1,10 +1,10 @@
 ﻿@model Loppuprojekti_AW.Models.Sport
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Lisää uusi laji";
 }
 
-<h1>Luo uusi laji</h1>
+<h2 class="display-4">Lisää uusi laji</h2>
 
 <hr />
 <div class="row">
@@ -13,25 +13,36 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Sportname" class="control-label"></label>
-                <input asp-for="Sportname" class="form-control" />
+                <input asp-for="Sportname" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Lajin nimi" required/>
                 <span asp-validation-for="Sportname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <label asp-for="Description" class="control-label">Kuvaus</label>
+                <input asp-for="Description" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="vapaa kuvaus" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="Category" class="control-label">Kategoria</label>
+                <input asp-for="Category" list="Categories" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="uusi kategoria tai valmis valikosta" />
+                <datalist id="Categories">
+                    @foreach (var item in ViewBag.Categories)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </datalist>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lisää" class="btn btn-outline-success" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Takaisin lajeihin</a>
-</div>
+    <div>
+        <a asp-action="Index" asp-controller="Sport" class="btn btn-outline-primary">Takaisin</a>
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

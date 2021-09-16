@@ -1,6 +1,76 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+body {
+    overflow-x: hidden;
+}
+
+#header-img {
+    background-image: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1)), url('../tennis-bg.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    width: 100%;
+    height: 500px;
+    position: absolute;
+    z-index: 0;
+}
+
+footer {
+    position: relative;
+    z-index: 2
+}
+
+.accordion {
+    margin: 30px;
+}
+
+a #otsikko {
+    color: black;
+}
+
+@font-face {
+    src: url("../AldithRegular.ttf");
+    font-family: otsikko;
+}
+
+#otsikko {
+    font-family: otsikko;
+    font-size: 300%;
+    font-style: italic;
+}
+
+main {
+    padding: 50px;
+    border-radius: 15px;
+    width: 100%;
+    position: relative;
+    margin-top: 50px;
+    z-index: 1;
+    background-image: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,9)) !important;
+   /* background-color: rgba(255,255,255, 0.6) !important;*/
+    backdrop-filter: blur(20px) !important;
+}
+
+.accordion > .card:last-of-type {
+    border-bottom: 1px solid lightgray !important;
+}
+
+.resizePhoto {
+    float: right;
+    border-radius: 100%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    /*height: auto;*/
+}
+
+.error {
+    padding-left: 20px;
+}
+textarea {
+    width: 90%;
+    height: 150px;
+}
 
 /*SANAPILVI*/
 ul.cloud {
@@ -11,27 +81,49 @@ ul.cloud {
     align-items: center;
     justify-content: center;
     line-height: 2.75rem;
-    width: 100%;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 40px;
     font-size: 1.5rem;
-    margin:0 !important;
+    font-family: monospace;
 }
 
-ul.cloud li:nth-child(2n+1) a {
-    color: #181;
-    font-size:3rem;
+    ul.cloud li:nth-child(1n+1) a {
+        color: rgb(222, 49, 99);
+        font-size: 2.5rem;
+        --color: rgba(222, 49, 99, 0.2);
     }
 
-ul.cloud li:nth-child(3n+1) a {
-    color: #33a;
-    font-size: 2rem;
+    ul.cloud li:nth-child(2n+1) a {
+        color: rgb(255, 191, 0);
+        font-size: 2.8rem;
+        --color: rgba(255, 191, 0, 0.2);
     }
 
-ul.cloud li:nth-child(4n+1) a {
-    color: #c38;
-    font-size: 2rem;
+    ul.cloud li:nth-child(3n+1) a {
+        color: rgb(41, 128, 185);
+        font-size: 1.8rem;
+        --color: rgba(41, 128, 185, 0.2);
+    }
+
+    ul.cloud li:nth-child(4n+1) a {
+        color: rgb(22, 160, 133);
+        font-size: 2.2rem;
+        --color: rgba(88, 214, 141, 0.2);
     }
 
 
+    /* Sanapilvi animaatio*/
+
+    ul.cloud a {
+        background-color: none;
+        transition: 0.28s;
+        padding-right: 10px;
+    }
+
+        ul.cloud a:hover {
+            background: var(--color);
+        }
 
 /*NAVIGOINTIPALKKI*/
 a.navbar-brand {
@@ -40,16 +132,23 @@ a.navbar-brand {
     word-break: break-all;
 }
 
-/* Provide sufficient contrast against white background */
-a {
-    color: #0366d6;
+nav {
+    background-color: rgba(255,255,255, 0.6) !important;
+    backdrop-filter: blur(20px) !important;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+nav ul li {
+        margin-left: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        transition: 0.28s;
+    }
+
+nav ul li:hover {
+   background-color: whitesmoke;
 }
+
+/* Provide sufficient contrast against white background */
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
@@ -181,4 +280,3 @@ input::placeholder {
     top: 5px;
     right: 15px;
 }
-

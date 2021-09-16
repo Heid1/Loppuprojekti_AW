@@ -3,8 +3,12 @@
 *@
 @{
 }
-
 <h3>Tapahtui virhe</h3>
-<p class="alert alert-danger" role="alert"> Tarkista että olet kirjautunut</p>
-    @Html.ActionLink("Uusi käyttäjä", "Create", "Account")<br />
-    @Html.ActionLink("Kirjaudu", "Login", "Home")
+<div class="alert alert-danger d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+    <div class="error">
+        <p>Tarkista että olet kirjautunut</p>
+        @Html.ActionLink("Uusi käyttäjä", "Create", "Account")<br />
+        @Html.ActionLink("Kirjaudu", "Index", "Login")
+    </div>
+</div>

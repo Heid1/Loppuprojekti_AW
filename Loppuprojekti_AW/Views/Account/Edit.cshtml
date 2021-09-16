@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Muokkaa tietojasi</h1>
 
-<h4>Enduser</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,50 +13,45 @@
             <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
             <input type="hidden" asp-for="Userid" />
             <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
+                <label asp-for="Username" class="control-label">Käyttäjänimi</label>
+                <input asp-for="Username" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Haluamasi käyttäjänimi"/>
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" />
+                <label asp-for="Password" class="control-label">Salasana</label>
+                <input asp-for="Password" type="password" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Pitää sisältää yksi numero, iso kirjain ja erikoismerkki"/>
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Birthday" class="control-label"></label>
-                <input asp-for="Birthday" class="form-control" />
+                <label asp-for="Birthday" class="control-label">Syntymäpäivä</label>
+                <input asp-for="Birthday" class="form-control" disabled/>
                 <span asp-validation-for="Birthday" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Userrole" class="control-label"></label>
-                <input asp-for="Userrole" class="form-control" />
-                <span asp-validation-for="Userrole" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <label asp-for="Description" class="control-label">Kuvaus</label>
+                <input asp-for="Description" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Vapaamuotoinen kuvaus itsestäsi"/>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" type="file" class="form-control" />
+                <label asp-for="Photo" class="control-label">Kuva</label>
+                <input asp-for="Photo" type="file" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Kuvan voi olla ? x ? kokoinen maksimissaan"/>
                 <span asp-validation-for="Photo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Club" class="control-label"></label>
-                <input asp-for="Club" class="form-control" />
+                <label asp-for="Club" class="control-label">Seura</label>
+                <input asp-for="Club" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Seura esim. koulu, järjestö, yhteisö, seura"/>
                 <span asp-validation-for="Club" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-outline-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-primary">Takaisin</a>
 </div>
 
 @section Scripts {

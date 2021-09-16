@@ -1,13 +1,12 @@
 ﻿@model Loppuprojekti_AW.Models.Enduser
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Kirjaudu";
 }
 
-<h1>Login</h1>
 
-<h4>Enduser</h4>
-<hr />
+<h2 class="display-4">Kirjaudu sisään</h2>
+
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Index", "Login", FormMethod.Post))
@@ -18,27 +17,33 @@
                     <label asp-for="Email" class="control-label"></label>
                     <input asp-for="Email" class="form-control" />
                     <span asp-validation-for="Email" class="text-danger"></span>
-                    <label asp-for="Password" class="control-label"></label>
+                    <label asp-for="Password" class="control-label">Salasana</label>
                     <input asp-for="Password" type="password" class="form-control" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Kirjaudu" class="btn btn-primary" />
-                    <button class="btn btn-outline-primary">@Html.ActionLink("Rekisteröidy", "Create", "Account")</button>
+                    <input type="submit" value="Kirjaudu" class="btn btn-outline-primary" />
                 </div>
             </form>
         }
+        <div>
+            <a asp-area="" asp-controller="Account" asp-action="Create" class="btn btn-outline-primary">Rekisteröidy</a>
+            <a asp-action="Index" class="btn btn-outline-primary">Takaisin</a>
+        </div>
+
+
     </div>
     <div class="leipäteksti">
         @if (ViewBag.AuthOK == false)
         {
-            <p class="alert alert-danger" role="alert">Salasana tai käyttäjätunnus väärin<br />Yritä uudelleen</p>
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+                <div class="error">
+                    Salasana tai käyttäjätunnus väärin. Yritä uudelleen
+                </div>
+            </div>
         }
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

@@ -13,37 +13,34 @@
         }
     </style>
     <script>
+        var list = '@Html.Raw(ViewBag.Posts)'
+        var list2 = JSON.parse(list);
+
+        console.log(list2);
+    </script>
+    <script>
         // Initialize and add the map
         function initMap() {
-
-            var paikka4 = {
-                lat: 60.1623901,
-                lng: 24.931080
-            };
-
-            var paikka3 = {
-                lat: 60.1673901,
-                lng: 24.937080
-            };
-
-            var paikka2 = {
-                lat: 60.1673901,
-                lng: 24.911080
-            };
-
-            var paikka1 = {
-                lat: 60.1677901,
-                lng: 24.931080
-            };
-
-            const paikat = [paikka1, paikka2, paikka3, paikka4];
-
-            var paini = {
+           
+            var wrestling = {
                 url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
-                
+
             };
 
+            var Padel = {
+                url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Emojione_BW_1F3BE.svg", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+
+            };
+
+            var dance = {
+                url: "https://cdn3.iconfinder.com/data/icons/dancing-dancer/214/dance-dancing-010-512.png", // url
+                scaledSize: new google.maps.Size(50, 50), // scaled size
+
+            };
+
+            var ikonit = [dance, wrestling, Padel];
 
             // The location of Kamppi
             const kamppi = { lat: 60.167390, lng: 24.931080 };
@@ -52,35 +49,55 @@
                 zoom: 11.5,
                 center: kamppi,
             });
+
+
+
+
             ///metodi ottaa aikaisemman listan ja luo markkerit+infoikkunan
             function populate() {
 
-                
-                for (var i = 0; i < paikat.length; i++) {
 
+                for (var i = 0; i < list2.length; i++) {
+
+                    var location = {
+                        lat: list2[i].Latitude,
+                        lng: list2[i].Longitude
+                    }
+
+                    var icon = i < 3 ? icon = ikonit[i] : icon = ikonit[1];
+
+                    if (location.lat == null || location.lng == null) {
+                        location.lat = 0;
+                        location.lng = 0;
+                    }
+
+                    
                     const content = '<div id="content">' +
                         '<div id="siteNotice">' +
                         "</div>" +
-     
-                        '<h1 id="firstHeading" class="firstHeading">Jaakko tarjoaa Yksitysitunteja!</h1>' +
+
+                        '<h1 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h1>' +
                         '<div id="bodyContent">' +
-                        '<div width:20%;"><img src="https://st3.depositphotos.com/4297569/18992/i/950/depositphotos_189928686-stock-photo-attractive-white-guy-smiling-at.jpg" width="120" height="80"/></div>'+
-                        "<p><b>Minä olen Jaakko!</b>, Jaakko on nimitetty suomen nopeimmaksi tanssijaksi 3 vuotta putkeen ja nyt hän tarjoaa yksityistunteja aloittelijoille</p > " +
+                        '<div width:20%;"><img src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' +
+                        "<p>" + list2[i].Description + "</p > " +
+                        "<p> Osoite :" + list2[i].Address + "</p > " +
+                        "<p> Kesto :" + list2[i].Duration.toString() + "</p > "
                          +
                         "</div>" +
                         "</div>";
 
                     const marker = new google.maps.Marker({
-                        position: paikat[i],
+                        position: location,
                         map: map,
-                        icon: paini
+                        icon: icon
                     });
 
                     const infowindow = new google.maps.InfoWindow({
                         content: content,
                     });
+
                     marker.addListener("click", () => {
-                infowindow.open(marker.get("map"), marker);
+                     infowindow.open(marker.get("map"), marker);
                      });
 
                    
