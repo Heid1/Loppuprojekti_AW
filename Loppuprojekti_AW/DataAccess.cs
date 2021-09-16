@@ -154,7 +154,7 @@ namespace Loppuprojekti_AW
                                   join a in db.Attendees on p.Postid equals a.Postid
                                   where a.Userid == userid && a.Organiser == organiser
                                   where p.Date <= future && p.Date >= now
-                                  select p).Include(s => s.Sport).ToList();
+                                  select p).Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
             return organizingtoday;
         }
 
@@ -168,7 +168,7 @@ namespace Loppuprojekti_AW
                                   join s in db.Sports on p.Sportid equals s.Sportid
                                   where a.Userid == userid && a.Organiser == organiser
                                   where p.Date <= future && p.Date >= now
-                                  select p).Include(s => s.Sport).ToList();
+                                  select p).Include(s => s.Sport).Include(a=>a.AttendeesNavigation).ToList();
             return attendingtoday;
         }
 

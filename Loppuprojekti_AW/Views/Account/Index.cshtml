@@ -41,12 +41,14 @@ else
                 </div>
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
-                        <p>@item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname</p>
+                        <p><strong>@item.Date.ToString("d.M.yyyy hh:mm") - @item.Duration min</strong></p>
+                        <p> @item.Description</p>
+                        <p><strong>@item.Sport.Sportname</strong> - @item.Place - @item.AttendeesNavigation.Count / @item.Attendees - @item.Price €</p>
                         <p>
                             @Html.ActionLink("Muokka ilmoitusta", "Edit", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-success" })
-                            @Html.ActionLink("Poista ilmoitus", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "alertDelete()"})
+                            @Html.ActionLink("Poista ilmoitus", "Delete", "Post", new { postid = item.Postid }, new { @class = "btn btn-outline-danger", onclick = "alertDelete()" })
                             @*<a asp-action="Edit" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Muokkaa ilmoitusta</a>
-                            <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>*@
+                                <a asp-action="Delete" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Poista ilmoitus</a>*@
                         </p>
                     </div>
                 </div>
@@ -79,11 +81,11 @@ else
                 </div>
                 <div id="@iditem" class="collapse" aria-labelledby="headingPost" data-parent="#accordionPost">
                     <div class="card-body">
+                        <p><strong>@item.Date.ToString("d.M.yyyy hh:mm") - @item.Duration min</strong></p>
+                        <p> @item.Description</p>
+                        <p><strong>@item.Sport.Sportname</strong> - @item.Place - @item.AttendeesNavigation.Count / @item.Attendees - @item.Price €</p>
                         <p>
-                            @item.Postname | @item.Description | @item.Place | @item.Date | @item.Duration | @item.Price | @item.Sport.Sportname
-                        </p>
-                        <p>
-                            <a asp-action="Attend" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Ilmoittaudu</a>
+                            @*<a asp-action="Attend" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-success">Ilmoittaudu</a>*@
                             <a asp-action="Cancel" asp-controller="Post" asp-route-id="@item.Postid" class="btn btn-outline-danger" onclick="alertDelete()">Peruuta ilmoittautumisesi</a>
                         </p>
                     </div>
@@ -95,6 +97,6 @@ else
 
 <script>
     function alertDelete() {
-        alert("Haluatko varmasti peruuttaa ilmoittautumisen?");
+        confirm("Haluatko varmasti peruuttaa ilmoittautumisen?");
     }
 </script>
