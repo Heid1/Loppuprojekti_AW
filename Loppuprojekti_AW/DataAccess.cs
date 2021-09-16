@@ -353,8 +353,8 @@ namespace Loppuprojekti_AW
         /// <returns>list of messages between the two users.</returns>
         public List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
         {
-            var messages = db.Messages.Where(u => u.Receiverid == userId1 && u.Senderid == userId2 ||
-            u.Receiverid == userId2 && u.Senderid == userId1).OrderBy(m => m.Sendtime).ToList();
+      
+            var messages = db.Messages.Where(u => (u.Receiverid == userId1 && u.Senderid == userId2) || (u.Receiverid == userId2 && u.Senderid == userId1)).OrderBy(m => m.Sendtime).ToList();
             return messages;
         }
 
