@@ -388,6 +388,8 @@ namespace Loppuprojekti_AW
             var postobject = (from p in db.Posts
                               join a in db.Attendees
                               on p.Postid equals a.Postid
+                              join s in db.Sports
+                              on p.Sportid equals s.Sportid
                               join u in db.Endusers
                               on a.Userid equals u.Userid
                               where a.Organiser == true
@@ -400,7 +402,7 @@ namespace Loppuprojekti_AW
                                   Latitude = p.Latitude,
                                   Longitude = p.Longitude,
                                   Address = p.Place,
-                                  Sport = p.Sportid
+                                  Sport = s.Sportname
                             
                               }).ToList();
 
