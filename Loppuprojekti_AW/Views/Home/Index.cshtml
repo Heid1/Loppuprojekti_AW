@@ -10,7 +10,7 @@
         <ul class="cloud" role="navigation" aria-label="linkkipilvi">
             @foreach (var post in ViewBag.CommonPosts)
             {
-                <li class="pilvilinkki"> @Html.ActionLink($"{post.Sportname}", "Index2", "Home", new { name = post.Sportname })</li>
+                <li class="pilvilinkki"> @Html.ActionLink($"{post.Sportname}", "Map", "Home", new { name = post.Sportname })</li>
             }
         </ul>
     }

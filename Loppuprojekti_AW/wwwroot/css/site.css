@@ -67,6 +67,11 @@ main {
 .error {
     padding-left: 20px;
 }
+
+.loginalert {
+    margin-top: 33px;
+}
+
 textarea {
     width: 90%;
     height: 150px;
