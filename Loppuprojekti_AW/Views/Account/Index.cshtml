@@ -6,12 +6,13 @@
     @using System.Globalization;
 }
 
-<h1 class="display-4">Hei @ViewBag.Username!</h1>
-<p>Olet kirjautunut sisään.</p>
 @if (ViewBag.Avatar != null)
 {
     <img src="@(ViewBag.Avatar)" alt="photo" class="rounded-circle float-right" title="Kuva" />
 }
+<h1 class="display-4">Hei @ViewBag.Username!</h1>
+<p>Olet kirjautunut sisään.</p>
+
 <p>Tänään on @DateTime.Today.ToString("d.M.y")</p>
 <a asp-action="Create" asp-controller="Post" class="btn btn-outline-success">Luo ilmoitus</a>
 <hr />
@@ -22,7 +23,7 @@
     <div class="alert alert-primary d-flex align-items-center" role="alert">
         <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
         <div class="error">
-            Sinulla ei ole omia tapahtumia 24h sisällä        
+            Sinulla ei ole omia tapahtumia 24h sisällä
         </div>
     </div>
 }
@@ -61,12 +62,12 @@ else
 <h5>Sinun ilmoittautumiset tälle päivälle</h5>
 @if (ViewBag.UserAttendenceToday.Count == 0)
 {
-<div class="alert alert-primary d-flex align-items-center" role="alert">
-    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
-    <div class="error">
-        Sinulla ei ole omia tapahtumia 24h sisällä
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+        <div class="error">
+            Sinulla ei ole omia ilmoittautumisia 24h sisällä
+        </div>
     </div>
-</div>
 }
 else
 {
