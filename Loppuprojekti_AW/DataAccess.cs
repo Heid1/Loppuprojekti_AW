@@ -407,6 +407,7 @@ namespace Loppuprojekti_AW
                               join u in db.Endusers
                               on a.Userid equals u.Userid
                               where a.Organiser == true
+                              where p.Date > DateTime.Now
                               select new
                               {
                                   Postname = p.Postname,
