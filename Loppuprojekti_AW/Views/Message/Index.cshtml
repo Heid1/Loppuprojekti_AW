@@ -11,7 +11,8 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-
+<script type="javascript" src="dist/js/bootstrap.js"></script>
+<link href="dist/css/bootstrap.css" rel="stylesheet">
 
 <p id="userId" hidden>@currentUserId</p>
 <p id="userName" hidden>@currentUserName</p>
@@ -26,19 +27,32 @@
             <div class="bg-white">
                 <div class="bg-gray px-4 py-2 bg-light">
                     <p class="h5 mb-0 py-1">Keskustelut</p>
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                            <a href="#about">About</a>
+                            <a href="#base">Base</a>
+                            <a href="#blog">Blog</a>
+                            <a href="#contact">Contact</a>
+                            <a href="#custom">Custom</a>
+                            <a href="#support">Support</a>
+                            <a href="#tools">Tools</a>
+                        </div>
+                    </div>
                     @*<div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                uusi keskustelu<span class="caret"></span>
-                            </button>
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                uusi keskustelu<span class="caret"></span>
+            </button>
 
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                @foreach (var item in allUsers)
-                                {
-                                    <li><a id="@item.Key" class="dropdown-item" onclick="updateMessages">@item.Value</a></li>
-                                }
-                            </ul>
-                        </div>*@
-                    <input id="newConversationButton" type="button" value="+" class="btn btn-outline-secondary" />
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                @foreach (var item in allUsers)
+                {
+                    <li><a id="@item.Key" class="dropdown-item" onclick="updateMessages">@item.Value</a></li>
+                }
+            </ul>
+        </div>*@
+                    <!--<input id="newConversationButton" type="button" value="+" class="btn btn-outline-secondary" />-->
                 </div>
                 <div class="messages-box">
                     <div class="list-group rounded-0" id="chats">
@@ -50,7 +64,7 @@
 
         <!-- Chat Box-->
         <div class="col-7 px-0" id="chatArea">
-            <div  class="px-4 chat-box py-5 bg-white" id="chat-area">
+            <div class="px-4 chat-box py-5 bg-white" id="chat-area">
                 <div id="chatBox">
                     @if (UsersMessagesWith.Count > 0)
                     {
@@ -108,10 +122,10 @@
     <p class="enduserId" hidden>@user.Userid</p>
 }
 @*<script>
-    $(document).ready(function () {
-        $('.dropdown-toggle').dropdown();
-    });
-</script>*@
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>*@
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js" defer></script>

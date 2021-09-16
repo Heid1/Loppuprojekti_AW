@@ -32,7 +32,6 @@ namespace Loppuprojekti_AW.Controllers
             var allUsers = _data.GetAllUsers();
             foreach(var item in allUsers){
                 Console.WriteLine(item.Value);
-                
             }
             ViewData["currentUserId"] = userId.Value;
             ViewData["currentUserName"] = userName;
