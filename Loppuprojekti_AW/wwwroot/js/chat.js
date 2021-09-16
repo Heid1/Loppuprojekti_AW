@@ -57,9 +57,6 @@ async function getmessages(otherPartyId) {
     var chatbox = document.getElementById("chatBox");
     console.log("get messages");
     chatbox.innerHTML = "";
-    // console.dir(this);
-    // console.dir(event);
-    //getMessagesApi()
     fetch(`/api/ChatApi/${currentUserId}/${otherPartyId}`)
         .then(res => res.json())
         .then(messages => {
@@ -70,16 +67,6 @@ async function getmessages(otherPartyId) {
             var div2ClassName;
             var div3ClassName;
             var text;
-
-                // < !--Sender Message-- >
-                //< div class="media w-50 mb-3" >
-                //   <div class="media-body ml-3">
-                //       <div class="bg-light rounded py-2 px-3 mb-2">
-                //        <p class="text-small mb-0 text-muted">Hello there!</p>
-                //       </div>
-                //       <p class="small text-muted">12:00 | Syyskuu 10</p>
-                //   </div>
-                //</div>
                                   
             // shows messages differently depending on who has sent the message
             if (m.senderid == currentUserId) {
@@ -110,6 +97,35 @@ function updateMessages() {
     getmessages(otherPartyId);
 }
 
+function newChat(id, name) {
+
+    var aElement = document.createElement('a');
+    aElement.className = "list-group-item list-group-item-action active text-white rounded-0";
+    aElement.id = id;
+
+    // function update chat window on when chat with different user is opened
+    aElement.addEventListener("click", updateMessages);
+
+    var div1 = document.createElement('div');
+    div1.className = "media";
+
+    var div2 = document.createElement('div');
+    div2.className = "media-body ml-4";
+
+    var div3 = document.createElement('div');
+    div3.className = "d-flex align-items-center justify-content-between mb-1";
+
+    var chatWithUserName = document.createElement('h6');
+    chatWithUserName.className = "mb-0";
+    chatWithUserName.appendChild(document.createTextNode(`${name}`));
+
+    div3.appendChild(chatWithUserName);
+    div2.appendChild(div3);
+    div1.appendChild(div2);
+    aElement.appendChild(div1);
+    document.getElementById("chats").appendChild(aElement);
+    getmessages(otherPartyId);
+}
 
 // CREATING ELEMENTS OF EXISTING CHATS
 for (let i = 0; i < usersMessagedWith.length; i++) {
@@ -212,7 +228,9 @@ connection.on("ReceiveMessage", function (senderName, message, sendTime, sendDat
     div2.appendChild(msgInfo);
     div1.appendChild(div2);
     document.getElementById("chatBox").appendChild(div1);
-
+    //connection.invoke("SaveMessage", message, sendTime, sendDate).catch(function (err) {
+    //    return console.error(err.toString());
+    //});
 });
 
 connection.start().then(function () {
@@ -227,6 +245,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     var senderId = document.getElementById("userId").innerText;
     var senderName = document.getElementById("userName").innerText;
     var message = document.getElementById("messageInput").value;
+    
     document.getElementById("messageInput").value = '';
     connection.invoke("SendMessage", senderId, senderName, message).catch(function (err) {
         return console.error(err.toString());
@@ -234,6 +253,4 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     event.preventDefault();
 });
 
-    function changeChat(userId) {
-        document.getElementById("demo").style.color = "red";
-    }
+

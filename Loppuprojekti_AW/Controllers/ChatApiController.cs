@@ -24,12 +24,7 @@ namespace Loppuprojekti_AW.Controllers
             _context = context;
         }
 
-        // GET: api/<ChatApiController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+      
 
         // GET api/<ChatApiController>/5
         [HttpGet("{id1}/{id2}")]
@@ -48,6 +43,15 @@ namespace Loppuprojekti_AW.Controllers
         public Enduser GetUser(int id)
         {
             return _context.Endusers.Where(u => u.Userid == id).FirstOrDefault();
+        }
+
+        [HttpPost()]
+        public void Post([FromBody] Message message)
+        {
+            //Message msg = new Message() { Senderid=senderid, Messagebody=message, Receiverid=receiverid, Sendtime=DateTime.Now };
+            message.Sendtime = DateTime.Now;
+            _context.Messages.Add(message);
+            _context.SaveChanges();
         }
     }
 }

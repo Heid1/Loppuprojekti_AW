@@ -29,11 +29,16 @@ namespace Loppuprojekti_AW.Controllers
             string userName = _data.GetUserById(userId).Username;
             var usersMessagedWith = _data.GetUsersMessagedWith((int)userId);
             var messageHistory = _data.GetMessagesOfUser((int)userId);
-
+            var allUsers = _data.GetAllUsers();
+            foreach(var item in allUsers){
+                Console.WriteLine(item.Value);
+                
+            }
             ViewData["currentUserId"] = userId.Value;
             ViewData["currentUserName"] = userName;
             ViewData["usersMessagedWith"] = usersMessagedWith;
             ViewData["messagesHistory"] = messageHistory;
+            ViewData["allUsersDict"] = allUsers;
             //ViewBag.userName = _data.GetUserById(userId).Username;
             return View();
         }

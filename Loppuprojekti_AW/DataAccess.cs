@@ -76,6 +76,17 @@ namespace Loppuprojekti_AW
             return db.Endusers.Find(userid).Photo;
         }
 
+        public Dictionary<int, string> GetAllUsers()
+        {
+            List<Enduser> users = db.Endusers.ToList();
+            Dictionary<int, string> usersDict = new Dictionary<int, string>();
+            foreach (var user in users)
+            {
+                usersDict.Add(user.Userid, user.Username);
+            }
+            return usersDict;
+        }
+
         // ----------------------- POSTS ----------------------------------------------
 
         //hae yleisimmät lajit post määrän mukaisesti (tämä on sanapilveä varten)
