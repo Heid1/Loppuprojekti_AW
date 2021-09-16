@@ -1,10 +1,10 @@
 ﻿@model Loppuprojekti_AW.Models.Sport
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Lisää uusi laji";
 }
 
-<h3>Luo uusi laji</h3>
+<h2 class="display-4">Lisää uusi laji</h2>
 
 <hr />
 <div class="row">
@@ -12,8 +12,8 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Sportname" class="control-label">Nimi</label>
-                <input asp-for="Sportname" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="vapaa kuvaus" />
+                <label asp-for="Sportname" class="control-label"></label>
+                <input asp-for="Sportname" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Lajin nimi" required/>
                 <span asp-validation-for="Sportname" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,7 +33,7 @@
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Luo" class="btn btn-outline-primary" />
+                <input type="submit" value="Lisää" class="btn btn-outline-success" />
             </div>
         </form>
     </div>
