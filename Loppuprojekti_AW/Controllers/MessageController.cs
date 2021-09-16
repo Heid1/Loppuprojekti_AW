@@ -21,17 +21,25 @@ namespace Loppuprojekti_AW.Controllers
         {
             //ViewData["messages"] = _data.GetMessagesOfUser(userId);
             //ViewData["users"] = _data.GetUsersMessagedWith(userId);
-            //return View(ViewData);
             int? userId = HttpContext.Session.GetInt32("userid");
             if (userId == null)
             {
-                return RedirectToAction("Virhe", "Home");
+                return RedirectToAction("Error", "Home");
             }
-            
-            //ViewData["currentUserId"] = userId;
-            //ViewData["usersMessagedWith"] = _data.GetUsersMessagedWith((int)userId);
-            //ViewData["messagesHistory"] = _data.GetMessagesOfUser((int)userId);
-            ViewBag.userName = _data.GetUserById(userId).Username;
+            string userName = _data.GetUserById(userId).Username;
+            var usersMessagedWith = _data.GetUsersMessagedWith((int)userId);
+            var messageHistory = _data.GetMessagesOfUser((int)userId);
+            var allUsers = _data.GetAllUsers();
+            foreach(var item in allUsers){
+                Console.WriteLine(item.Value);
+                
+            }
+            ViewData["currentUserId"] = userId.Value;
+            ViewData["currentUserName"] = userName;
+            ViewData["usersMessagedWith"] = usersMessagedWith;
+            ViewData["messagesHistory"] = messageHistory;
+            ViewData["allUsersDict"] = allUsers;
+            //ViewBag.userName = _data.GetUserById(userId).Username;
             return View();
         }
 
@@ -40,7 +48,7 @@ namespace Loppuprojekti_AW.Controllers
             int? userId = HttpContext.Session.GetInt32("userid");
             if (userId == null)
             {
-                return RedirectToAction("Virhe", "Home");
+                return RedirectToAction("Error", "Home");
             }
             ViewBag.userName = _data.GetUserById(userId).Username;
             ViewData["currentUser"]= _data.GetUserById(userId);

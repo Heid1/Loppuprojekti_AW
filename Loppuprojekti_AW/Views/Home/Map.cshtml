@@ -22,7 +22,7 @@
         // Initialize and add the map
         function initMap() {
            
-            var wrestling = {
+            var Wrestling = {
                 url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
 
@@ -34,13 +34,13 @@
 
             };
 
-            var dance = {
+            var Dance = {
                 url: "https://cdn3.iconfinder.com/data/icons/dancing-dancer/214/dance-dancing-010-512.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
 
             };
 
-            var ikonit = [dance, wrestling, Padel];
+            
 
             // The location of Kamppi
             const kamppi = { lat: 60.167390, lng: 24.931080 };
@@ -56,15 +56,23 @@
             ///metodi ottaa aikaisemman listan ja luo markkerit+infoikkunan
             function populate() {
 
+                console.log(list2[4].Category)
 
                 for (var i = 0; i < list2.length; i++) {
+                    var icon = Dance;
 
-                    var location = {
+                    if (list2[i].Category == "Tanssi") {
+                        icon = Dance
+                    } else if (list2[i].Category == "Kamppailulajit") {
+                        icon = Wrestling
+                    } else {icon = Padel }
+                   
+                        var location = {
                         lat: list2[i].Latitude,
                         lng: list2[i].Longitude
                     }
 
-                    var icon = i < 3 ? icon = ikonit[i] : icon = ikonit[1];
+                  //var icon = i < 3 ? icon = icons[i] : icon = icon[1];
 
                     if (location.lat == null || location.lng == null) {
                         location.lat = 0;
@@ -75,13 +83,16 @@
                     const content = '<div id="content">' +
                         '<div id="siteNotice">' +
                         "</div>" +
-                        '<h1 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h1>' +
+                        '<h4 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h4>' +
                         '<div id="bodyContent">' +
-                        '<div width:20%;"><img src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' +
+
+                        (list2[1].ImgUrl != null ? '<div width:20%;"><img class="mapkuva" src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' : '') +
+
                         "<p>" + list2[i].Description + "</p > " +
-                        "<p> Osoite :" + list2[i].Address + "</p > " +
-                        "<p> Kesto :" + list2[i].Duration.toString() + "</p > "
-                        +
+                        '<p class="kartta">Osoite: ' + list2[i].Address + "<br> " +
+                        'Kesto: ' + list2[i].Duration.toString() + " min<br> " +
+                        'Järjestäjä: ' + list2[i].Organiser + "<br>"
+                        'Päivämäärä: ' + list2[i].Date + "</p>" +
                         "</div>" +
                         "</div>";
 

@@ -77,11 +77,26 @@ namespace Loppuprojekti_AW
             return db.Endusers.Find(userid).Photo;
         }
 
+        public Dictionary<int, string> GetAllUsers()
+        {
+            List<Enduser> users = db.Endusers.ToList();
+            Dictionary<int, string> usersDict = new Dictionary<int, string>();
+            foreach (var user in users)
+            {
+                usersDict.Add(user.Userid, user.Username);
+            }
+            return usersDict;
+        }
+
         // ----------------------- POSTS ----------------------------------------------
 
         public List<Post> GetAllPosts()
         {
-            return db.Posts.Include(s => s.Sport).Include(a => a.AttendeesNavigation).OrderBy(p => p.Date).ToList();
+            return db.Posts
+                .Include(s => s.Sport)
+                .Include(a => a.AttendeesNavigation)
+                .OrderBy(p => p.Date)
+                .ToList();
         }
 
         //hae yleisimmät lajit post määrän mukaisesti (tämä on sanapilveä varten)
@@ -342,8 +357,8 @@ namespace Loppuprojekti_AW
         /// <returns>list of messages between the two users.</returns>
         public List<Message> GetMessagesBetweenUsers(int userId1, int userId2)
         {
-            var messages = db.Messages.Where(u => u.Receiverid == userId1 && u.Senderid == userId2 ||
-            u.Receiverid == userId2 && u.Senderid == userId1).OrderBy(m => m.Sendtime).ToList();
+      
+            var messages = db.Messages.Where(u => (u.Receiverid == userId1 && u.Senderid == userId2) || (u.Receiverid == userId2 && u.Senderid == userId1)).OrderBy(m => m.Sendtime).ToList();
             return messages;
         }
 
@@ -419,7 +434,8 @@ namespace Loppuprojekti_AW
                                   Address = p.Place,
                                   Sport = s.Sportname,
                                   Organiser = u.Username,
-                                  Date = p.Date
+                                  Date = p.Date,
+                                  Category = s.Category
                             
                               }).ToList();
 

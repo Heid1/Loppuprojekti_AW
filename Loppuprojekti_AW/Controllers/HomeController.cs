@@ -33,11 +33,10 @@ namespace Loppuprojekti_AW.Controllers
             return View();
         }
 
-        public IActionResult Index2(string FilterWord)
+        public IActionResult Map(string ?Sportname)
         {
             DataAccess da = new DataAccess(_context);
             ViewBag.Posts = da.ReturnPostObjects();
-            ViewBag.FilterWord = FilterWord;
             return View();
         }
 

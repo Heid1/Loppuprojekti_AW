@@ -76,13 +76,14 @@
                         '<h4 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h4>' +
                         '<div id="bodyContent">' +
 
-                        (list2[1].ImgUrl != null ? '<div width:20%;"><img src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' : '') +
+                        (list2[1].ImgUrl != null ? '<div width:20%;"><img class="mapkuva" src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' : '') +
 
                         "<p>" + list2[i].Description + "</p > " +
                         '<p class="kartta">Osoite: ' + list2[i].Address + "<br> " +
                         'Kesto: ' + list2[i].Duration.toString() + " min<br> " +
-                        'Järjestäjä: ' + list2[i].Organiser + "<br>"
+                        'Järjestäjä: ' + list2[i].Organiser + "<br>"+
                         'Päivämäärä: ' + list2[i].Date + "</p>" +
+                        '<a href="/Search/GetPostsByCriteria" class="nappi">' + 'Siirry ilmoituksiin' + '</a>' +
                         "</div>" +
                         "</div>";
 
@@ -149,9 +150,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="Index">Lajit</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index2">Kartta</a>
-                        </li>
 
                         @if (userid != null)
                         {
@@ -201,11 +199,33 @@
     </script>
     @await RenderSectionAsync("Scripts", required: false)
     <style>
-        #content { color: blue;}
-        #siteNotice { color: red;}
         #firstHeading {color: indianred;}
-        #bodyContent {color: black;}
         .kartta{ font-weight: bold;}
+        .mapkuva{ border-radius: 50%; float: right;}
+        .nappi {
+            color: #007bff;
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid #007bff;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+        .nappi:hover{
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            text-decoration: none;
+        }
     </style>
 </body>
 </html>

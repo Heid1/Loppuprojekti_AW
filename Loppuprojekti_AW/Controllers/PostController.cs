@@ -24,7 +24,7 @@ namespace Loppuprojekti_AW.Controllers
             int? userid = HttpContext.Session.GetInt32("userid");
             if (userid == null)
             {
-                return RedirectToAction("Virhe", "Home");
+                return RedirectToAction("Error", "Home");
             }
             var organising = _data.GetPostsByAttendance((int)userid, true);
             ViewBag.Organising = organising;
@@ -53,7 +53,7 @@ namespace Loppuprojekti_AW.Controllers
             post.Latitude = _data.ReturnCoordinates(post.Place, true);
             post.Longitude = _data.ReturnCoordinates(post.Place, false);
             _data.CreatePost((int)userid, post);
-            return RedirectToAction("GetPostsByCriteria", "Search");
+            return RedirectToAction("Index", "Account");
         }
 
         [HttpGet]
@@ -62,7 +62,7 @@ namespace Loppuprojekti_AW.Controllers
             int? userid = HttpContext.Session.GetInt32("userid");
             if (userid == null)
             {
-                return RedirectToAction("Virhe", "Home");
+                return RedirectToAction("Error", "Home");
             }
             var attending = _data.GetPostsByAttendance((int)userid, false);
             ViewBag.Attending = attending;

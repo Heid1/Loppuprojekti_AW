@@ -8,7 +8,7 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/ChatHub").build();
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
-connection.on("ReceiveMessage", function (userName, message, sendTime, sendDate) {
+connection.on("ReceiveMessage", function (senderName, message, sendTime, sendDate) {
 
     // receiver and sender message examples
     //< !--Sender Message-- >
@@ -32,13 +32,14 @@ connection.on("ReceiveMessage", function (userName, message, sendTime, sendDate)
     //            </div>
     //        </div>
 
-    var receiverUserName = document.getElementById("userNameHeading").innerHTML;
+    var receiverUserName = document.getElementById("userNameHeading").innerText;
     var div1ClassName;
     var div2ClassName;
     var div3ClassName;
     var text;
 
-    if (receiverUserName === userName) {
+    // shows messages differently depending on who has sent the message
+    if (receiverUserName === senderName) {
         div1ClassName = "media w-50 ml-auto mb-3";
         div2ClassName = "media-body";
         div3ClassName = "bg-primary rounded py-2 px-3 mb-2";
@@ -68,7 +69,7 @@ connection.on("ReceiveMessage", function (userName, message, sendTime, sendDate)
 
     var sender = document.createElement('p');
     sender.className = 'small text-muted';
-    sender.appendChild(document.createTextNode(`${userName}`));
+    sender.appendChild(document.createTextNode(`${senderName}`));
 
     div3.appendChild(msgContent);
     div2.appendChild(sender);
@@ -76,19 +77,6 @@ connection.on("ReceiveMessage", function (userName, message, sendTime, sendDate)
     div2.appendChild(msgInfo);
     div1.appendChild(div2);
     document.getElementById("chatBox").appendChild(div1);
-
-    // example structure of one message created above
-
-    //<div class="media w-50 ml-auto mb-3">
-    //    <div class="media-body">
-    //        <p class="small text-muted">Esko</p>
-    //        <div class="bg-primary rounded py-2 px-3 mb-2">
-    //            <p class="text-small mb-0 text-white">Hey!</p>
-    //        </div>
-    //        <p class="small text-muted">12:00 | Syyskuu 10</p>
-    //    </div>
-    //</div>
-
 });
 
 connection.start().then(function () {

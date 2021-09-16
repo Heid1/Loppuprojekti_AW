@@ -12,5 +12,5 @@
             Sinut on nyt uloskirjattu palvelusta.
         </div>
     </div>
-    <button class="btn btn-outline-primary"> @Html.ActionLink("Palaa etusivulle", "Index", "Home", new { @class = "btn btn-outline-primary" })</button>
+    <a asp-action="Index" asp-controller="Home" class="btn btn-outline-primary">Etusivulle</a>
 </div>
