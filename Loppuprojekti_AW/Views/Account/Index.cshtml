@@ -18,8 +18,12 @@
 <h5>Sinun ilmoitukset tälle päivälle</h5>
 @if (ViewBag.UserOwnPosts.Count == 0)
 {
-    <div class="alert alert-info" role="alert">
-        <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
+
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+        <div class="error">
+            Sinulla ei ole omia tapahtumia 24h sisällä        
+        </div>
     </div>
 }
 else
@@ -59,9 +63,12 @@ else
 <h5>Sinun ilmoittautumiset tälle päivälle</h5>
 @if (ViewBag.UserAttendenceToday.Count == 0)
 {
-    <div class="alert alert-info" role="alert">
-        <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill" /></svg>
+    <div class="error">
+        Sinulla ei ole omia tapahtumia 24h sisällä
     </div>
+</div>
 }
 else
 {
