@@ -416,7 +416,9 @@ namespace Loppuprojekti_AW
                                   Latitude = p.Latitude,
                                   Longitude = p.Longitude,
                                   Address = p.Place,
-                                  Sport = s.Sportname
+                                  Sport = s.Sportname,
+                                  Organiser = u.Username,
+                                  Date = p.Date
                             
                               }).ToList();
 
