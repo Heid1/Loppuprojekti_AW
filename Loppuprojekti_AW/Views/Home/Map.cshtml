@@ -75,13 +75,16 @@
                     const content = '<div id="content">' +
                         '<div id="siteNotice">' +
                         "</div>" +
-                        '<h1 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h1>' +
+                        '<h4 id="firstHeading" class="firstHeading">' + list2[i].Postname + '</h4>' +
                         '<div id="bodyContent">' +
-                        '<div width:20%;"><img src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' +
+
+                        (list2[1].ImgUrl != null ? '<div width:20%;"><img class="mapkuva" src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' : '') +
+
                         "<p>" + list2[i].Description + "</p > " +
-                        "<p> Osoite :" + list2[i].Address + "</p > " +
-                        "<p> Kesto :" + list2[i].Duration.toString() + "</p > "
-                        +
+                        '<p class="kartta">Osoite: ' + list2[i].Address + "<br> " +
+                        'Kesto: ' + list2[i].Duration.toString() + " min<br> " +
+                        'Järjestäjä: ' + list2[i].Organiser + "<br>"
+                        'Päivämäärä: ' + list2[i].Date + "</p>" +
                         "</div>" +
                         "</div>";
 
