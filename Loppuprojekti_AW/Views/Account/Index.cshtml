@@ -18,7 +18,7 @@
 <a asp-action="Create" asp-controller="Post" class="btn btn-outline-success">Luo ilmoitus</a>
 <hr />
 <h5>Sinun ilmoitukset tälle päivälle</h5>
-@if (ViewBag.UserOwnPosts == null)
+@if (ViewBag.UserOwnPosts.Count == 0)
 {
     <div class="alert alert-info" role="alert">
         <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
@@ -57,7 +57,7 @@ else
 
 
 <h5>Sinun ilmoittautumiset tälle päivälle</h5>
-@if (ViewBag.UserAttendenceToday == null)
+@if (ViewBag.UserAttendenceToday.Count == 0)
 {
     <div class="alert alert-info" role="alert">
         <p>Sinulla ei ole omia tapahtumia 24h sisällä</p>
