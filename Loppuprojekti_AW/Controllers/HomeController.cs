@@ -35,6 +35,8 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Map(string ?Sportname)
         {
+
+            ViewBag.name = Sportname;
             DataAccess da = new DataAccess(_context);
             ViewBag.Posts = da.ReturnPostObjects();
             return View();
