@@ -79,10 +79,10 @@
                         (list2[1].ImgUrl != null ? '<div width:20%;"><img src="' + list2[i].ImgUrl + '" width="80" height="auto"/></div>' : '') +
 
                         "<p>" + list2[i].Description + "</p > " +
-                        '<p class="kartta">Osoite: ' + list2[i].Address + "</p > " +
-                        '<p class="kartta">Kesto: ' + list2[i].Duration.toString() + " min</p > " +
-                        '<p class="kartta">Järjestäjä: ' + list2[i].Post.Username +
-                        '<p class="kartta">Päivämäärä: ' + list2[i].Post.Date +
+                        '<p class="kartta">Osoite: ' + list2[i].Address + "<br> " +
+                        'Kesto: ' + list2[i].Duration.toString() + " min<br> " +
+                        'Järjestäjä: ' + list2[i].Organiser + "<br>"
+                        'Päivämäärä: ' + list2[i].Date + "</p>" +
                         "</div>" +
                         "</div>";
 
@@ -94,7 +94,7 @@
 
                     const infowindow = new google.maps.InfoWindow({
                         content: content,
-                        maxWidth: 400
+                        maxWidth: 500
                     });
 
                     marker.addListener("click", () => {
