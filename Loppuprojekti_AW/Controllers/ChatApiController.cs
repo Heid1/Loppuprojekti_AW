@@ -6,15 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Loppuprojekti_AW.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ChatApiController : ControllerBase
     {
-
         private readonly ILogger<ChatApiController> _logger;
         private readonly MoveoContext _context;
 
@@ -23,8 +20,6 @@ namespace Loppuprojekti_AW.Controllers
             _logger = logger;
             _context = context;
         }
-
-      
 
         // GET api/<ChatApiController>/5
         [HttpGet("{id1}/{id2}")]

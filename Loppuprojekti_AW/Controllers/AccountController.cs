@@ -12,7 +12,6 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System.Text;
-using System.Globalization;
 
 namespace Loppuprojekti_AW.Controllers
 {
@@ -24,7 +23,6 @@ namespace Loppuprojekti_AW.Controllers
         private readonly string photoBlob;
         private readonly string thumbnailPhotoBlob;
         private readonly MoveoContext _context;
-        public readonly CultureInfo _ci;
 
         public AccountController(MoveoContext context, IConfiguration configuration)
         {
@@ -34,7 +32,6 @@ namespace Loppuprojekti_AW.Controllers
             storageAccountKey = configuration["StorageAccountKey"];
             storageAccountName = configuration["StorageAccountName"];
             blobServiceEndpoint = configuration["StorageEndPoint"];
-            _ci = new CultureInfo("fi-fi");
         }
 
         public async Task<IActionResult> Index()
@@ -197,7 +194,6 @@ namespace Loppuprojekti_AW.Controllers
                                 prf: KeyDerivationPrf.HMACSHA512,
                                 iterationCount: 10000,
                                 numBytesRequested: 256 / 8);
-
             return Convert.ToBase64String(valueBytes);
         }
         public static bool Validate(string value, string hash)
