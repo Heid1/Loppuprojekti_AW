@@ -86,6 +86,64 @@ namespace Loppuprojekti_AW.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            var userid = HttpContext.Session.GetInt32("userid");
+            if (userid != null)
+            {
+                var enduser = new DataAccess(_context).GetUserById(userid);
+                return View(enduser);
+            }
+            else
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Edit()
+        {
+            var userid = HttpContext.Session.GetInt32("userid");
+            var enduser = new DataAccess(_context).GetUserById(userid);
+            if (enduser == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            return View(enduser);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(Enduser enduser, IFormFile Photo)
+        {
+            DataAccess da = new DataAccess(_context);
+            enduser.Photo = AddPhotoInContainer(Photo, da.GetCurrentPhotoUrl(enduser.Userid));
+            if (enduser.Password != null)
+            {
+                enduser.Password = Hash(enduser.Password);
+            }
+            da.EditUser(enduser);
+            return RedirectToAction("Profile", new { Id = enduser.Userid });
+        }
+
+        public IActionResult Delete(Enduser Eu)
+        {
+            var userid = HttpContext.Session.GetInt32("userid");
+            DataAccess da = new DataAccess(_context);
+            var enduser = da.GetUserById(userid);
+            if (enduser == null)
+            {
+                return RedirectToAction("Virhe", "Home");
+            }
+            else
+            {
+                da.DeleteUser(enduser);
+                HttpContext.Session.Clear();
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         /// <summary>
         /// Lisää Blobiin uuden kuvan ja poistaa samalla vanhan, jos sellainen on olemassa.
         /// Myös vanhan kuvan thumbnailversio poistetaan.
@@ -123,63 +181,6 @@ namespace Loppuprojekti_AW.Controllers
             //return blob.Uri.ToString();
         }
 
-        [HttpGet]
-        public IActionResult Profile()
-        {
-            var userid = HttpContext.Session.GetInt32("userid");
-            if (userid != null)
-            {
-                var enduser = new DataAccess(_context).GetUserById(userid);
-                return View(enduser);
-            }
-            else
-            {
-                return RedirectToAction("Virhe", "Home");
-            }
-        }
-
-        [HttpGet]
-        public IActionResult Edit()//siirrytään tiettyyn palveluun uniikin palveluid perusteella, uusi muokkausnäkymä
-        {
-            var userid = HttpContext.Session.GetInt32("userid");
-            var enduser = new DataAccess(_context).GetUserById(userid);
-            if (enduser == null)
-            {
-                return RedirectToAction("Virhe", "Home");
-            }
-            return View(enduser);
-        }
-
-
-        [HttpPost] //editoidaan henkilöä ja lähetetaan se
-        public IActionResult Edit(Enduser enduser, IFormFile Photo)
-        {
-            DataAccess da = new DataAccess(_context);
-            enduser.Photo = AddPhotoInContainer(Photo, da.GetCurrentPhotoUrl(enduser.Userid));
-            if (enduser.Password != null)
-            {
-                enduser.Password = Hash(enduser.Password);
-            }
-            da.EditUser(enduser);
-            return RedirectToAction("Profile", new { Id = enduser.Userid });
-        }
-
-        public IActionResult Delete(Enduser Eu)
-        {
-            var userid = HttpContext.Session.GetInt32("userid");
-            DataAccess da = new DataAccess(_context);
-            var enduser = da.GetUserById(userid);
-            if (enduser == null)
-            {
-                return RedirectToAction("Virhe", "Home");
-            }
-            else
-            {
-                da.DeleteUser(enduser);
-                HttpContext.Session.Clear();
-                return RedirectToAction("Index", "Home");
-            }
-        }
         /// <summary>
         /// Muokkaa salasanan eri muotoon, jottei näy suoraan tietokannassa.
         /// </summary>

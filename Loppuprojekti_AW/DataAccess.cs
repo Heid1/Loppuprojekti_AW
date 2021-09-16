@@ -150,10 +150,11 @@ namespace Loppuprojekti_AW
             DateTime future = DateTime.Now.AddHours(24);
             bool organiser = true;
             var organizingtoday = (from p in db.Posts
+                                  join s in db.Sports on p.Sportid equals s.Sportid
                                   join a in db.Attendees on p.Postid equals a.Postid
                                   where a.Userid == userid && a.Organiser == organiser
                                   where p.Date <= future && p.Date >= now
-                                  select p).ToList();
+                                  select p).Include(s => s.Sport).ToList();
             return organizingtoday;
         }
 
@@ -164,9 +165,10 @@ namespace Loppuprojekti_AW
             bool organiser = false;
             var attendingtoday = (from p in db.Posts
                                   join a in db.Attendees on p.Postid equals a.Postid
+                                  join s in db.Sports on p.Sportid equals s.Sportid
                                   where a.Userid == userid && a.Organiser == organiser
                                   where p.Date <= future && p.Date >= now
-                                  select p).ToList();
+                                  select p).Include(s => s.Sport).ToList();
             return attendingtoday;
         }
 
@@ -386,6 +388,8 @@ namespace Loppuprojekti_AW
             var postobject = (from p in db.Posts
                               join a in db.Attendees
                               on p.Postid equals a.Postid
+                              join s in db.Sports
+                              on p.Sportid equals s.Sportid
                               join u in db.Endusers
                               on a.Userid equals u.Userid
                               where a.Organiser == true
@@ -398,7 +402,7 @@ namespace Loppuprojekti_AW
                                   Latitude = p.Latitude,
                                   Longitude = p.Longitude,
                                   Address = p.Place,
-                                  Sport = p.Sportid
+                                  Sport = s.Sportname
                             
                               }).ToList();
 
