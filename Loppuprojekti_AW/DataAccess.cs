@@ -81,7 +81,7 @@ namespace Loppuprojekti_AW
 
         public List<Post> GetAllPosts()
         {
-            return db.Posts.Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
+            return db.Posts.Include(s => s.Sport).Include(a => a.AttendeesNavigation).OrderBy(p => p.Date).ToList();
         }
 
         //hae yleisimmät lajit post määrän mukaisesti (tämä on sanapilveä varten)
@@ -106,8 +106,9 @@ namespace Loppuprojekti_AW
                 || p.Date.ToString().Contains(criteria)
                 || p.Sport.Sportid.ToString().Contains(criteria.ToLower())
                 || p.Sport.Sportname.ToLower().Contains(criteria.ToLower())
-                || p.Sport.Description.ToLower().Contains(criteria.ToLower())
-               ).ToList();
+                || p.Sport.Description.ToLower().Contains(criteria.ToLower()))
+                .OrderBy(p=>p.Date)
+               .ToList();
             return postlist;
         }
 
@@ -120,6 +121,7 @@ namespace Loppuprojekti_AW
                            select p)
                            .Include(s => s.Sport)
                            .Include(a => a.AttendeesNavigation)
+                           .OrderBy(p => p.Date)
                            .ToList();
                 return postlist;
         }
@@ -135,7 +137,11 @@ namespace Loppuprojekti_AW
             var posts = (from p in db.Posts
                          join a in db.Attendees on p.Postid equals a.Postid
                          where a.Userid == userid && a.Organiser == organiser
-                         select p).Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
+                         select p)
+                         .Include(s => s.Sport)
+                         .Include(a => a.AttendeesNavigation)
+                         .OrderBy(p => p.Date)
+                         .ToList();
             return posts;
         }
 
@@ -154,7 +160,11 @@ namespace Loppuprojekti_AW
                                   join a in db.Attendees on p.Postid equals a.Postid
                                   where a.Userid == userid && a.Organiser == organiser
                                   where p.Date <= future && p.Date >= now
-                                  select p).Include(s => s.Sport).Include(a => a.AttendeesNavigation).ToList();
+                                  select p)
+                                  .Include(s => s.Sport)
+                                  .Include(a => a.AttendeesNavigation)
+                                  .OrderBy(p => p.Date)
+                                  .ToList();
             return organizingtoday;
         }
 
@@ -168,7 +178,11 @@ namespace Loppuprojekti_AW
                                   join s in db.Sports on p.Sportid equals s.Sportid
                                   where a.Userid == userid && a.Organiser == organiser
                                   where p.Date <= future && p.Date >= now
-                                  select p).Include(s => s.Sport).Include(a=>a.AttendeesNavigation).ToList();
+                                  select p)
+                                  .Include(s => s.Sport)
+                                  .Include(a=>a.AttendeesNavigation)
+                                  .OrderBy(p => p.Date)
+                                  .ToList();
             return attendingtoday;
         }
 

@@ -11,7 +11,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Postid" />
             <div class="form-group">
-                <label asp-for="Postname" class="control-label"></label>
+                <label asp-for="Postname" class="control-label">Nimi</label>
                 <input asp-for="Postname" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Ilmoituksen otsikko"/>
                 <span asp-validation-for="Postname" class="text-danger"></span>
             </div>
@@ -27,13 +27,13 @@
                 <span asp-validation-for="Sportid" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="control-label">Kuvaus</label>
                 <input asp-for="Description" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Vapaa muotoinen kuvaus"/>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Attendees" class="control-label"></label>
-                <input asp-for="Attendees" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Osallistujat"/>
+                <label asp-for="Attendees" class="control-label">Osallistujien määrä</label>
+                <input asp-for="Attendees" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Lukumäärä"/>
                 <span asp-validation-for="Attendees" class="text-danger"></span>
             </div>
             @*<div class="form-group">
@@ -42,8 +42,8 @@
                 <span asp-validation-for="Posttype" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <label asp-for="Place" class="control-label"></label>
-                <input asp-for="Place" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Paikka, sijainti"/>
+                <label asp-for="Place" class="control-label">Sijainti</label>
+                <input asp-for="Place" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="osoite, kaupunginosa, kaupunki"/>
                 <span asp-validation-for="Place" class="text-danger"></span>
             </div>
             @*<div class="form-group">
@@ -57,12 +57,12 @@
                 <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
+                <label asp-for="Date" class="control-label">Aika</label>
                 <input asp-for="Date" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Milloin alkaa?"/>
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Duration" class="control-label"></label>
+                <label asp-for="Duration" class="control-label">Kesto</label>
                 <input asp-for="Duration" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Kesto minuuteissa"/>
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
@@ -72,12 +72,12 @@
                 <span asp-validation-for="Privacy" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Hinta €"/>
+                <label asp-for="Price" class="control-label">Hinta</label>
+                <input asp-for="Price" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Hinta €, erottele pilkulla"/>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-outline-success" />
+                <input type="submit" value="Tallenna" class="btn btn-outline-success" />
             </div>
         </form>
     </div>
