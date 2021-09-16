@@ -24,7 +24,7 @@ namespace Loppuprojekti_AW.Controllers
             int? userId = HttpContext.Session.GetInt32("userid");
             if (userId == null)
             {
-                return RedirectToAction("Virhe", "Home");
+                return RedirectToAction("Error", "Home");
             }
             string userName = _data.GetUserById(userId).Username;
             var usersMessagedWith = _data.GetUsersMessagedWith((int)userId);
@@ -48,7 +48,7 @@ namespace Loppuprojekti_AW.Controllers
             int? userId = HttpContext.Session.GetInt32("userid");
             if (userId == null)
             {
-                return RedirectToAction("Virhe", "Home");
+                return RedirectToAction("Error", "Home");
             }
             ViewBag.userName = _data.GetUserById(userId).Username;
             ViewData["currentUser"]= _data.GetUserById(userId);
