@@ -162,6 +162,9 @@ body {
     position:absolute;
     bottom: 0;
 }*/
+.list-group-item {
+
+}
 
 .rounded-lg {
     border-radius: 0.5rem;

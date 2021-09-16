@@ -10,6 +10,11 @@ var usersMessagedWithIds = document.getElementsByClassName("enduserId");
 //Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
+var links = $('a');
+links.click(function () {
+    links.css('background-color', 'grey');
+    $(this).css('background-color', 'purple');
+});
 
 //function getMessagesApi() {
 //    return fetch(`/api/ChatApi/87/88`)
@@ -131,8 +136,9 @@ function newChat(id, name) {
 for (let i = 0; i < usersMessagedWith.length; i++) {
 
     var aElement = document.createElement('a');
-    aElement.className = "list-group-item list-group-item-action active text-white rounded-0";
+    aElement.className = "list-group-item list-group-item-action list-group-item-light rounded-0";
     aElement.id = usersMessagedWithIds[i].innerHTML;
+    aElement.href = "#";
 
     // function update chat window on when chat with different user is opened
     aElement.addEventListener("click", updateMessages);
