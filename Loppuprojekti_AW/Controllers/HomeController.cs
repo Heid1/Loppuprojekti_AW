@@ -25,7 +25,6 @@ namespace Loppuprojekti_AW.Controllers
 
         public IActionResult Index()
         {
-           
             DataAccess da = new DataAccess(_context);
             var prevalencelist = da.GetAllSports();
             ViewBag.CommonPosts = prevalencelist;
@@ -41,16 +40,6 @@ namespace Loppuprojekti_AW.Controllers
             ViewBag.Posts = da.ReturnPostObjects();
             return View();
         }
-
-        // NÄIHIN EN KEKSINYT HELPPOA RATKAISUA
-        public IActionResult SendFeedback()
-        {
-            return View();
-        }
-        //public IActionResult SendFeedback(string text)
-        //{
-        //    return View();
-        //}
 
         public IActionResult Privacy()
         {
