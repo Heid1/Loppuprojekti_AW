@@ -36,7 +36,6 @@ namespace Loppuprojekti_AW.Controllers
         {
             var userid = HttpContext.Session.GetInt32("userid");
             ViewBag.Userid = userid;
-            //ViewBag.Attendance = _data.GetAttendances(userid).
             var postlist = new List<Post>();
             if (criteria != null)
             {
@@ -58,20 +57,6 @@ namespace Loppuprojekti_AW.Controllers
             {
                 postlist = _data.GetAllPosts();
             }
-            //// Tarkistetaan osallistujien määrä
-            //ViewBag.currentParCount = db.Participants.Where(e => e.EventId == id).ToList().Count();
-            //ViewBag.parCountFull = false;
-            //if (ViewBag.currentParCount == ev.Participants)
-            //{
-            //    ViewBag.parCountFull = true;
-            //}
-            //// Tässä tsekataan onko sivun selaaja tapahtuman järjestäjä tai osallistuja, valmis.
-            //var par = (db.Participants).Where(e => (e.EventId == id && e.PersonId == personId)).FirstOrDefault();
-            //ViewBag.Partisipant = par;
-            //if (par != null)
-            //{
-            //    ViewBag.Organizer = par.Organizer;
-            //}
             return View(postlist);
         }
     }

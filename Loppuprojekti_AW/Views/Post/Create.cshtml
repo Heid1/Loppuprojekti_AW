@@ -54,7 +54,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label">Hinta</label>
-                <input asp-for="Price" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Hinta"/>
+                <input asp-for="Price" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Hinat €, erottele pisteellä"/>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -64,9 +64,9 @@
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-action="Index" class = "btn btn-outline-primary">Takaisin</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
