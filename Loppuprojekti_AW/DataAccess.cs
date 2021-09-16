@@ -92,7 +92,11 @@ namespace Loppuprojekti_AW
 
         public List<Post> GetAllPosts()
         {
-            return db.Posts.Include(s => s.Sport).Include(a => a.AttendeesNavigation).OrderBy(p => p.Date).ToList();
+            return db.Posts
+                .Include(s => s.Sport)
+                .Include(a => a.AttendeesNavigation)
+                .OrderBy(p => p.Date)
+                .ToList();
         }
 
         //hae yleisimmät lajit post määrän mukaisesti (tämä on sanapilveä varten)

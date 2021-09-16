@@ -53,7 +53,7 @@ namespace Loppuprojekti_AW.Controllers
             post.Latitude = _data.ReturnCoordinates(post.Place, true);
             post.Longitude = _data.ReturnCoordinates(post.Place, false);
             _data.CreatePost((int)userid, post);
-            return RedirectToAction("GetPostsByCriteria", "Search");
+            return RedirectToAction("Index", "Account");
         }
 
         [HttpGet]
