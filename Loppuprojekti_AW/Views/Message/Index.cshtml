@@ -6,22 +6,27 @@
     var currentUserName = (string)ViewData["currentUserName"];
     var allUsers = (Dictionary<int, string>)ViewData["allUsersDict"];
 }
+<!--<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
 
 <p id="userId" hidden>@currentUserId</p>
 <p id="userName" hidden>@currentUserName</p>
-@*<a id="93" class="dropdown-item" onclick=newChat()>testi</a>*@
-    @*<h4 id="currentChatUser">@UsersMessagesWith[0].Username</h4>*@
 
-    <div class="container py-5 px-4">
 
-        <div class="row rounded-lg overflow-hidden shadow">
+<div class="container py-5 px-4">
 
-            <!-- Users box-->
-            <div class="col-5 px-0">
-                <div class="bg-white">
-                    <div class="bg-gray px-4 py-2 bg-light">
-                        <p class="h5 mb-0 py-1">Keskustelut</p>
-                        @*<div class="dropdown">
+    <div class="row rounded-lg overflow-hidden shadow">
+
+        <!-- Users box-->
+        <div class="col-5 px-0">
+            <div class="bg-white">
+                <div class="bg-gray px-4 py-2 bg-light">
+                    <p class="h5 mb-0 py-1">Keskustelut</p>
+                    @*<div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 uusi keskustelu<span class="caret"></span>
                             </button>
@@ -33,78 +38,80 @@
                                 }
                             </ul>
                         </div>*@
-                         <input id="newConversationButton" type="button" value="+" class="btn btn-outline-secondary" />
-                    </div>
-                    <div class="messages-box">
-                        <div class="list-group rounded-0" id="chats">
-                        </div>
-                    </div>
+                    <input id="newConversationButton" type="button" value="+" class="btn btn-outline-secondary" />
                 </div>
-            </div>
-
-
-            <!-- Chat Box-->
-            <div class="col-7 px-0" id="chatArea">
-                <div @*class="px-4 py-5 chat-box bg-white"*@ class="px-4 chat-box py-5 bg-white" id="chat-area">
-                    <div id="chatBox">
-                        @if (UsersMessagesWith.Count > 0)
-                        {
-                            @foreach (var messageObject in MessageHistory[UsersMessagesWith[0].Userid])
-                            {
-                                @if (messageObject.Senderid == currentUserId)
-                                {
-
-                                    <div class="media w-50 ml-auto mb-3">
-                                        <div class="media-body">
-                                            @*<p class="small text-muted">@messageObject.Sender.Username</p>*@
-                                            <div class="bg-primary rounded py-2 px-3 mb-2">
-                                                <p class="text-small mb-0 text-white">@messageObject.Messagebody</p>
-                                            </div>
-                                            <p class="small text-muted">@messageObject.Sendtime.ToString("t") | @messageObject.Sendtime.ToString("d.M.yyyy")</p>
-                                        </div>
-                                    </div>
-
-                                }
-                                @if (messageObject.Senderid != currentUserId)
-                                {
-                                    <div class="media w-50 mb-3">
-                                        <div class="media-body ml-3">
-                                            @*<p class="small text-muted">@messageObject.Sender.Username</p>*@
-                                            <div class="bg-light rounded py-2 px-3 mb-2">
-                                                <p class="text-small mb-0 text-muted">@messageObject.Messagebody</p>
-                                            </div>
-                                            <p class="small text-muted">@messageObject.Sendtime.ToString("t") | @messageObject.Sendtime.ToString("d.M.yyyy")</p>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                        }
+                <div class="messages-box">
+                    <div class="list-group rounded-0" id="chats">
                     </div>
-
-                    <!-- Typing area -->
-                    <form action="#" class="bg-light" id="typingArea">
-                        <div class="input-group">
-                            <input type="text" id="messageInput" placeholder="Kirjoita viesti" class="form-control rounded-0 border-0 py-4 bg-light">
-                            @*<input type="text" id="messageInput" placeholder="Kirjoita viesti" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">*@
-                            <div class="input-group-append">
-                                <input id="sendButton" type="button" value="Lähetä" class="btn btn-primary" />
-                                @*<button id="sendButton" type="button" value="Send Message" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>*@
-                                <!-- id="button-addon2" type="submit" -->
-                            </div>
-                        </div>
-                    </form>
-
-
                 </div>
             </div>
         </div>
+
+
+        <!-- Chat Box-->
+        <div class="col-7 px-0" id="chatArea">
+            <div  class="px-4 chat-box py-5 bg-white" id="chat-area">
+                <div id="chatBox">
+                    @if (UsersMessagesWith.Count > 0)
+                    {
+                        @foreach (var messageObject in MessageHistory[UsersMessagesWith[0].Userid])
+                        {
+                            @if (messageObject.Senderid == currentUserId)
+                            {
+
+                                <div class="media w-50 ml-auto mb-3">
+                                    <div class="media-body">
+                                        @*<p class="small text-muted">@messageObject.Sender.Username</p>*@
+                                        <div class="bg-primary rounded py-2 px-3 mb-2">
+                                            <p class="text-small mb-0 text-white">@messageObject.Messagebody</p>
+                                        </div>
+                                        <p class="small text-muted">@messageObject.Sendtime.ToString("t") | @messageObject.Sendtime.ToString("d.M.yyyy")</p>
+                                    </div>
+                                </div>
+
+                            }
+                            @if (messageObject.Senderid != currentUserId)
+                            {
+                                <div class="media w-50 mb-3">
+                                    <div class="media-body ml-3">
+                                        @*<p class="small text-muted">@messageObject.Sender.Username</p>*@
+                                        <div class="bg-light rounded py-2 px-3 mb-2">
+                                            <p class="text-small mb-0 text-muted">@messageObject.Messagebody</p>
+                                        </div>
+                                        <p class="small text-muted">@messageObject.Sendtime.ToString("t") | @messageObject.Sendtime.ToString("d.M.yyyy")</p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+
+                <!-- Typing area -->
+                <form action="#" class="bg-light" id="typingArea">
+                    <div class="input-group">
+                        <input type="text" id="messageInput" placeholder="Kirjoita viesti" class="form-control rounded-0 border-0 py-4 bg-light">
+                        <div class="input-group-append">
+                            <input id="sendButton" type="button" value="Lähetä" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
     </div>
+</div>
 
-    @foreach (var user in UsersMessagesWith)
-    {
-        <p class="enduserName" hidden>@user.Username</p>
-        <p class="enduserId" hidden>@user.Userid</p>
-    }
+@foreach (var user in UsersMessagesWith)
+{
+    <p class="enduserName" hidden>@user.Username</p>
+    <p class="enduserId" hidden>@user.Userid</p>
+}
+@*<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+</script>*@
 
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat.js" defer></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js" defer></script>
