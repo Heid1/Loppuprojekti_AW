@@ -100,7 +100,7 @@ namespace Loppuprojekti_AW.Controllers
             }
             else
             {
-                return RedirectToAction("Virhe", "Home");
+                return RedirectToAction("Error", "Home");
             }
         }
 
@@ -111,7 +111,7 @@ namespace Loppuprojekti_AW.Controllers
             var enduser = new DataAccess(_context).GetUserById(userid);
             if (enduser == null)
             {
-                return RedirectToAction("Virhe", "Home");
+                return RedirectToAction("Error", "Home");
             }
             return View(enduser);
         }
@@ -137,7 +137,7 @@ namespace Loppuprojekti_AW.Controllers
             var enduser = da.GetUserById(userid);
             if (enduser == null)
             {
-                return RedirectToAction("Virhe", "Home");
+                return RedirectToAction("Error", "Home");
             }
             else
             {
