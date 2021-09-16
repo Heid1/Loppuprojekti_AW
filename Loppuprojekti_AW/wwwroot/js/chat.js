@@ -218,12 +218,12 @@ connection.on("ReceiveMessage", function (senderName, message, sendTime, sendDat
     msgInfo.className = 'small text-muted';
     msgInfo.appendChild(document.createTextNode(`${sendTime} | ${sendDate}`));
 
-    var sender = document.createElement('p');
-    sender.className = 'small text-muted';
-    sender.appendChild(document.createTextNode(`${senderName}`));
+    //var sender = document.createElement('p');
+    //sender.className = 'small text-muted';
+    //sender.appendChild(document.createTextNode(`${senderName}`));
 
     div3.appendChild(msgContent);
-    div2.appendChild(sender);
+   /* div2.appendChild(sender);*/
     div2.appendChild(div3);
     div2.appendChild(msgInfo);
     div1.appendChild(div2);
