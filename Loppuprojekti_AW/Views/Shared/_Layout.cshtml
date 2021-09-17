@@ -88,7 +88,7 @@
                         "<p>" + list2[i].Description + "</p > " +
                         '<p class="kartta">Osoite: ' + list2[i].Address + "<br> " +
                         'Kesto: ' + list2[i].Duration.toString() + " min<br> " +
-                        'Järjestäjä: ' + list2[i].Organiser + "<br>"+
+                        'Järjestäjä: ' + list2[i].Organiser + "<br>" +
                         'Päivämäärä: ' + list2[i].Date + "</p>" +
                         '<a href="/Search/GetPostsByCriteria" class="nappi">' + 'Siirry ilmoituksiin' + '</a>' +
                         "</div>" +
@@ -157,9 +157,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Sport" asp-action="Index">Lajit</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Map">Kartta</a>
+                        </li>
 
                         @if (userid != null)
                         {
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Message" asp-action="Index">Viestit</a>
                             </li>
@@ -179,9 +183,9 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Create">Rekisteröidy</a>
                             </li>
                         }
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="mailto:admin@admin.fi">Palaute</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="mailto:admin@admin.fi">Palaute</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -206,9 +210,19 @@
     </script>
     @await RenderSectionAsync("Scripts", required: false)
     <style>
-        #firstHeading {color: indianred;}
-        .kartta{ font-weight: bold;}
-        .mapkuva{ border-radius: 50%; float: right;}
+        #firstHeading {
+            color: indianred;
+        }
+
+        .kartta {
+            font-weight: bold;
+        }
+
+        .mapkuva {
+            border-radius: 50%;
+            float: right;
+        }
+
         .nappi {
             color: #007bff;
             display: inline-block;
@@ -227,12 +241,13 @@
             border-radius: .25rem;
             transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
         }
-        .nappi:hover{
-            color: #fff;
-            background-color: #007bff;
-            border-color: #007bff;
-            text-decoration: none;
-        }
+
+            .nappi:hover {
+                color: #fff;
+                background-color: #007bff;
+                border-color: #007bff;
+                text-decoration: none;
+            }
     </style>
 </body>
 </html>
