@@ -127,12 +127,52 @@
     </script>
 </head>
 <body>
-    <h3>ilmoitukset</h3>
+    <h4 class="display-4">Ilmoitukset kartalla</h4>
     <!--The div element for the map -->
     <div id="map"></div>
 
     <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3QpAniVaOsNKERSCcBjkoon3Iojbbxhw&callback=initMap&libraries=&v=weekly"
             async></script>
+    <style>
+        #firstHeading {
+            color: indianred;
+        }
+
+        .kartta {
+            font-weight: bold;
+        }
+
+        .mapkuva {
+            border-radius: 50%;
+            float: right;
+        }
+
+        .nappi {
+            color: #007bff;
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid #007bff;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+
+            .nappi:hover {
+                color: #fff;
+                background-color: #007bff;
+                border-color: #007bff;
+                text-decoration: none;
+            }
+    </style>
 </body>
 </html>

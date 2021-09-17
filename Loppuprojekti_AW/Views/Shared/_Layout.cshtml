@@ -27,7 +27,7 @@
         // Initialize and add the map
         function initMap() {
 
-            var wrestling = {
+            var Wrestling = {
                 url: "https://image.flaticon.com/icons/png/512/94/94107.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
             };
@@ -37,12 +37,12 @@
                 scaledSize: new google.maps.Size(50, 50), // scaled size
             };
 
-            var dance = {
+            var Dance = {
                 url: "https://cdn3.iconfinder.com/data/icons/dancing-dancer/214/dance-dancing-010-512.png", // url
                 scaledSize: new google.maps.Size(50, 50), // scaled size
             };
 
-            var ikonit = [dance, wrestling, Padel];
+            var ikonit = [Dance, Wrestling, Padel];
 
             // The location of Kamppi
             const kamppi = { lat: 60.167390, lng: 24.931080 };
@@ -56,6 +56,13 @@
             function populate() {
 
                 for (var i = 0; i < list2.length; i++) {
+                    var icon = Dance;
+
+                    if (list2[i].Category == "Tanssi") {
+                        icon = Dance
+                    } else if (list2[i].Category == "Kamppailulajit") {
+                        icon = Wrestling
+                    } else { icon = Padel }
 
                     var location = {
                         lat: list2[i].Latitude,
@@ -95,7 +102,7 @@
 
                     const infowindow = new google.maps.InfoWindow({
                         content: content,
-                        maxWidth: 500
+                        minWidth: 400
                     });
 
                     marker.addListener("click", () => {
