@@ -49,6 +49,7 @@ namespace Loppuprojekti_AW.Controllers
                 return View();
             }
         }
+
         /// <summary>
         /// Muokkaa salasanan eri muotoon, jottei näy suoraan tietokannassa.
         /// </summary>
