@@ -40,45 +40,7 @@ links.click(function () {
     $(this).css('background-color', 'purple');
 });
 
-//function getMessagesApi() {
-//    return fetch(`/api/ChatApi/87/88`)
-//        .then(res => res.json())
-//              /*return fetch(`/api/ChatApi/${currentUserId}/${otherPartyId}`)*/             
-//}
 
-//function updateUser(id) {
-//    fetch(`/api/ChatApi/user/${id}`)
-//        .then(res => {res.json()})
-//        .then(user => {
-//            var userName = user.username;
-//            document.getElementById("currentChatUser").innerText = userName;
-//        }).catch((error) => {
-//            console.error('Error:', error);
-//        });
-//}
-
-//function getUser(id) {
-//    const userName = fetch(`/api/ChatApi/user/${id}`)
-//        .then((response) => response.json())
-//        .then((user) => {
-//            return user.username;
-//        });
-//}
-
-//const printAddress = async () => {
-//    const a = await address;
-//    console.log(a);
-//};
-
-//async function getUser(id) {
-//    try {
-//        const response = await fetch(`/api/ChatApi/user/${id}`)
-//        const data = await response.json()
-//        return data;
-//    } catch (err) {
-//        console.log(err)
-//    }
-//}
 
 
 
@@ -127,7 +89,7 @@ function updateMessages() {
 }
 
 function newChat(id, name) {
-
+     
     var aElement = document.createElement('a');
     aElement.className = "list-group-item list-group-item-action active text-white rounded-0";
     aElement.id = id;
@@ -258,9 +220,6 @@ connection.on("ReceiveMessage", function (senderName, message, sendTime, sendDat
     div2.appendChild(msgInfo);
     div1.appendChild(div2);
     document.getElementById("chatBox").appendChild(div1);
-    //connection.invoke("SaveMessage", message, sendTime, sendDate).catch(function (err) {
-    //    return console.error(err.toString());
-    //});
 });
 
 connection.start().then(function () {
@@ -270,7 +229,6 @@ connection.start().then(function () {
 });
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
-    //var user = document.getElementById("userInput").value;
     
     var senderId = document.getElementById("userId").innerText;
     var senderName = document.getElementById("userName").innerText;

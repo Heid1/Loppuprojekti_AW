@@ -33,7 +33,7 @@
                             <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
                             @foreach (var item in allUsers)
                             {
-                                <a id="@item.Key" class="dropdown-item" >@item.Value</a>
+                                <a id="@item.Key" class="dropdown-item" onclick="updateMessages()">@item.Value</a>
                             }
                             </div>
                     </div>
